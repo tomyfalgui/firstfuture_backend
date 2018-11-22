@@ -1,0 +1,13 @@
+APP REQUIRES A JSON CAPABLE MYSQL SERVER. XAMPP DEFAULT DOES NOT WORK.
+
+Assumes that a single user can have as many extracurr, skills, work exp as necessary, as well as leaving open the option to search by these fields
+Birthday is used to compute age, age is not to be stored to save space
+Addresses are separated per field to force data integrity (from experience at Barangka)
+Data validation is done in the front end
+Sex and track are stored as integers with set correspondence (i.e. 1 male, 0 female; 0 - GAS, 1-Stem, 2-ICT etc.) to save space
+Honors is stored as a json, as it is not valuable to categorize users by this field vs. skills, work experience and extracurr
+K12 student and graduates are on the same table, separated by an attribute called isGraduate to make searches less expensive (1 table vs 2 tables)
+English and Filipino skills are assumed per user, but other languages are not and are placed in a separate table to reduce db size (2 int colums vs 2 additional entries (english, filipino) on a language table)
+STRING is VARCHAR(255) by default in Sequelize
+Hashing is done on the server side to reduce transfer volumes
+Honors can be formatted as needed depending on formatting

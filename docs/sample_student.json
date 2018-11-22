@@ -1,0 +1,90 @@
+{
+    "user":{
+    	"firstName":"Plain",
+    	"lastName":"Bread",
+    	"middleName":"White",
+    	"userName":"Sandwich",
+    	"password":"sandwiches",
+    	"email":"sandwich@google.com",
+    	"phone":"87000",
+    	"street":"317 Katipunan",
+    	"barangay":"Loyola Heights",
+    	"city":"Quezon City",
+    	"province":"NCR",
+    	"birthdate": "2018-11-22",
+    	"sex":0,
+    	"isGraduate":true,
+    	"graduationDate": "2018-11-22",
+    	"shs":"AHS",
+    	"track":0,
+    	"generalAverage":99.87,
+    	"honors":{},
+    	"englishSpeakingRating":10,
+    	"englishWritingRating":10,
+    	"englishReadingRating":10,
+    	"filipinoSpeakingRating":10,
+    	"filipinoWritingRating":10,
+    	"filipinoReadingRating":10
+    },
+    "skills":[
+    	{
+    		"name":"Spanish",
+    		"description":"Can speak Spanish",
+    		"rating":10
+    	},
+    	{
+    		"name":"MySQL",
+    		"description":"Can database",
+    		"rating":10
+    	}
+    	],
+    "extracurriculars":[
+    	{
+    		"orgName":"MISA",
+    		"yearsActive":10,
+    		"positionsHeld":["President","Secretary General"]
+    	},
+    	{
+    		"orgName":"UXSoc",
+    		"yearsActive":99,
+    		"positionsHeld":["President","Secretary","Director"]
+    		
+    	}],
+    "workExperiences":[
+    	{
+    		"company":"Oracle",
+    		"typeOfWork":"DBA",
+    		"hours":100
+    	},
+    	{
+    		"company":"Google",
+    		"typeOfWork":"SRE",
+    		"hours":100
+    	},
+		{
+    		"company":"Palantir",
+    		"typeOfWork":"UX Lead",
+    		"hours":300
+    	}
+    	],
+    	"languages":[
+    		{
+    			"name":"Spanish",
+    			"speakingRating":1,
+    			"writingRating":9,
+    			"readingRating":7
+    		},
+    		{
+    			"name":"German",
+    			"speakingRating":1,
+    			"writingRating":9,
+    			"readingRating":7
+    		},
+    		{
+    			"name":"Hokien",
+    			"speakingRating":1,
+    			"writingRating":9,
+    			"readingRating":7
+    		}
+    		]
+}

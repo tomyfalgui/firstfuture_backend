@@ -34,6 +34,6 @@ Language.belongsTo(User);
 WorkExperience.belongsTo(User);
 ExtraCurricular.belongsTo(User);
 
-sequelize.sync({alter:true});
+sequelize.sync();
 
 module.exports = {User,Company,ExtraCurricular,Skill,Language,WorkExperience};

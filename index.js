@@ -3,7 +3,7 @@ const {User,Company,ExtraCurricular,Skill,Language,WorkExperience} = require('./
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv').config();
-
+var cors = require('cors');
 
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
@@ -11,7 +11,7 @@ var app = express();
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())
 
-app.post('/api/users/new', (req, res) => {
+app.post('/api/users/new', cors(), (req, res) => {
     let plaintext = req.body.user.password;
     req.body.user.salt = bcrypt.genSaltSync(saltRounds);
     req.body.user.password = bcrypt.hashSync(plaintext,req.body.user.salt);
@@ -38,7 +38,7 @@ app.post('/api/users/new', (req, res) => {
 
 })
 
-app.post('/api/company/new', (req, res) => {
+app.post('/api/company/new', cors(), (req, res) => {
     let plaintext = req.body.password;
     req.body.salt = bcrypt.genSaltSync(saltRounds);
     req.body.password = bcrypt.hashSync(plaintext,req.body.salt);
@@ -47,4 +47,4 @@ app.post('/api/company/new', (req, res) => {
 })
 
 
-app.listen(3000);
+app.listen(3000,'0.0.0.0');

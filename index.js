@@ -46,5 +46,7 @@ app.post('/api/company/new', cors(), (req, res) => {
         .then(company => res.json(company))
 })
 
-
-app.listen(3000,'0.0.0.0');
+const port = process.env.PORT || 3000;
+app.listen(port,()=>{
+	console.log("Application starting");
+);

@@ -10,8 +10,11 @@ const saltRounds = parseInt(process.env.SALT_ROUNDS);
 var app = express();
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())
-
 app.post('/api/users/new', cors(), (req, res) => {
+	User.create(req.body).then(user => res.json(user))
+});
+
+app.post('/api/users/edit', cors(), (req, res) => {
     let plaintext = req.body.user.password;
     req.body.user.salt = bcrypt.genSaltSync(saltRounds);
     req.body.user.password = bcrypt.hashSync(plaintext,req.body.user.salt);

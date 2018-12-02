@@ -42,6 +42,10 @@ app.post('/api/users/edit', cors(), (req, res) => {
 })
 
 app.post('/api/company/new', cors(), (req, res) => {
+	Company.create(req.body).then(company => res.json(company))
+});
+
+app.post('/api/company/edit', cors(), (req, res) => {
     let plaintext = req.body.password;
     req.body.salt = bcrypt.genSaltSync(saltRounds);
     req.body.password = bcrypt.hashSync(plaintext,req.body.salt);

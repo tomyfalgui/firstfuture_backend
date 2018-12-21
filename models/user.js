@@ -62,7 +62,7 @@ module.exports = (sequelize, type) => {
     shs:{
       type: Sequelize.STRING
     },
-    track:{
+    strand:{
       type: Sequelize.INTEGER(2)
     },
     generalAverage:{

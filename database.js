@@ -7,7 +7,7 @@ const extraCurricularModel = require('./models/extraCurricular');
 const languageModel = require('./models/language');
 const workExperienceModel = require('./models/workExperience');
 const skillModel = require('./models/skill');
-
+const bookmarkModel = require('./models/bookmark');
 
 
 
@@ -28,11 +28,13 @@ const ExtraCurricular = extraCurricularModel(sequelize, Sequelize);
 const Skill = skillModel(sequelize, Sequelize);
 const Language = languageModel(sequelize, Sequelize);
 const WorkExperience = workExperienceModel(sequelize, Sequelize);
+const Bookmark = bookmarkModel(sequelize,Sequelize);
 
 Skill.belongsTo(User);
 Language.belongsTo(User);
 WorkExperience.belongsTo(User);
 ExtraCurricular.belongsTo(User);
+Bookmark.belongsTo(User);
 
 sequelize.sync();
 

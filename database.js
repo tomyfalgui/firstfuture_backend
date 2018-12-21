@@ -11,7 +11,7 @@ const bookmarkModel = require('./models/bookmark');
 
 
 
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
     host: process.env.DB_HOST,
     dialect: 'mysql',
     operatorsAliases: false,
@@ -36,6 +36,6 @@ WorkExperience.belongsTo(User);
 ExtraCurricular.belongsTo(User);
 Bookmark.belongsTo(User);
 
-sequelize.sync();
+sequelize.sync({alter:true});
 
 module.exports = {User,Company,ExtraCurricular,Skill,Language,WorkExperience};

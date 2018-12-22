@@ -6,8 +6,8 @@ const dotenv = require('dotenv').config();
 var cors = require('cors');
 // Router Imports
 var users = require('./routes/users');
-var companies = require('./routes/companies')
-
+var companies = require('./routes/companies');
+var bookmarks = require('./routes/bookmarks');
 
 var app = express();
 
@@ -20,6 +20,7 @@ app.use(cors());
 // Routes
 app.use('/api/users',users);
 app.use('/api/companies',companies);
+app.use('/api/bookmarks',bookmarks)
 
 const port = process.env.PORT || 3000;
 app.listen(port,()=>{

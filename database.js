@@ -43,4 +43,4 @@ jobListingSkill.belongsTo(JobListing);
 
 sequelize.sync({alter:true});
 
-module.exports = {User,Company,ExtraCurricular,Skill,Language,WorkExperience,JobListing,jobListingSkill};
+module.exports = {User,Company,ExtraCurricular,Skill,Language,WorkExperience,JobListing,jobListingSkill,Bookmark};

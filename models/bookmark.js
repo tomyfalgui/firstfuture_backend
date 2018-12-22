@@ -4,7 +4,7 @@ module.exports = (sequelize, type) => {
     userId: {
       type: Sequelize.INTEGER(11)
     },
-    listingId: {
+    jobListingId: {
       type: Sequelize.INTEGER(11)
     },
   });

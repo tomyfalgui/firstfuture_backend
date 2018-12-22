@@ -1,11 +1,14 @@
 const Sequelize = require('sequelize');
 module.exports = (sequelize, type) => {
-  return sequelize.define('bookmark', {
-    userId: {
+  return sequelize.define('extraCurricular', {
+    applicantID: {
       type: Sequelize.INTEGER(11)
     },
-    listingId: {
+    jobListingID: {
       type: Sequelize.INTEGER(11)
     },
+    status: {
+      type: Sequelize.INTEGER(2)
+    }
   });
 }

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, type) => {
-    return sequelize.define('user', {
+  return sequelize.define('user', {
     // ID is auto-generated
     // Name
     firstName: {
@@ -31,44 +31,44 @@ module.exports = (sequelize, type) => {
       type: Sequelize.STRING
     },
     // Address Section
-    street:{
+    street: {
       type: Sequelize.STRING
     },
-    barangay:{
+    barangay: {
       type: Sequelize.STRING
     },
-    city:{
+    city: {
       type: Sequelize.STRING
     },
-    province:{
+    province: {
       type: Sequelize.STRING
     },
     // Birthday
-    birthdate:{
+    birthdate: {
       type: Sequelize.DATE
     },
     // Sex
-    sex:{
+    sex: {
       type: Sequelize.BOOLEAN
     },
     // Academic Information
-    isGraduate:{
+    isGraduate: {
       type: Sequelize.BOOLEAN
     },
-    graduationDate:{
+    graduationDate: {
       type: Sequelize.DATE,
       allowNull: true
     },
-    shs:{
+    shs: {
       type: Sequelize.STRING
     },
-    strand:{
+    strand: {
       type: Sequelize.INTEGER(2)
     },
-    generalAverage:{
+    generalAverage: {
       type: Sequelize.FLOAT
     },
-    honors:{
+    honors: {
       type: Sequelize.JSON
     },
     englishSpeakingRating: {

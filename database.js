@@ -8,10 +8,10 @@ const languageModel = require('./models/language');
 const workExperienceModel = require('./models/workExperience');
 const skillModel = require('./models/skill');
 const bookmarkModel = require('./models/bookmark');
+const jobListingModel = require('./models/jobListing');
+const jobListingSkillModel = require('./models/jobListingSkill');
 
-
-
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
+const sequelize = new Sequelize(process.env.DB_URL, {
     host: process.env.DB_HOST,
     dialect: 'mysql',
     operatorsAliases: false,
@@ -29,13 +29,18 @@ const Skill = skillModel(sequelize, Sequelize);
 const Language = languageModel(sequelize, Sequelize);
 const WorkExperience = workExperienceModel(sequelize, Sequelize);
 const Bookmark = bookmarkModel(sequelize,Sequelize);
+const JobListing = jobListingModel(sequelize,Sequelize);
+const jobListingSkill = jobListingSkillModel(sequelize,Sequelize);
 
 Skill.belongsTo(User);
 Language.belongsTo(User);
 WorkExperience.belongsTo(User);
 ExtraCurricular.belongsTo(User);
 Bookmark.belongsTo(User);
+Bookmark.belongsTo(JobListing);
+JobListing.belongsTo(Company);
+jobListingSkill.belongsTo(JobListing);
 
 sequelize.sync({alter:true});
 
-module.exports = {User,Company,ExtraCurricular,Skill,Language,WorkExperience};
+module.exports = {User,Company,ExtraCurricular,Skill,Language,WorkExperience,JobListing,jobListingSkill};

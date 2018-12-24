@@ -18,4 +18,9 @@ router.post('/edit', (req, res) => {
         .then(company => res.json(company));
 })
 
+router.delete('/delete/', (req,res) => {
+    Company.destroy({ where: {id : req.query.id}} )
+        .then(res.json(true));
+});
+
 module.exports = router;

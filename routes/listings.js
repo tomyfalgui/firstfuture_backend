@@ -13,8 +13,23 @@ router.get('/show/:id', (req, res) => {
         where: {
             id: id
         }
-    }).then(listing => res.json(listing));
+    }).then(listing => res.json(listing))
 });
+
+router.get('/search', (req, res) => { // under construction
+    JobListing.findAll().then(listing => res.json(listing));
+})
+
+// will try to improve this to partial edit
+router.put('/edit/:id', (req, res) => {
+    const { id } = req.params;
+    JobListing.update(
+        req.body, 
+        {
+            where: { id: id }
+        }
+    ).then(listing => res.json(listing));
+})
 
 router.delete('/delete/:id', (req, res) => {
     const { id } = req.params;
@@ -22,9 +37,7 @@ router.delete('/delete/:id', (req, res) => {
         where: {
             id : id
         }
-    }).then(function(listing) {
-        res.json('listing deleted');
-    })
+    }).then(listing => res.json('listing deleted'))
 });
 
 module.exports = router;

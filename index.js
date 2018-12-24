@@ -3,11 +3,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv').config();
-var cors = require('cors');
+const cors = require('cors');
+const jwt = require('jsonwebtoken');
+const passport = require("passport");
+const passportJWT = require("passport-jwt");
 // Router Imports
 var users = require('./routes/users');
 var companies = require('./routes/companies');
 var bookmarks = require('./routes/bookmarks');
+
 
 var app = express();
 
@@ -16,6 +20,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cors());
 
+// JWT
+var ExtractJwt = passportJWT.ExtractJwt;
+var JwtStrategy = passportJWT.Strategy;
 
 // Routes
 app.use('/api/users',users);

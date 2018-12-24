@@ -10,6 +10,7 @@ const skillModel = require('./models/skill');
 const bookmarkModel = require('./models/bookmark');
 const jobListingModel = require('./models/jobListing');
 const jobListingSkillModel = require('./models/jobListingSkill');
+const profilePictureModel = require('./models/profilePicture');
 
 const sequelize = new Sequelize(process.env.DB_URL, {
     host: process.env.DB_HOST,
@@ -31,16 +32,20 @@ const WorkExperience = workExperienceModel(sequelize, Sequelize);
 const Bookmark = bookmarkModel(sequelize,Sequelize);
 const JobListing = jobListingModel(sequelize,Sequelize);
 const jobListingSkill = jobListingSkillModel(sequelize,Sequelize);
+const ProfilePicture = profilePictureModel(sequelize,Sequelize);
 
 Skill.belongsTo(User);
 Language.belongsTo(User);
 WorkExperience.belongsTo(User);
 ExtraCurricular.belongsTo(User);
 Bookmark.belongsTo(User);
-Bookmark.belongsTo(JobListing);
+ProfilePicture.belongsTo(User);
 JobListing.belongsTo(Company);
+Bookmark.belongsTo(JobListing);
+Bookmark.belongsTo(User);
 jobListingSkill.belongsTo(JobListing);
+
 
 sequelize.sync({alter:true});
 
-module.exports = {User,Company,ExtraCurricular,Skill,Language,WorkExperience,JobListing,jobListingSkill,Bookmark};
+module.exports = {User,Company,ExtraCurricular,Skill,Language,WorkExperience,JobListing,jobListingSkill,Bookmark,ProfilePicture};

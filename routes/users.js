@@ -1,7 +1,7 @@
 const express = require('express');
 var router = express.Router();
 const dotenv = require('dotenv').config();
-const {User,ExtraCurricular,Skill,Language,WorkExperience} = require('../database');
+const {User,ExtraCurricular,Skill,Language,WorkExperience,ProfilePicture} = require('../database');
 const bcrypt = require('bcrypt');
 
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
@@ -30,6 +30,12 @@ router.post('/new', (req, res) => {
         }
     })
     .then(() => res.json(true))
+});
+
+router.post('/new/profilePicture', (req, res) => {
+    ProfilePicture.create(req.body).then(()=>
+        res.json(true)
+    );
 });
 
 router.post('/new/skill', (req, res) => {
@@ -63,6 +69,11 @@ router.post('/edit', (req, res) => {
 
 router.post('/edit/skill', (req, res) => {
     Skill.update(req.body.deltas,{ where: {id : req.body.id}} )
+        .then(skill => res.json(skill));
+});
+
+router.post('/edit/profilePicture', (req, res) => {
+    ProfilePicture.update(req.body.deltas,{ where: {id : req.body.id}} )
         .then(skill => res.json(skill));
 });
 

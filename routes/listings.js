@@ -8,8 +8,14 @@ router.post('/new', (req, res) => {
 });
 
 router.delete('/delete/:id', (req, res) => {
-    JobListing.destroy({ where: {id : req.params.companyId}} )
-        .then(res.json(true));
+    const { id } = req.params;
+    JobListing.destroy({ 
+        where: {
+            id : id
+        }
+    }).then(function(listing) {
+        res.json('listing deleted');
+    })
 });
 
 module.exports = router;

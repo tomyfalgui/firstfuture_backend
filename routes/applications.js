@@ -1,6 +1,6 @@
 const express = require('express');
 const { Application } = require('../database');
-const router = express.Router();
+var router = express.Router();
 
 router.post('/new', (req, res) => {
     Application.create(req.body)
@@ -17,3 +17,5 @@ router.get('/show/:id', (req, res) => {
         res.json(application);
     })
 });
+
+module.exports = router;

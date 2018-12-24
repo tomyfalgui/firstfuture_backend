@@ -7,11 +7,12 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const passport = require("passport");
 const passportJWT = require("passport-jwt");
+
 // Router Imports
 var users = require('./routes/users');
 var companies = require('./routes/companies');
 var bookmarks = require('./routes/bookmarks');
-
+let applications = require('./routes/applications');
 
 var app = express();
 
@@ -25,11 +26,12 @@ var ExtractJwt = passportJWT.ExtractJwt;
 var JwtStrategy = passportJWT.Strategy;
 
 // Routes
-app.use('/api/users',users);
-app.use('/api/companies',companies);
-app.use('/api/bookmarks',bookmarks)
+app.use('/api/users', users);
+app.use('/api/companies', companies);
+app.use('/api/bookmarks', bookmarks);
+app.use('/api/applications', applications);
 
 const port = process.env.PORT || 3000;
-app.listen(port,()=>{
-	console.log("Application starting");
+app.listen(port, () => {
+    console.log("Application starting");
 });

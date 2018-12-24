@@ -7,6 +7,15 @@ router.post('/new', (req, res) => {
         .then(listing => res.json(listing));
 });
 
+router.get('/show/:id', (req, res) => {
+    const { id } = req.params;
+    JobListing.findOne({
+        where: {
+            id: id
+        }
+    }).then(listing => res.json(listing));
+});
+
 router.delete('/delete/:id', (req, res) => {
     const { id } = req.params;
     JobListing.destroy({ 

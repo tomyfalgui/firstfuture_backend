@@ -13,7 +13,7 @@ var users = require('./routes/users');
 var companies = require('./routes/companies');
 var bookmarks = require('./routes/bookmarks');
 let applications = require('./routes/applications');
-var listings = require('./routes/listings');
+let listings = require('./routes/listings');
 
 var app = express();
 

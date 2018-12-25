@@ -48,7 +48,8 @@ Bookmark.belongsTo(JobListing);
 Bookmark.belongsTo(User);
 jobListingSkill.belongsTo(JobListing);
 Application.belongsTo(User);
+Application.belongsTo(JobListing);
 
-// sequelize.sync({ alter: true });
+//sequelize.sync({ alter: true });
 
 module.exports = { User, Company, ExtraCurricular, Skill, Language, WorkExperience, JobListing, jobListingSkill, Bookmark, ProfilePicture, Application };

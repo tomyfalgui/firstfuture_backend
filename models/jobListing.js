@@ -33,7 +33,6 @@ module.exports = (sequelize, type) => {
         },
         strands: {
             type: Sequelize.STRING,
-            allowNull: false,
             get() {
                 var results = this.getDataValue('strands').split(';');
                 for (let i in results) {

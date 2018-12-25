@@ -2,9 +2,13 @@ const express = require('express');
 const { JobListing } = require('../database');
 var router = express.Router();
 
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 router.post('/new', (req, res) => {
     JobListing.create(req.body)
-        .then(listing => res.json(listing));
+        .then(listing => res.json(listing))
+        .catch(err => res.json(err));
 });
 
 router.get('/show/:id', (req, res) => {
@@ -13,14 +17,28 @@ router.get('/show/:id', (req, res) => {
         where: {
             id: id
         }
-    }).then(listing => res.json(listing))
+    })
+    .then(listing => res.json(listing))
+    .catch(err => res.json(err));
 });
 
-router.get('/search', (req, res) => { // under construction
-    JobListing.findAll().then(listing => res.json(listing));
+router.get('/search', (req, res) => { 
+    let { q } = req.query;
+    
+    JobListing.findAll({
+        where: {
+            [Op.or]: [
+                { street: { [Op.like]: `%${q}%` } },
+                { barangay: { [Op.like]: `%${q}%` } },
+                { city: { [Op.like]: `%${q}%` } },
+                { province: { [Op.like]: `%${q}%` } }
+            ]
+        }
+    })
+    .then(listing => res.json(listing))
+    .catch(err => res.json(err));
 })
 
-// will try to improve this to partial edit
 router.put('/edit/:id', (req, res) => {
     const { id } = req.params;
     JobListing.update(
@@ -28,7 +46,9 @@ router.put('/edit/:id', (req, res) => {
         {
             where: { id: id }
         }
-    ).then(listing => res.json(listing));
+    )
+    .then(listing => res.json(listing))
+    .catch(err => res.json(err));
 })
 
 router.delete('/delete/:id', (req, res) => {
@@ -37,7 +57,9 @@ router.delete('/delete/:id', (req, res) => {
         where: {
             id : id
         }
-    }).then(listing => res.json('listing deleted'))
+    })
+    .then(listing => res.json('listing deleted'))
+    .catch(err => res.json(err));
 });
 
 module.exports = router;

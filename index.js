@@ -30,7 +30,7 @@ var JwtStrategy = passportJWT.Strategy;
 app.use('/api/users', users);
 app.use('/api/companies', companies);
 app.use('/api/bookmarks', bookmarks);
-app.use('/api/applications', applications);
+app.use('/api/apply', applications);
 app.use('/api/listings', listings);
 
 const port = process.env.PORT || 3000;

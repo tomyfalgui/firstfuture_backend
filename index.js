@@ -7,13 +7,15 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const passport = require("passport");
 const passportJWT = require("passport-jwt");
+require('./passport.js');
 
 // Router Imports
 var users = require('./routes/users');
 var companies = require('./routes/companies');
 var bookmarks = require('./routes/bookmarks');
-let applications = require('./routes/applications');
-let listings = require('./routes/listings');
+var applications = require('./routes/applications');
+var listings = require('./routes/listings');
+var auth = require('./routes/auth');
 
 var app = express();
 
@@ -22,15 +24,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cors());
 
-// JWT
-var ExtractJwt = passportJWT.ExtractJwt;
-var JwtStrategy = passportJWT.Strategy;
-
 // Routes
-app.use('/api/users', users);
-app.use('/api/companies', companies);
-app.use('/api/bookmarks', bookmarks);
-app.use('/api/apply', applications);
+app.use('/api/auth',auth);
+app.use('/api/users', passport.authenticate('jwt', {session: false}), users);
+app.use('/api/companies',  companies, passport.authenticate('company-jwt', {session: false}), companies);
+app.use('/api/bookmarks', passport.authenticate('jwt', {session: false}), bookmarks);
+app.use('/api/apply', passport.authenticate('jwt', {session: false}), applications);
 app.use('/api/listings', listings);
 
 const port = process.env.PORT || 3000;

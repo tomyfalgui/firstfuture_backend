@@ -1,11 +1,14 @@
 const express = require('express');
 const { JobListing } = require('../database');
 var router = express.Router();
-
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const passport = require('passport');
+const passportJWT = require("passport-jwt");
+require('../passport.js');
 
-router.post('/new', (req, res) => {
+
+router.post('/new', passport.authenticate('company-jwt', {session: false}), (req, res) => {
     JobListing.create(req.body)
         .then(listing => res.json(listing))
         .catch(err => res.json(err));
@@ -39,7 +42,7 @@ router.get('/search', (req, res) => {
     .catch(err => res.json(err));
 })
 
-router.put('/edit/:id', (req, res) => {
+router.put('/edit/:id', passport.authenticate('company-jwt', {session: false}),  (req, res) => {
     const { id } = req.params;
     JobListing.update(
         req.body, 
@@ -51,7 +54,7 @@ router.put('/edit/:id', (req, res) => {
     .catch(err => res.json(err));
 })
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/delete/:id', passport.authenticate('company-jwt', {session: false}), (req, res) => {
     const { id } = req.params;
     JobListing.destroy({ 
         where: {

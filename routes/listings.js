@@ -31,10 +31,13 @@ router.get('/search', (req, res) => {
     JobListing.findAll({
         where: {
             [Op.or]: [
+                { position: { [Op.like]: `%${q}%` } },
+                { description: { [Op.like]: `%${q}%` } },
                 { street: { [Op.like]: `%${q}%` } },
                 { barangay: { [Op.like]: `%${q}%` } },
                 { city: { [Op.like]: `%${q}%` } },
-                { province: { [Op.like]: `%${q}%` } }
+                { province: { [Op.like]: `%${q}%` } },
+                { strands: { [Op.like]: `%${q}%`.toString() } }
             ]
         }
     })

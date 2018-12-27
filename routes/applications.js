@@ -22,7 +22,7 @@ router.get('/show/:id', middleware.extractUserIdParams, (req, res) => {
 });
 
 //update application
-router.post('/edit/:id', middleware.extractUserIdBody, (req, res) => {
+router.post('/edit', middleware.extractUserIdBody, (req, res) => {
     Application.update(
         req.body.deltas, {
             where: { id: req.body.id, userId: req.body.userId }

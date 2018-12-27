@@ -25,11 +25,11 @@ app.use(bodyParser.urlencoded());
 app.use(cors());
 
 // Routes
-app.use('/api/auth',auth);
-app.use('/api/users', [passport.authenticate('jwt', {session: false})], users);
-app.use('/api/companies',  companies, passport.authenticate('company-jwt', {session: false}), companies);
-app.use('/api/bookmarks', [passport.authenticate('jwt', {session: false})], bookmarks);
-app.use('/api/apply', [passport.authenticate('jwt', {session: false})], applications);
+app.use('/api/auth', auth);
+app.use('/api/users', [passport.authenticate('jwt', { session: false })], users);
+app.use('/api/companies', companies, passport.authenticate('company-jwt', { session: false }), companies);
+app.use('/api/bookmarks', [passport.authenticate('jwt', { session: false })], bookmarks);
+app.use('/api/apply', [passport.authenticate('jwt', { session: false })], applications);
 app.use('/api/listings', listings);
 
 const port = process.env.PORT || 3000;

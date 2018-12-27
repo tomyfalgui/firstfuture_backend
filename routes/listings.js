@@ -5,20 +5,21 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const passport = require('passport');
 const passportJWT = require("passport-jwt");
+const middleware = require('../middleware/middlewareCompany.js');
 require('../passport.js');
 
 
-router.post('/new', passport.authenticate('company-jwt', {session: false}), (req, res) => {
+router.post('/new', [passport.authenticate('company-jwt', {session: false}), middleware.extractCompanyIdBody], (req, res) => {
     JobListing.create(req.body)
         .then(listing => res.json(listing))
         .catch(err => res.json(err));
 });
 
-router.get('/show/:id', (req, res) => {
-    const { id } = req.params;
+router.get('/show/:id', middleware.extractUserIdParams, (req, res) => {
     JobListing.findOne({
         where: {
-            id: id
+            id: req.params.id,
+            companyId: req.params.companyId
         }
     })
     .then(listing => res.json(listing))
@@ -42,23 +43,22 @@ router.get('/search', (req, res) => {
     .catch(err => res.json(err));
 })
 
-router.put('/edit/:id', passport.authenticate('company-jwt', {session: false}),  (req, res) => {
-    const { id } = req.params;
+router.post('/edit', [passport.authenticate('company-jwt', {session: false}), middleware.extractCompanyIdBody],  (req, res) => {
     JobListing.update(
-        req.body, 
+        req.body.deltas, 
         {
-            where: { id: id }
+            where: { id: req.body.id, companyId : req.body.companyId }
         }
     )
     .then(listing => res.json(listing))
     .catch(err => res.json(err));
 })
 
-router.delete('/delete/:id', passport.authenticate('company-jwt', {session: false}), (req, res) => {
-    const { id } = req.params;
+router.delete('/delete/:id', [passport.authenticate('company-jwt', {session: false}), middleware.extractCompanyIdParams], (req, res) => {
     JobListing.destroy({ 
         where: {
-            id : id
+            id : req.params.id,
+            companyId: req.params.companyId
         }
     })
     .then(listing => res.json('listing deleted'))

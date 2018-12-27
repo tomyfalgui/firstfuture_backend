@@ -2,16 +2,16 @@ const express = require('express');
 const {Company} = require('../database');
 var router = express.Router();
 const bcrypt = require('bcrypt');
-
+const middleware = require('../middleware/middlewareCompany.js');
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
-router.post('/edit', (req, res) => {
-    Company.update(req.body.deltas,{ where: { id : req.body.id }} )
+router.post('/edit', [passport.authenticate('company-jwt', {session: false}), middleware.extractCompanyIdBody], (req, res) => {
+    Company.update(req.body.deltas,{ where: { id : req.body.id, companyId : req.body.companyId }} )
         .then(company => res.json(company));
 })
 
-router.delete('/delete/', (req,res) => {
-    Company.destroy({ where: {id : req.query.id}} )
+router.delete('/delete/', [passport.authenticate('company-jwt', {session: false}), middleware.extractCompanyIdQuery], (req,res) => {
+    Company.destroy({ where: {id : req.query.id, companyId:req.query.companyId}} )
         .then(res.json(true));
 });
 

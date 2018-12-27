@@ -10,6 +10,9 @@ module.exports = (sequelize, type) => {
     salt: {
       type: Sequelize.STRING
     },
+    email: {
+      type: Sequelize.STRING
+    },
     companyName: {
       type: Sequelize.STRING
     },

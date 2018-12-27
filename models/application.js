@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize');
 module.exports = (sequelize, type) => {
     return sequelize.define('application', {
-        applicantID: {
+        userId: {
             type: Sequelize.INTEGER(11)
         },
-        jobListingID: {
+        jobListingId: {
             type: Sequelize.INTEGER(11)
         },
         status: {

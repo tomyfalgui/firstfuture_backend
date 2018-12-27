@@ -1,9 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = (sequelize, type) => {
     return sequelize.define('jobListing', {
-        companyId: {
-            type: Sequelize.INTEGER(11)
-        },
         position: {
             type: Sequelize.STRING
         },
@@ -34,11 +31,16 @@ module.exports = (sequelize, type) => {
         strands: {
             type: Sequelize.STRING,
             get() {
-                var results = this.getDataValue('strands').split(';');
-                for (let i in results) {
-                    results[i] = parseInt(results[i]);
+                try{
+                    var results = this.getDataValue('strands').split(';');
+                    for (let i in results) {
+                        results[i] = parseInt(results[i]);
+                    }
+                    return(results);
                 }
-                return (results);
+                catch(err){
+                    return(null);
+                }
             },
             set(val) {
                 this.setDataValue('strands', val.join(';'));

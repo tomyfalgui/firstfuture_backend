@@ -22,7 +22,7 @@ router.get('/show/:id', middleware.extractUserIdParams, (req, res) => {
 });
 
 //update application
-router.post('edit/:id', middleware.extractUserIdBody, (req, res) => {
+router.post('/edit', middleware.extractUserIdBody, (req, res) => {
     Application.update(
         req.body.deltas, 
         {
@@ -32,11 +32,11 @@ router.post('edit/:id', middleware.extractUserIdBody, (req, res) => {
 })
 
 //delete application
-router.delete('/delete/:id', middleware.extractUserIdParams, (req, res) => {
+router.delete('/delete', middleware.extractUserIdQuery, (req, res) => {
     Application.destroy({
         where: {
-            id: req.params.id,
-            userId : req.params.userId
+            id: req.query.id,
+            userId : req.query.userId
         }
     }).then(function(application) {
         res.json(application);

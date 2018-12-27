@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "dac76090-de29-4aac-98eb-7ba22ffda7d7",
-		"name": "PBED",
+		"_postman_id": "7ad9aaa6-399d-4b5b-b7a3-fff2921d01d1",
+		"name": "Firstfuture",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Edit Company Information",
+			"name": "Create Company",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -19,30 +19,207 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"id\": 9,\r\n\t\"deltas\" : {\r\n\t\"userName\":\"Google URecruiting\",\r\n\t\"password\":\"Bing is better\",\r\n\t\"companyName\":\"MS\"\r\n\t}\r\n}"
+					"raw": "{\r\n\t\"userName\":\"Google URecruiting\",\r\n\t\"password\":\"Bing is better\",\r\n\t\"companyName\":\"Google\",\r\n\t\"email\":\"google@gmail.com\",\r\n\t\"description\":\"Google is an ad company\",\r\n   \t\"street\":\"317 Katipunan\",\r\n    \"barangay\":\"Loyola Heights\",\r\n   \t\"city\":\"Quezon City\",\r\n    \"province\":\"NCR\"\r\n}"
 				},
 				"url": {
-					"raw": "localhost:3000/api/users/edit/skill",
+					"raw": "localhost:3000/api/auth/signup/company",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
 						"api",
-						"users",
-						"edit",
-						"skill"
+						"auth",
+						"signup",
+						"company"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Company",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTA0Mzc1fQ.Bjg5k2TdjuTEPNKYXJ9OhrXVOhvntJrvUyye5RWixhs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"email\" : \"google@gmail.com\",\r\n\t\"password\": \"Bing is better\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/api/auth/login/company",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"login",
+						"company"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Listing",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTA0Mzc1fQ.Bjg5k2TdjuTEPNKYXJ9OhrXVOhvntJrvUyye5RWixhs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"strands\": [\n        1,\n        2,\n        3\n    ],\n    \"position\": \"Web Developer Intern\",\n    \"description\": \"You will be working to develop an app to do app things\",\n    \"deadline\": \"2018-11-22T08:37:22.000Z\",\n    \"category\": 5,\n    \"viewCount\": 1,\n    \"street\": null,\n    \"barangay\": null,\n    \"city\": null,\n    \"province\": null,\n    \"createdAt\": \"2018-12-26T15:06:47.000Z\",\n    \"updatedAt\": \"2018-12-26T15:06:47.000Z\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/api/listings/new",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"listings",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show Listing",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/api/listings/show/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"listings",
+						"show",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Listing",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTA0Mzc1fQ.Bjg5k2TdjuTEPNKYXJ9OhrXVOhvntJrvUyye5RWixhs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":1,\n\t\"deltas\":{\n\t    \"strands\": [1,2],\n\t    \"position\": \"Front-End Web Developer Intern\",\n\t    \"description\": \"You will be working to develop an app to do app things\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/api/listings/edit",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"listings",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Listing",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTA0Mzc1fQ.Bjg5k2TdjuTEPNKYXJ9OhrXVOhvntJrvUyye5RWixhs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/api/listings/delete?id=1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"listings",
+						"delete"
 					],
 					"query": [
 						{
-							"key": "userID",
-							"value": "4",
-							"disabled": true
-						},
-						{
-							"key": "receiverID",
-							"value": "6",
-							"disabled": true
+							"key": "id",
+							"value": "1"
 						}
 					]
 				}
@@ -50,88 +227,75 @@
 			"response": []
 		},
 		{
-			"name": "Edit Skill",
+			"name": "Edit Company",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTA0Mzc1fQ.Bjg5k2TdjuTEPNKYXJ9OhrXVOhvntJrvUyye5RWixhs",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"id\": 4,\r\n\t\"deltas\" : {\r\n\t\"name\":\"cooking\"\r\n\t}\r\n}"
+					"raw": "{\n\t\"id\":1,\n\t\"deltas\":{\n\t\t\"companyName\":\"Bing\",\n\t    \"description\": \"Suprise it's actually bing\"\n\t}\n}"
 				},
 				"url": {
-					"raw": "localhost:3000/api/users/edit/skill",
+					"raw": "localhost:3000/api/companies/edit",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
 						"api",
-						"users",
-						"edit",
-						"skill"
-					],
-					"query": [
-						{
-							"key": "userID",
-							"value": "4",
-							"disabled": true
-						},
-						{
-							"key": "receiverID",
-							"value": "6",
-							"disabled": true
-						}
+						"companies",
+						"edit"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "New Skill",
+			"name": "Delete Company",
 			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTA0Mzc1fQ.Bjg5k2TdjuTEPNKYXJ9OhrXVOhvntJrvUyye5RWixhs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"name\":\"cooking\",\r\n\t\"userId\" : 2\r\n}"
+					"raw": ""
 				},
 				"url": {
-					"raw": "localhost:3000/api/users/new/skill",
+					"raw": "localhost:3000/api/companies/delete",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
 						"api",
-						"users",
-						"new",
-						"skill"
-					],
-					"query": [
-						{
-							"key": "userID",
-							"value": "4",
-							"disabled": true
-						},
-						{
-							"key": "receiverID",
-							"value": "6",
-							"disabled": true
-						}
+						"companies",
+						"delete"
 					]
 				}
 			},

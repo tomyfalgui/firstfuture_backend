@@ -4,7 +4,9 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
-const {User,ExtraCurricular,Skill,Language,WorkExperience} = require('../database');
+const {User,ExtraCurricular,Skill,Language,WorkExperience,Company} = require('../database');
+
+const saltRounds = 10;
 
 router.post('/login/user',  (req, res) => {
     passport.authenticate('local', {session: false}, (err, user, info) => {

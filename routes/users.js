@@ -2,9 +2,10 @@ const express = require('express');
 var router = express.Router();
 const dotenv = require('dotenv').config();
 const {User,ExtraCurricular,Skill,Language,WorkExperience,ProfilePicture} = require('../database');
-const middleware = require('../middleware/middlewareUsers.js');
+const passport = require('passport');
+const middleware = require('../middleware/middlewareUser.js');
 
-router.post('/new/profilePicture', middleware.extractUserIdBody, (req, res) => {
+router.post('/new/profilePicture', middleware.extractUserIdBody, (req, res, next) => {
     ProfilePicture.create(req.body).then(()=>
         res.json(true)
     );

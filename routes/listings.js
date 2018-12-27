@@ -15,11 +15,10 @@ router.post('/new', [passport.authenticate('company-jwt', {session: false}), mid
         .catch(err => res.json(err));
 });
 
-router.get('/show/:id', middleware.extractUserIdParams, (req, res) => {
+router.get('/show/:id', (req, res) => {
     JobListing.findOne({
         where: {
-            id: req.params.id,
-            companyId: req.params.companyId
+            id: req.params.id
         }
     })
     .then(listing => res.json(listing))
@@ -45,20 +44,17 @@ router.get('/search', (req, res) => {
 
 router.post('/edit', [passport.authenticate('company-jwt', {session: false}), middleware.extractCompanyIdBody],  (req, res) => {
     JobListing.update(
-        req.body.deltas, 
-        {
-            where: { id: req.body.id, companyId : req.body.companyId }
-        }
+        req.body.deltas, {where: { id: req.body.id, companyId : req.body.companyId }}
     )
     .then(listing => res.json(listing))
     .catch(err => res.json(err));
 })
 
-router.delete('/delete/:id', [passport.authenticate('company-jwt', {session: false}), middleware.extractCompanyIdParams], (req, res) => {
+router.delete('/delete', [passport.authenticate('company-jwt', {session: false}), middleware.extractCompanyIdQuery], (req, res) => {
     JobListing.destroy({ 
         where: {
-            id : req.params.id,
-            companyId: req.params.companyId
+            id : req.query.id,
+            companyId: req.query.companyId
         }
     })
     .then(listing => res.json('listing deleted'))

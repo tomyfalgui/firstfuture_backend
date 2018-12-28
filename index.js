@@ -7,6 +7,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const passport = require("passport");
 const passportJWT = require("passport-jwt");
+const fileUpload = require('express-fileupload');
 require('./passport.js');
 
 // Router Imports
@@ -22,11 +23,13 @@ var app = express();
 // Global App Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
+app.use(bodyParser.raw({ inflate: true, limit: '100kb'}));
+app.use(fileUpload());
 app.use(cors());
 
 // Routes
 app.use('/api/auth', auth);
-app.use('/api/users', [passport.authenticate('jwt', { session: false })], users);
+app.use('/api/users', users);
 app.use('/api/companies', companies, passport.authenticate('company-jwt', { session: false }), companies);
 app.use('/api/bookmarks', [passport.authenticate('jwt', { session: false })], bookmarks);
 app.use('/api/apply', [passport.authenticate('jwt', { session: false })], applications);

@@ -1,5 +1,5 @@
 const express = require('express');
-const {Company} = require('../database');
+const {Company,JobListing} = require('../database');
 var router = express.Router();
 const bcrypt = require('bcrypt');
 const middleware = require('../middleware/middlewareCompany.js');
@@ -14,6 +14,27 @@ router.post('/edit', [passport.authenticate('company-jwt', {session: false}), mi
 router.delete('/delete', [passport.authenticate('company-jwt', {session: false}), middleware.extractCompanyIdQuery], (req,res) => {
     Company.destroy({ where: {id : req.query.companyId}} )
         .then(res.json(true));
+});
+
+router.get('/show/:id',(req,res,next)=>{
+    Company.findOne({id:req.params.id}).then((company)=>{
+        delete company.password;
+        delete company.salt;
+        res.json(company);
+    })
+});
+
+router.get('/show-all/:id',(req,res,next)=>{
+    Company.findOne({where:{id:req.params.id}}).then((company)=>{
+        delete company.password;
+        delete company.salt;
+        JobListing.findAll({where:{id:req.params.id}}).then((listings)=>{
+            res.json({
+                "company":company,
+                "listings":listings
+            });
+        })
+    })
 });
 
 module.exports = router;

@@ -56,6 +56,7 @@ router.post('/signup/user', (req, res) => {
         }
     })
     .then(() => res.json(true))
+    .catch((err) => res.json(err));
 });
 
 router.post('/signup/company', (req, res) => {
@@ -63,7 +64,8 @@ router.post('/signup/company', (req, res) => {
     req.body.salt = bcrypt.genSaltSync(saltRounds);
     req.body.password = bcrypt.hashSync(plaintext,req.body.salt);
     Company.create(req.body)
-        .then(company => res.json(company));
+        .then(company => res.json(company))
+        .catch((err) => res.json(err));
 });
 
 router.post('/login/company',  (req, res) => {

@@ -42,7 +42,7 @@ Language.belongsTo(User, { onDelete: 'CASCADE' });
 WorkExperience.belongsTo(User, { onDelete: 'CASCADE' });
 ExtraCurricular.belongsTo(User, { onDelete: 'CASCADE' });
 Bookmark.belongsTo(User, { onDelete: 'CASCADE' });
-ProfilePicture.belongsTo(User, { onDelete: 'CASCADE' });
+User.hasOne(ProfilePicture, { onDelete: 'CASCADE' });
 JobListing.belongsTo(Company, { onDelete: 'CASCADE' });
 Bookmark.belongsTo(JobListing, { onDelete: 'CASCADE' });
 Bookmark.belongsTo(User, { onDelete: 'CASCADE' });
@@ -50,6 +50,6 @@ jobListingSkill.belongsTo(JobListing, { onDelete: 'CASCADE' });
 Application.belongsTo(User, { onDelete: 'CASCADE' });
 Application.belongsTo(JobListing, { onDelete: 'CASCADE' });
 
-// sequelize.sync({ alter: true });
+sequelize.sync({ alter: true });
 
 module.exports = { User, Company, ExtraCurricular, Skill, Language, WorkExperience, JobListing, jobListingSkill, Bookmark, ProfilePicture, Application };

@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "cc1d7ca7-c7b7-4855-bf40-5be6aef7e8fd",
-		"name": "Firstfuture",
+		"_postman_id": "10e4b1f0-b731-4d74-812e-9be635d899a6",
+		"name": "Firstfuture copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -79,6 +79,36 @@
 								"companies",
 								"delete"
 							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Company",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Company Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
 						}
 					},
 					"response": []
@@ -164,7 +194,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:3000/api/listings/search?q=developer",
+							"raw": "localhost:3000/api/listings/search/?/developer",
 							"host": [
 								"localhost"
 							],
@@ -173,8 +203,13 @@
 								"api",
 								"listings",
 								"search",
-								"?",
-								"developer"
+								""
+							],
+							"query": [
+								{
+									"key": "/developer",
+									"value": null
+								}
 							]
 						}
 					},
@@ -193,7 +228,7 @@
 								}
 							]
 						},
-						"method": "PUT",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -460,7 +495,7 @@
 							"raw": "{\n\t\"jobListingId\": 4,\n\t\"userId\": 2\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/bookmarks/new/",
+							"raw": "http://localhost:3000/api/bookmarks/new/?",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -616,7 +651,7 @@
 								}
 							]
 						},
-						"method": "PUT",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -677,6 +712,493 @@
 								"apply",
 								"delete",
 								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "New Skill",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTIyNjIwfQ.yttvizZb9vBnbmIS2XH4Yv5zRc97e9aVSXgqczcbvO8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Name\",\n\t\"description\": \"description\",\n\t\"rating\":5\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/new/skill",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"new",
+								"skill"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Work Experience",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTIyNjIwfQ.yttvizZb9vBnbmIS2XH4Yv5zRc97e9aVSXgqczcbvO8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \t\t\"company\":\"PoGo\",\r\n    \t\t\"typeOfWork\":\"Catch\",\r\n    \t\t\"hours\":1000\r\n    \t}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/new/workExperience",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"new",
+								"workExperience"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Language",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTIyNjIwfQ.yttvizZb9vBnbmIS2XH4Yv5zRc97e9aVSXgqczcbvO8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \t\t\t\"name\":\"new lang\",\r\n    \t\t\t\"speakingRating\":1,\r\n    \t\t\t\"writingRating\":9,\r\n    \t\t\t\"readingRating\":7\r\n    \t\t}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/new/language",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"new",
+								"language"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Extra Curricular",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTIyNjIwfQ.yttvizZb9vBnbmIS2XH4Yv5zRc97e9aVSXgqczcbvO8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \t\t\"orgName\":\"MISA\",\r\n    \t\t\"yearsActive\":10,\r\n    \t\t\"positionsHeld\":[\"Secretary General\"]\r\n    \t}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/new/extraCurricular",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"new",
+								"extraCurricular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add/Edit Profile Picture",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ2MDA3MjAzfQ.0XxkQGrPNuAnQGyGLTchsGpbm4zxJnbcCKwKeml0nho",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/new/profilePicture",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"new",
+								"profilePicture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Skill",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTY4NjU4fQ.b9v0lRt5ArFDtACQPRutTCMVRW6EqCBx0-Uej81w9cE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":3,\n\t\"deltas\":{\n\t\t\"name\": \"Node.js\",\n\t\t\"description\": \"Can make web services\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/edit/skill",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"edit",
+								"skill"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Work Experience",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTQ1OTkzNDcyfQ.E1Zs2EiphDttCGGvkm0pNE-LZZkW6ueZCmXFk0iVEO0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":4,\n\t\"deltas\":{\n\t\t\"company\": \"Atlassian\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/edit/workExperience",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"edit",
+								"workExperience"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Language",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTQ1OTkzNDcyfQ.E1Zs2EiphDttCGGvkm0pNE-LZZkW6ueZCmXFk0iVEO0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":4,\n\t\"deltas\":{\n\t\t\"name\": \"Navajo\",\n\t\t\"speakingRating\": 5\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/edit/language",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"edit",
+								"language"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit ExtraCurricular",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTQ1OTkzNDcyfQ.E1Zs2EiphDttCGGvkm0pNE-LZZkW6ueZCmXFk0iVEO0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":4,\n\t\"deltas\":{\n\t\t\"orgName\": \"CompSAT\",\n\t\t\"yearsActive\": 5\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/edit/extraCurricular",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"edit",
+								"extraCurricular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTY4NjU4fQ.b9v0lRt5ArFDtACQPRutTCMVRW6EqCBx0-Uej81w9cE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Profile Picture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/show/profilePicture/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"show",
+								"profilePicture",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/show/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"show",
+								"1"
 							]
 						}
 					},

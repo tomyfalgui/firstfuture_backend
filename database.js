@@ -37,18 +37,18 @@ const jobListingSkill = jobListingSkillModel(sequelize, Sequelize);
 const ProfilePicture = profilePictureModel(sequelize, Sequelize);
 const Application = applicationModel(sequelize, Sequelize);
 
-Skill.belongsTo(User, {onDelete: 'CASCADE'});
-Language.belongsTo(User, {onDelete: 'CASCADE'});
-WorkExperience.belongsTo(User, {onDelete: 'CASCADE'});
-ExtraCurricular.belongsTo(User, {onDelete: 'CASCADE'});
-Bookmark.belongsTo(User, {onDelete: 'CASCADE'});
-ProfilePicture.belongsTo(User, {onDelete: 'CASCADE'});
-JobListing.belongsTo(Company, {onDelete: 'CASCADE'});
-Bookmark.belongsTo(JobListing, {onDelete: 'CASCADE'});
-Bookmark.belongsTo(User, {onDelete: 'CASCADE'});
-jobListingSkill.belongsTo(JobListing, {onDelete: 'CASCADE'});
-Application.belongsTo(User, {onDelete: 'CASCADE'});
-Application.belongsTo(JobListing, {onDelete: 'CASCADE'});
+Skill.belongsTo(User, { onDelete: 'CASCADE' });
+Language.belongsTo(User, { onDelete: 'CASCADE' });
+WorkExperience.belongsTo(User, { onDelete: 'CASCADE' });
+ExtraCurricular.belongsTo(User, { onDelete: 'CASCADE' });
+Bookmark.belongsTo(User, { onDelete: 'CASCADE' });
+ProfilePicture.belongsTo(User, { onDelete: 'CASCADE' });
+JobListing.belongsTo(Company, { onDelete: 'CASCADE' });
+Bookmark.belongsTo(JobListing, { onDelete: 'CASCADE' });
+Bookmark.belongsTo(User, { onDelete: 'CASCADE' });
+jobListingSkill.belongsTo(JobListing, { onDelete: 'CASCADE' });
+Application.belongsTo(User, { onDelete: 'CASCADE' });
+Application.belongsTo(JobListing, { onDelete: 'CASCADE' });
 
 // sequelize.sync({ alter: true });
 

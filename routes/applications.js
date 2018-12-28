@@ -14,7 +14,7 @@ router.get('/show/:id', middleware.extractUserIdParams, (req, res) => {
     Application.findOne({
         where: {
             id: req.params.id,
-            userId : req.params.userId
+            userId: req.params.userId
         }
     }).then(function(application) {
         res.json(application);
@@ -24,19 +24,18 @@ router.get('/show/:id', middleware.extractUserIdParams, (req, res) => {
 //update application
 router.post('/edit', middleware.extractUserIdBody, (req, res) => {
     Application.update(
-        req.body.deltas, 
-        {
+        req.body.deltas, {
             where: { id: req.body.id, userId: req.body.userId }
         }
     ).then(application => res.json(application));
 })
 
 //delete application
-router.delete('/delete', middleware.extractUserIdQuery, (req, res) => {
+router.delete('/delete/:id', middleware.extractUserIdQuery, (req, res) => {
     Application.destroy({
         where: {
             id: req.query.id,
-            userId : req.query.userId
+            userId: req.query.userId
         }
     }).then(function(application) {
         res.json(application);

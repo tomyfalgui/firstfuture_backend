@@ -50,6 +50,6 @@ jobListingSkill.belongsTo(JobListing, {onDelete: 'CASCADE'});
 Application.belongsTo(User, {onDelete: 'CASCADE'});
 Application.belongsTo(JobListing, {onDelete: 'CASCADE'});
 
-sequelize.sync({ alter: true });
+// sequelize.sync({ alter: true });
 
 module.exports = { User, Company, ExtraCurricular, Skill, Language, WorkExperience, JobListing, jobListingSkill, Bookmark, ProfilePicture, Application };

@@ -11,3 +11,10 @@ English and Filipino skills are assumed per user, but other languages are not an
 STRING is VARCHAR(255) by default in Sequelize
 Hashing is done on the server side to reduce transfer volumes
 Honors can be formatted as needed depending on formatting
+
+
+- unique constraints db for email
+- search improvements
+- link jobListingSkill to jobLIsting
+- uniform responses
+- error handling

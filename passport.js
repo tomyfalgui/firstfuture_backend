@@ -24,42 +24,34 @@ passport.use('local', new LocalStrategy(localAuthFields,
                 return callback(null, false, { message: 'Incorrect email or password.' });
             }
             return validatePassword(candidatePassword, user, callback);
-        }).catch(err => callback(err));
+        }).catch(error => callback(error));
     }
 ));
 
 passport.use('company-local', new LocalStrategy(localAuthFields,
     function (candidateEmail, candidatePassword, callback) {
-        return Company.findOne({ where: { email: candidateEmail } }).then(user => {
-            if (!user) {
+        return Company.findOne({ where: { email: candidateEmail } }).then(company => {
+            if (!company) {
                 return callback(null, false, { message: 'Incorrect email or password.' });
             }
-            return validatePassword(candidatePassword, user, callback);
-        }).catch(err => callback(err));
+            return validatePassword(candidatePassword, company, callback);
+        }).catch(error => callback(error));
     }
 ));
 
 passport.use('jwt', new JWTStrategy(jwtSettings,
     function (jwtPayload, callback) {
         return User.findById(jwtPayload.id)
-            .then(user => {
-                return callback(null, user);
-            })
-            .catch(err => {
-                return callback(err);
-            });
+            .then(user => {return callback(null, user);})
+            .catch(error => {return callback(error)});
     }
 ));
 
 passport.use('company-jwt', new JWTStrategy(jwtSettings,
     function (jwtPayload, callback) {
         return Company.findById(jwtPayload.id)
-            .then(user => {
-                return callback(null, user);
-            })
-            .catch(err => {
-                return callback(err);
-            });
+            .then(company => {return callback(null, company)})
+            .catch(error => {return callback(error);});
     }));
 
 function validatePassword(candidate, user, callback) {

@@ -8,8 +8,12 @@ const passportJWT = require("passport-jwt");
 const middleware = require('../middleware/middlewareCompany.js');
 require('../passport.js');
 
+router.post('*', passport.authenticate('company-jwt', {session: false}));
+router.post('*', middleware.extractCompanyIdBody);
+router.delete('*', passport.authenticate('company-jwt', {session: false}));
+router.delete('*', middleware.extractCompanyIdQuery);
 
-router.post('/new', [passport.authenticate('company-jwt', {session: false}), middleware.extractCompanyIdBody], (req, res) => {
+router.post('/new', (req, res) => {
     JobListing.create(req.body)
         .then(listing => res.json(listing))
         .catch(err => res.json(err));
@@ -45,7 +49,7 @@ router.get('/search', (req, res) => {
     .catch(err => res.json(err));
 })
 
-router.post('/edit', [passport.authenticate('company-jwt', {session: false}), middleware.extractCompanyIdBody],  (req, res) => {
+router.post('/edit',  (req, res) => {
     JobListing.update(
         req.body.deltas, {where: { id: req.body.id, companyId : req.body.companyId }}
     )
@@ -53,7 +57,7 @@ router.post('/edit', [passport.authenticate('company-jwt', {session: false}), mi
     .catch(err => res.json(err));
 })
 
-router.delete('/delete', [passport.authenticate('company-jwt', {session: false}), middleware.extractCompanyIdQuery], (req, res) => {
+router.delete('/delete',  (req, res) => {
     JobListing.destroy({ 
         where: {
             id : req.query.id,

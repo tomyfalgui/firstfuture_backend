@@ -2,16 +2,16 @@ const express = require('express');
 const {Company,JobListing} = require('../database');
 var router = express.Router();
 const bcrypt = require('bcrypt');
-const {extractCompanyId} = require('../middleware/middlewareCompany.js');
+const {extractUserId} = require('../middleware/middlewareUser.js');
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 const passport = require('passport');
 
-router.post('/edit', [passport.authenticate('company-jwt', {session: false}), extractCompanyId], (req, res) => {
+router.post('/edit', [passport.authenticate('company-jwt', {session: false}), extractUserId], (req, res) => {
     Company.update(req.body.deltas,{ where: { id : req.companyId }} )
         .then(company => res.json(company));
 })
 
-router.delete('/delete', [passport.authenticate('company-jwt', {session: false}), extractCompanyId], (req,res) => {
+router.delete('/delete', [passport.authenticate('company-jwt', {session: false}), extractUserId], (req,res) => {
     Company.destroy({ where: {id : req.companyId}} )
         .then(res.json(true));
 });

@@ -5,15 +5,15 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const passport = require('passport');
 const passportJWT = require("passport-jwt");
-const {extractCompanyId,companyIdToBody} = require('../middleware/middlewareCompany.js');
+const {extractUserId,userIdToBody} = require('../middleware/middlewareUser.js');
 require('../passport.js');
 
 router.post('*', passport.authenticate('company-jwt', {session: false}));
-router.post('*', extractCompanyId);
+router.post('*', extractUserId);
 router.delete('*', passport.authenticate('company-jwt', {session: false}));
-router.delete('*', extractCompanyId);
+router.delete('*', extractUserId);
 
-router.post('/new', companyIdToBody, (req, res) => {
+router.post('/new', userIdToBody, (req, res) => {
     JobListing.create(req.body)
         .then(listing => res.json(listing))
         .catch(err => res.json(err));

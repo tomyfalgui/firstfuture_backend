@@ -23,7 +23,6 @@ router.delete('/delete', (req, res) => {
 router.get('/show/:id',(req,res,next)=>{
     User.findOne({where:{id:req.params.id}}).then((user)=>{
         delete user.password;
-        delete user.salt;
         Skill.findAll({where:{userId:req.params.id}}).then((skills)=>{
             WorkExperience.findAll({where:{userId:req.params.id}}).then((workexperiences)=>{
                 Language.findAll({where:{userId:req.params.id}}).then((languages)=>{

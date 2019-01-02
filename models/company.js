@@ -7,9 +7,6 @@ module.exports = (sequelize, type) => {
     password: {
       type: Sequelize.STRING
     },
-    salt: {
-      type: Sequelize.STRING
-    },
     email: {
       type: Sequelize.STRING,
       validate: {

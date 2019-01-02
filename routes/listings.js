@@ -5,33 +5,45 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const passport = require('passport');
 const passportJWT = require("passport-jwt");
-const middleware = require('../middleware/middlewareCompany.js');
+const {extractCompanyId,companyIdToBody} = require('../middleware/middlewareCompany.js');
 require('../passport.js');
 
 router.post('*', passport.authenticate('company-jwt', {session: false}));
-router.post('*', middleware.extractCompanyIdBody);
+router.post('*', extractCompanyId);
 router.delete('*', passport.authenticate('company-jwt', {session: false}));
-router.delete('*', middleware.extractCompanyIdQuery);
+router.delete('*', extractCompanyId);
 
-router.post('/new', (req, res) => {
+router.post('/new', companyIdToBody, (req, res) => {
     JobListing.create(req.body)
         .then(listing => res.json(listing))
         .catch(err => res.json(err));
 });
 
-router.get('/show/:id', (req, res) => {
-    JobListing.findOne({
+router.post('/edit',  (req, res) => {
+    JobListing.update(req.body.deltas, {where: { id: req.body.id, companyId : req.companyId }})
+    .then(listing => res.json(listing))
+    .catch(err => res.json(err));
+})
+
+router.delete('/delete',  (req, res) => {
+    JobListing.destroy({ 
         where: {
-            id: req.params.id
+            id : req.query.id,
+            companyId: req.companyId
         }
     })
+    .then(listing => res.json('listing deleted'))
+    .catch(err => res.json(err));
+});
+
+router.get('/show/:id', (req, res) => {
+    JobListing.findOne({where: {id: req.query.id}})
     .then(listing => res.json(listing))
     .catch(err => res.json(err));
 });
 
 router.get('/search', (req, res) => { 
     let { q } = req.query;
-    
     JobListing.findAll({
         where: {
             [Op.or]: [
@@ -46,25 +58,6 @@ router.get('/search', (req, res) => {
         }
     })
     .then(listing => res.json(listing))
-    .catch(err => res.json(err));
-})
-
-router.post('/edit',  (req, res) => {
-    JobListing.update(
-        req.body.deltas, {where: { id: req.body.id, companyId : req.body.companyId }}
-    )
-    .then(listing => res.json(listing))
-    .catch(err => res.json(err));
-})
-
-router.delete('/delete',  (req, res) => {
-    JobListing.destroy({ 
-        where: {
-            id : req.query.id,
-            companyId: req.query.companyId
-        }
-    })
-    .then(listing => res.json('listing deleted'))
     .catch(err => res.json(err));
 });
 

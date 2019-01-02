@@ -20,9 +20,6 @@ module.exports = (sequelize, type) => {
     password: {
       type: Sequelize.STRING
     },
-    salt: {
-      type: Sequelize.STRING
-    },
     // Contact Information
     email: {
       type: Sequelize.STRING,

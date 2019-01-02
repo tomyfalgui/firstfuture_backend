@@ -17,6 +17,7 @@ var bookmarks = require('./routes/bookmarks');
 var applications = require('./routes/applications');
 var listings = require('./routes/listings');
 var auth = require('./routes/auth');
+var feedUser = require('./routes/feedUser');
 
 var app = express();
 
@@ -31,9 +32,10 @@ app.use(cors());
 app.use('/api/auth', auth);
 app.use('/api/users', users);
 app.use('/api/companies', companies, passport.authenticate('company-jwt', { session: false }), companies);
-app.use('/api/bookmarks', [passport.authenticate('jwt', { session: false })], bookmarks);
-app.use('/api/apply', [passport.authenticate('jwt', { session: false })], applications);
+app.use('/api/bookmarks', passport.authenticate('jwt', { session: false }), bookmarks);
+app.use('/api/apply', passport.authenticate('jwt', { session: false }), applications);
 app.use('/api/listings', listings);
+app.use('/api/feed',  passport.authenticate('jwt', { session: false }), feedUser);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

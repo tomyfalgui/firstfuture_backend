@@ -5,7 +5,7 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const passport = require('passport');
 const passportJWT = require("passport-jwt");
-const {extractUserId,userIdToBody} = require('../middleware/middlewareUser.js');
+const {extractUserId,userIdToBody} = require('../middleware/id.js');
 require('../passport.js');
 
 router.post('*', passport.authenticate('company-jwt', {session: false}));

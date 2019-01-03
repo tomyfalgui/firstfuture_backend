@@ -2,7 +2,7 @@ const express = require('express');
 const {Company,JobListing} = require('../database');
 var router = express.Router();
 const bcrypt = require('bcrypt');
-const {extractUserId} = require('../middleware/middlewareUser.js');
+const {extractUserId} = require('../middleware/id.js');
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 const passport = require('passport');
 

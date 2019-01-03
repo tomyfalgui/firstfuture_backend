@@ -3,7 +3,7 @@ var router = express.Router();
 const dotenv = require('dotenv').config();
 const {ProfilePicture } = require('../database');
 const passport = require('passport');
-const {extractUserId} = require('../middleware/middlewareUser.js');
+const {extractUserId} = require('../middleware/id.js');
 
 router.post('*', passport.authenticate('jwt', { session: false }));
 router.post('*', extractUserId);

@@ -1,7 +1,7 @@
 const express = require('express');
 const { Application } = require('../database');
 var router = express.Router();
-const { extractUserId, userIdToBody } = require('../middleware/middlewareUser.js');
+const { extractUserId, userIdToBody } = require('../middleware/id.js');
 
 router.use(extractUserId);
 

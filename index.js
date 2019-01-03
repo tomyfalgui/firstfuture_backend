@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const passport = require("passport");
 const passportJWT = require("passport-jwt");
 const fileUpload = require('express-fileupload');
-const {extractUserId} = require('./middleware/middlewareUser')
+const {extractUserId} = require('./middleware/id')
 require('./passport.js');
 
 // Router Imports
@@ -52,3 +52,5 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log("Application starting");
 });
+
+module.exports = app

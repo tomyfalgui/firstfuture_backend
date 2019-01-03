@@ -23,6 +23,7 @@ const sequelize = new Sequelize(process.env.DB_URL, {
         acquire: 30000,
         idle: 10000
     },
+    logging: false
 })
 
 const User = userModel(sequelize, Sequelize);
@@ -50,6 +51,6 @@ jobListingSkill.belongsTo(JobListing, { onDelete: 'CASCADE' });
 Application.belongsTo(User, { onDelete: 'CASCADE' });
 Application.belongsTo(JobListing, { onDelete: 'CASCADE' });
 
-sequelize.sync({ alter: true });
+sequelize.sync();
 
-module.exports = { User, Company, ExtraCurricular, Skill, Language, WorkExperience, JobListing, jobListingSkill, Bookmark, ProfilePicture, Application };
+module.exports = {User, Company, ExtraCurricular, Skill, Language, WorkExperience, JobListing, jobListingSkill, Bookmark, ProfilePicture, Application, sequelize};

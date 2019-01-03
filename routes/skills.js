@@ -1,7 +1,7 @@
 const express = require('express');
 var router = express.Router();
 const {Skill} = require('../database');
-const {userIdToBody} = require('../middleware/middlewareUser');
+const {userIdToBody} = require('../middleware/id');
 
 router.post('/new', userIdToBody, (req, res) => {
     Skill.create(req.body).then(() =>

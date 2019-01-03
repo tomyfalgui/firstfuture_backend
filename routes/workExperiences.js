@@ -1,7 +1,7 @@
 const express = require('express');
 var router = express.Router();
 const {WorkExperience} = require('../database');
-const {userIdToBody} = require('../middleware/middlewareUser');
+const {userIdToBody} = require('../middleware/id');
 
 router.post('/new', userIdToBody, (req, res) => {
     WorkExperience.create(req.body).then(() =>

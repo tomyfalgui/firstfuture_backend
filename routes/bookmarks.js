@@ -3,7 +3,7 @@ const {Bookmark} = require('../database');
 var router = express.Router();
 const passport = require('passport');
 const passportJWT = require("passport-jwt");
-const {extractUserId} = require('../middleware/middlewareUser.js');
+const {extractUserId} = require('../middleware/id.js');
 
 router.use(extractUserId);
 

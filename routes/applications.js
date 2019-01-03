@@ -16,7 +16,7 @@ router.get('/show/:id', (req, res) => {
             id: req.params.id,
             userId: req.userId
         }
-    }).then(function (application) {
+    }).then(function(application) {
         res.json(application);
     });
 });
@@ -31,7 +31,7 @@ router.delete('/delete/:id', (req, res) => {
             id: req.query.id,
             userId: req.userId
         }
-    }).then(function (application) {
+    }).then(function(application) {
         res.json(application);
     });
 });

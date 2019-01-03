@@ -8,12 +8,14 @@ const passport = require('passport');
 
 router.post('/edit', [passport.authenticate('company-jwt', { session: false }), extractUserId], (req, res) => {
     Company.update(req.body.deltas, { where: { id: req.companyId } })
-        .then(company => res.json(company));
+        .then(company => res.json(company))
+        .catch(err => res.json(err));
 })
 
 router.delete('/delete', [passport.authenticate('company-jwt', { session: false }), extractUserId], (req, res) => {
     Company.destroy({ where: { id: req.companyId } })
-        .then(res.json(company));
+        .then(res.json(company))
+        .catch(err => res.json(err));
 });
 
 router.get('/show/:id', (req, res, next) => {
@@ -21,7 +23,7 @@ router.get('/show/:id', (req, res, next) => {
         delete company.password;
         delete company.salt;
         res.json(company);
-    })
+    }).catch(err => res.json(err));
 });
 
 router.get('/show-all/:id', (req, res, next) => {
@@ -32,7 +34,7 @@ router.get('/show-all/:id', (req, res, next) => {
                 "company": company,
                 "listings": listings
             });
-        })
+        }).catch(err => res.json(err));
     })
 });
 

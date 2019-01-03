@@ -10,12 +10,14 @@ router.use(extractUserId);
 router.post('/new', (req, res) => {
     req.body.userId = req.userId;
     Bookmark.create(req.body)
-        .then(bookmark => res.json(bookmark));
+        .then(bookmark => res.json(bookmark))
+        .catch(err => res.json(err));
 });
 
 router.delete('/delete/:id', (req, res) => {
     Bookmark.destroy({ where: { id: req.query.id, userId: req.userId } })
-        .then(res.json(bookmark));
+        .then(res.json(bookmark))
+        .catch(err => res.json(err));
 });
 
 module.exports = router;

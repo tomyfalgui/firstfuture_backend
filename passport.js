@@ -13,6 +13,11 @@ const jwtSettings = {
   secretOrKey: process.env.JWTSecret,
 };
 
+const companyJwtSettings = {
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.CompanyJWTSecret,
+};
+
 const localAuthFields = {
   usernameField: 'email',
   passwordField: 'password',
@@ -52,7 +57,7 @@ passport.use('jwt', new JWTStrategy(jwtSettings,
     }
 ));
 
-passport.use('company-jwt', new JWTStrategy(jwtSettings,
+passport.use('company-jwt', new JWTStrategy(companyJwtSettings,
     function(jwtPayload, cb) {
       return Company.findById(jwtPayload.id)
           .then((company) => {

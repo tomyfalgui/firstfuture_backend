@@ -30,7 +30,7 @@ const app = express();
 // Global App Middleware
 app.use(helmet());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.raw({inflate: true, limit: '100kb'}));
 app.use(fileUpload());
 app.use(cors());

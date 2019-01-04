@@ -3,50 +3,58 @@ module.exports = (sequelize, type) => {
   return sequelize.define('company', {
     userName: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     password: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+    },
+    profilePicture: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    coverPicture: {
+      type: Sequelize.STRING,
+      allowNull: true,
     },
     email: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
-        isEmail:true
+        isEmail: true,
       },
       unique: {
-          args: true,
-          msg: 'Email address already in use!'
-      }
+        args: true,
+        msg: 'Email address already in use!',
+      },
     },
     companyName: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     contactNumber: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     description: {
       type: Sequelize.TEXT,
-      allowNull: true
+      allowNull: true,
     },
     street: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     barangay: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     city: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     province: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
   });
-}
+};

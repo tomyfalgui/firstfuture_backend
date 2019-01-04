@@ -3,14 +3,14 @@ module.exports = (sequelize, type) => {
   return sequelize.define('extraCurricular', {
     orgName: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     yearsActive: {
       type: Sequelize.INTEGER(2),
-      allowNull: false
+      allowNull: false,
     },
     positionsHeld: {
-      type: Sequelize.JSON
+      type: Sequelize.JSON,
     },
   });
-}
+};

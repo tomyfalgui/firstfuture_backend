@@ -12,6 +12,7 @@ const jobListingModel = require('./models/jobListing');
 const jobListingSkillModel = require('./models/jobListingSkill');
 const profilePictureModel = require('./models/profilePicture');
 const applicationModel = require('./models/application');
+const companyPictureModel = require('./models/companyPicture');
 
 const sequelize = new Sequelize(process.env.DB_URL, {
     host: process.env.DB_HOST,
@@ -35,8 +36,10 @@ const WorkExperience = workExperienceModel(sequelize, Sequelize);
 const Bookmark = bookmarkModel(sequelize, Sequelize);
 const JobListing = jobListingModel(sequelize, Sequelize);
 const jobListingSkill = jobListingSkillModel(sequelize, Sequelize);
-const ProfilePicture = profilePictureModel(sequelize, Sequelize);
 const Application = applicationModel(sequelize, Sequelize);
+// Temp, remove on working directory
+const ProfilePicture = profilePictureModel(sequelize, Sequelize);
+const CompanyPicture = companyPictureModel(sequelize, Sequelize);
 
 
 User.hasMany(Skill,{ onDelete: 'CASCADE' });
@@ -47,10 +50,11 @@ User.hasMany(Bookmark,{ onDelete: 'CASCADE' });
 User.hasMany(Application, { onDelete: 'CASCADE' });
 User.hasOne(ProfilePicture, { onDelete: 'CASCADE' });
 Company.hasMany(JobListing,{ onDelete: 'CASCADE' });
+Company.hasMany(CompanyPicture, {onDelete:'CASCADE'});
 JobListing.hasMany(Bookmark, { onDelete: 'CASCADE' });
 JobListing.hasMany(jobListingSkill, { onDelete: 'CASCADE' });
 JobListing.hasMany(Application, { onDelete: 'CASCADE' });
 
 sequelize.sync({force:true});
 
-module.exports = {User, Company, ExtraCurricular, Skill, Language, WorkExperience, JobListing, jobListingSkill, Bookmark, ProfilePicture, Application, sequelize};
+module.exports = {User, Company, ExtraCurricular, Skill, Language, WorkExperience, JobListing, jobListingSkill, Bookmark, ProfilePicture, Application, CompanyPicture, sequelize};

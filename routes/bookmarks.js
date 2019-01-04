@@ -1,23 +1,24 @@
 const express = require('express');
-const { Bookmark } = require('../database');
-var router = express.Router();
-const passport = require('passport');
-const passportJWT = require("passport-jwt");
-const { extractUserId } = require('../middleware/id.js');
+// eslint-disable-next-line new-cap
+const router = express.Router();
+const {Bookmark} = require('../database');
+const {extractUserId, userIdToBody} = require('../middleware/id.js');
 
 router.use(extractUserId);
 
-router.post('/new', (req, res) => {
-    req.body.userId = req.userId;
-    Bookmark.create(req.body)
-        .then(bookmark => res.json(bookmark))
-        .catch(err => res.json(err));
+router.post('/new', userIdToBody, (req, res) => {
+  Bookmark.create(req.body)
+      .then((bookmark) => res.json(bookmark))
+      .catch((err) => res.json(err));
 });
 
 router.delete('/delete/:id', (req, res) => {
-    Bookmark.destroy({ where: { id: req.query.id, userId: req.userId } })
-        .then(res.json(bookmark))
-        .catch(err => res.json(err));
+  Bookmark.destroy({
+    where: {
+      id: req.params.id,
+      userId: req.userId}})
+      .then((bookmark) => res.json(bookmark))
+      .catch((err) => res.json(err));
 });
 
 module.exports = router;

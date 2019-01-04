@@ -3,19 +3,19 @@ module.exports = (sequelize, type) => {
   return sequelize.define('language', {
     name: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     speakingRating: {
       type: Sequelize.INTEGER(2),
-      allowNull: false
+      allowNull: false,
     },
     writingRating: {
       type: Sequelize.INTEGER(2),
-      allowNull: false
+      allowNull: false,
     },
     readingRating: {
       type: Sequelize.INTEGER(2),
-      allowNull: false
+      allowNull: false,
     },
   });
-}
+};

@@ -6,114 +6,118 @@ module.exports = (sequelize, type) => {
     // Name
     firstName: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     lastName: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     middleName: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     // Account Information
     userName: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     password: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+    },
+    profilePicturePath: {
+      type: Sequelize.STRING,
+      allowNull: true,
     },
     // Contact Information
     email: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
-        isEmail:true
+        isEmail: true,
       },
       unique: {
-          args: true,
-          msg: 'Email address already in use!'
-      }
+        args: true,
+        msg: 'Email address already in use!',
+      },
     },
     phone: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     // Address Section
     street: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     barangay: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     city: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     province: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     // Birthday
     birthdate: {
       type: Sequelize.DATE,
-      allowNull: false
+      allowNull: false,
     },
     // Sex
     sex: {
       type: Sequelize.BOOLEAN,
-      allowNull: false
+      allowNull: false,
     },
     // Academic Information
     isGraduate: {
       type: Sequelize.BOOLEAN,
-      allowNull: false
+      allowNull: false,
     },
     graduationDate: {
       type: Sequelize.DATE,
-      allowNull: true
+      allowNull: true,
     },
     shs: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     strand: {
       type: Sequelize.INTEGER(2),
-      allowNull: false
+      allowNull: false,
     },
     generalAverage: {
       type: Sequelize.FLOAT,
-      allowNull: false
+      allowNull: false,
     },
     honors: {
-      type: Sequelize.JSON
+      type: Sequelize.JSON,
     },
     englishSpeakingRating: {
       type: Sequelize.INTEGER(2),
-      allowNull: false
+      allowNull: false,
     },
     englishWritingRating: {
       type: Sequelize.INTEGER(2),
-      allowNull: false
+      allowNull: false,
     },
     englishReadingRating: {
       type: Sequelize.INTEGER(2),
-      allowNull: false
+      allowNull: false,
     },
     filipinoSpeakingRating: {
       type: Sequelize.INTEGER(2),
-      allowNull: false
+      allowNull: false,
     },
     filipinoWritingRating: {
       type: Sequelize.INTEGER(2),
-      allowNull: false
+      allowNull: false,
     },
     filipinoReadingRating: {
       type: Sequelize.INTEGER(2),
-      allowNull: false
+      allowNull: false,
     },
   });
-}
+};

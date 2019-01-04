@@ -2,9 +2,11 @@
 	"userName":"Google URecruiting",
 	"password":"Bing is better",
 	"companyName":"Google",
+	"email":"google@gmail.com",
 	"description":"Google is an ad company",
    	"street":"317 Katipunan",
     "barangay":"Loyola Heights",
    	"city":"Quezon City",
-    "province":"NCR"
+	"province":"NCR",
+	"contactNumber":"099129291"
 }

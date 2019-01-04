@@ -16,7 +16,7 @@
     	"isGraduate":true,
     	"graduationDate": "2018-11-22",
     	"shs":"AHS",
-    	"track":0,
+    	"strand":0,
     	"generalAverage":99.87,
     	"honors":{},
     	"englishSpeakingRating":10,

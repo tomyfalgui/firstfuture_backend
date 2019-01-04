@@ -38,19 +38,19 @@ const jobListingSkill = jobListingSkillModel(sequelize, Sequelize);
 const ProfilePicture = profilePictureModel(sequelize, Sequelize);
 const Application = applicationModel(sequelize, Sequelize);
 
-Skill.belongsTo(User, { onDelete: 'CASCADE' });
-Language.belongsTo(User, { onDelete: 'CASCADE' });
-WorkExperience.belongsTo(User, { onDelete: 'CASCADE' });
-ExtraCurricular.belongsTo(User, { onDelete: 'CASCADE' });
-Bookmark.belongsTo(User, { onDelete: 'CASCADE' });
-User.hasOne(ProfilePicture, { onDelete: 'CASCADE' });
-JobListing.belongsTo(Company, { onDelete: 'CASCADE' });
-Bookmark.belongsTo(JobListing, { onDelete: 'CASCADE' });
-Bookmark.belongsTo(User, { onDelete: 'CASCADE' });
-jobListingSkill.belongsTo(JobListing, { onDelete: 'CASCADE' });
-Application.belongsTo(User, { onDelete: 'CASCADE' });
-Application.belongsTo(JobListing, { onDelete: 'CASCADE' });
 
-sequelize.sync();
+User.hasMany(Skill,{ onDelete: 'CASCADE' });
+User.hasMany(Language,{ onDelete: 'CASCADE' });
+User.hasMany(WorkExperience,{ onDelete: 'CASCADE' });
+User.hasMany(ExtraCurricular,{ onDelete: 'CASCADE' });
+User.hasMany(Bookmark,{ onDelete: 'CASCADE' });
+User.hasMany(Application, { onDelete: 'CASCADE' });
+User.hasOne(ProfilePicture, { onDelete: 'CASCADE' });
+Company.hasMany(JobListing,{ onDelete: 'CASCADE' });
+JobListing.hasMany(Bookmark, { onDelete: 'CASCADE' });
+JobListing.hasMany(jobListingSkill, { onDelete: 'CASCADE' });
+JobListing.hasMany(Application, { onDelete: 'CASCADE' });
+
+sequelize.sync({force:true});
 
 module.exports = {User, Company, ExtraCurricular, Skill, Language, WorkExperience, JobListing, jobListingSkill, Bookmark, ProfilePicture, Application, sequelize};

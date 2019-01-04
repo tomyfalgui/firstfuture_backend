@@ -11,7 +11,7 @@ router.delete('*', passport.authenticate('jwt', { session: false }));
 router.delete('*', extractUserId);
 
 router.post('/edit',  (req, res) => {
-    User.update(req.body.deltas, { where: { id: req.body.id, userId: req.userId } })
+    User.update(req.body.deltas, { where: { id: req.userId } })
         .then(user => res.json(user));
 });
 

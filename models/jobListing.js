@@ -2,34 +2,43 @@ const Sequelize = require('sequelize');
 module.exports = (sequelize, type) => {
     return sequelize.define('jobListing', {
         position: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false
         },
         description: {
-            type: Sequelize.TEXT
+            type: Sequelize.TEXT,
+            allowNull: false
         },
         deadline: {
             type: Sequelize.DATE
         },
         category: {
-            type: Sequelize.INTEGER(2)
+            type: Sequelize.INTEGER(2),
+            allowNull: false
         },
         viewCount: {
-            type: Sequelize.INTEGER(6)
+            type: Sequelize.INTEGER(6),
+            allowNull: false
         },
         street: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false
         },
         barangay: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false
         },
         city: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false
         },
         province: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false
         },
         strands: {
             type: Sequelize.STRING,
+            allowNull: false,
             get() {
                 try{
                     var results = this.getDataValue('strands').split(';');

@@ -6,7 +6,7 @@ const dotenv = require('dotenv').config({path:'../.env'});
 const bcrypt = require('bcrypt');
 const {User,ExtraCurricular,Skill,Language,WorkExperience,Company} = require('../database');
 
-const saltRounds = process.env.SALT_ROUNDS;
+const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
 router.post('/login/user',  (req, res) => {
     login('local',req,res);
@@ -21,24 +21,51 @@ router.post('/signup/user', (req, res) => {
     req.body.user.password = encryptPassword(plaintext);
     User.create(req.body.user).then((user)=>{
         let id = user.id;
+        
+        var promisesSkill = [];
+        var promisesExtraCurricular = [];
+        var promisesWorkExperience = [];
+        var promisesLanguage = []; 
+        var out = {};
+
         for(let skill of req.body.skills){
             skill.userId = id;
-            Skill.create(skill);
+            promisesSkill.push(Skill.create(skill));
         }
         for(let extracurricular of req.body.extracurriculars){
             extracurricular.userId = id;
-            ExtraCurricular.create(extracurricular);
+            promisesExtraCurricular.push(ExtraCurricular.create(extracurricular));
         }
         for(let workExperience of req.body.workExperiences){
             workExperience.userId = id;
-            WorkExperience.create(workExperience)
+            promisesWorkExperience.push(WorkExperience.create(workExperience));
         }
         for(let language of req.body.languages){
             language.userId = id;
-            Language.create(language);
+            promisesLanguage.push(Language.create(language));
         }
+        
+        out.user = user;
+        
+        Promise.all([
+            Promise.all(promisesSkill).then((results)=>{
+                out.skills = results;
+            }),
+            Promise.all(promisesExtraCurricular).then((results)=>{
+                out.extraCurriculars = results
+            }),
+            Promise.all(promisesWorkExperience).then((results)=>{
+                out.workExperiences = results
+            }),
+            Promise.all(promisesLanguage).then((results)=>{
+                out.languages = results
+            })
+        ])
+        .then((output)=>{
+            res.json(out)
+        })
+        .catch((err) => res.json(err));
     })
-    .then(() => res.json(true))
     .catch((err) => res.json(err));
 });
 
@@ -59,12 +86,6 @@ function encryptPassword(plaintext){
 function login(strategy,req,res){
     passport.authenticate(strategy, {session: false}, (err, user, info) => {
         if (err || !user) {
-            if(err){
-                console.log(err)
-            }
-            if(!user){
-                console.log('No user')
-            }
             return res.status(400).json({
                 message: 'Something is not right',
                 user   : user

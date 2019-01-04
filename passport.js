@@ -40,33 +40,41 @@ passport.use('company-local', new LocalStrategy(localAuthFields,
         if (!company) {
           return cb(null, false, {message: 'Invalid login'});
         }
-        return validatePassword(sentPassword, company, cb);
+        return validatePassword(sentPassword, company, cb, true);
       }).catch((error) => cb(error));
     }
 ));
 
 passport.use('jwt', new JWTStrategy(jwtSettings,
     function(jwtPayload, cb) {
+      if(!jwtPayload.isCompany){
       return User.findById(jwtPayload.id)
           .then((user) => {
             return cb(null, user);
           })
           .catch((error) => {
+            console.log(error);
             return cb(error);
           });
+      }
+      return cb(null,false);
     }
 ));
 
 passport.use('company-jwt', new JWTStrategy(companyJwtSettings,
     function(jwtPayload, cb) {
-      return Company.findById(jwtPayload.id)
-          .then((company) => {
-            return cb(null, company);
-          })
-          .catch((error) => {
-            return cb(error);
-          });
-    }));
+      if(jwtPayload.isCompany){
+        return Company.findById(jwtPayload.id)
+            .then((company) => {
+              return cb(null, company);
+            })
+            .catch((error) => {
+              console.log(error);
+              return cb(error);
+            });
+      }
+      return cb(null,false);
+  }));
 
 /**
  * Determines if password input matches the passport stored in the database.
@@ -75,10 +83,10 @@ passport.use('company-jwt', new JWTStrategy(companyJwtSettings,
  * @param {object} user - The object holding the password stored in the DB.
  * @param {function} cb - The cb of the function.
  */
-function validatePassword(candidate, user, cb) {
+function validatePassword(candidate, user, cb, isCompany = false) {
   bcrypt.compare(candidate, user.password, function(err, res) {
     if (res) {
-      return cb(null, {id: user.id}, {message: 'Logged In Successfully'});
+      return cb(null, {id: user.id, isCompany: isCompany}, {message: 'Logged In Successfully'});
     }
     return cb(null, false, {message: 'Incorrect email or password.'});
   });

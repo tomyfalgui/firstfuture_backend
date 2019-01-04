@@ -15,14 +15,14 @@ router.delete('*', extractUserId);
 
 router.post('/new', userIdToBody, (req, res) => {
     JobListing.create(req.body)
-        .then(listing => res.json(listing))
-        .catch(err => res.json(err));
+        .then((listing) => res.json(listing))
+        .catch((err) => res.json(err));
 });
 
 router.post('/edit',  (req, res) => {
     JobListing.update(req.body.deltas, {where: { id: req.body.id, companyId : req.companyId }})
-    .then(listing => res.json(listing))
-    .catch(err => res.json(err));
+        .then((listing) => res.json(listing))
+        .catch((err) => res.json(err));
 })
 
 router.delete('/delete',  (req, res) => {
@@ -32,8 +32,8 @@ router.delete('/delete',  (req, res) => {
             companyId: req.companyId
         }
     })
-    .then(listing => res.json('listing deleted'))
-    .catch(err => res.json(err));
+        .then((listing) => res.json(listing))
+        .catch((err) => res.json(err));
 });
 
 router.get('/show/:id', (req, res) => {
@@ -57,8 +57,8 @@ router.get('/search', (req, res) => {
             ]
         }
     })
-    .then(listing => res.json(listing))
-    .catch(err => res.json(err));
+        .then(listing => res.json(listing))
+        .catch(err => res.json(err));
 });
 
 module.exports = router;

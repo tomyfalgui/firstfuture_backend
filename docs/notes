@@ -14,8 +14,6 @@ Honors can be formatted as needed depending on formatting
 
 - search improvements
 - link jobListingSkill to jobLIsting
-- uniform responses
 - standardize responses
 - error handling
-- rework search, feed generation, listing creation
-- Buffer warnings, model.findByPk
+- rework search, address

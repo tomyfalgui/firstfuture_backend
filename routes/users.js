@@ -12,35 +12,39 @@ router.delete('*', extractUserId);
 
 router.post('/edit',  (req, res) => {
     User.update(req.body.deltas, { where: { id: req.userId } })
-        .then(user => res.json(user));
+        .then(user => res.json(user))
+        .catch((err)=> res.json(err));
 });
 
 router.delete('/delete', (req, res) => {
     User.destroy({ where: { id: req.userId } })
-        .then(res.json(true));
+        .then(user => res.json(user))
+        .catch((err)=> res.json(err));
 });
 
 router.get('/show/:id',(req,res,next)=>{
-    User.findOne({where:{id:req.params.id}}).then((user)=>{
-        delete user.password;
-        Skill.findAll({where:{userId:req.params.id}}).then((skills)=>{
-            WorkExperience.findAll({where:{userId:req.params.id}}).then((workexperiences)=>{
-                Language.findAll({where:{userId:req.params.id}}).then((languages)=>{
-                    ExtraCurricular.findAll({where:{userId:req.params.id}}).then((excurr)=>{
-                        res.json(
-                            {
-                                "user":user,
-                                "skills":skills,
-                                "workExperiences":workexperiences,
-                                "languages":languages,
-                                "extraCurriculars":excurr
-                            }
-                        )
-                    })
-                })  
+    User.findOne({where:{id:req.params.id}})
+        .then((user)=>{
+            delete user.password;
+            Skill.findAll({where:{userId:req.params.id}}).then((skills)=>{
+                WorkExperience.findAll({where:{userId:req.params.id}}).then((workexperiences)=>{
+                    Language.findAll({where:{userId:req.params.id}}).then((languages)=>{
+                        ExtraCurricular.findAll({where:{userId:req.params.id}}).then((excurr)=>{
+                            res.json(
+                                {
+                                    "user":user,
+                                    "skills":skills,
+                                    "workExperiences":workexperiences,
+                                    "languages":languages,
+                                    "extraCurriculars":excurr
+                                }
+                            )
+                        })
+                    })  
+                })
             })
         })
-    })
+        .catch((err)=>res.json(err));
 });
 
 module.exports = router;

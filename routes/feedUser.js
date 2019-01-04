@@ -35,8 +35,9 @@ router.get('/',(req,res,next)=>{
                 });
             }
             else res.json([]);
-        });
-    });
+        })
+        .catch((err)=>res.json(err));
+    }).catch((err)=>res.json(err));
 });
 
 

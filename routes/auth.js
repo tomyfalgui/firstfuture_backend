@@ -2,11 +2,11 @@ const express = require('express');
 const router  = express.Router();
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-const dotenv = require('dotenv');
+const dotenv = require('dotenv').config({path:'../.env'});
 const bcrypt = require('bcrypt');
 const {User,ExtraCurricular,Skill,Language,WorkExperience,Company} = require('../database');
 
-const saltRounds = 10;
+const saltRounds = process.env.SALT_ROUNDS;
 
 router.post('/login/user',  (req, res) => {
     login('local',req,res);

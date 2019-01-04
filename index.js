@@ -8,7 +8,8 @@ const jwt = require('jsonwebtoken');
 const passport = require("passport");
 const passportJWT = require("passport-jwt");
 const fileUpload = require('express-fileupload');
-const {extractUserId} = require('./middleware/id')
+const {extractUserId} = require('./middleware/id');
+const helmet = require('helmet')
 require('./passport.js');
 
 // Router Imports
@@ -28,6 +29,7 @@ var profilePicture = require('./routes/profilePicture');
 var app = express();
 
 // Global App Middleware
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.raw({ inflate: true, limit: '100kb'}));
@@ -37,11 +39,11 @@ app.use(cors());
 // Routes
 app.use('/api/auth', auth);
 app.use('/api/users', users);
-app.use('/api/companies', companies, passport.authenticate('company-jwt', { session: false }), companies);
+app.use('/api/companies', passport.authenticate('company-jwt', { session: false }), companies);
 app.use('/api/bookmarks', passport.authenticate('jwt', { session: false }), bookmarks);
 app.use('/api/applications', passport.authenticate('jwt', { session: false }), applications);
 app.use('/api/listings', listings);
-app.use('/api/feed',  passport.authenticate('jwt', { session: false }), feedUser);
+app.use('/api/feed/user',  [passport.authenticate('jwt', { session: false }), extractUserId], feedUser);
 app.use('/api/skills', [passport.authenticate('jwt', { session: false }), extractUserId], skills);
 app.use('/api/extracurriculars', [passport.authenticate('jwt', { session: false }), extractUserId], extraCurriculars);
 app.use('/api/languages', [passport.authenticate('jwt', { session: false }), extractUserId], languages);

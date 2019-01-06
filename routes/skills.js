@@ -7,19 +7,19 @@ const {userIdToBody} = require('../middleware/id');
 router.post('/new', userIdToBody, (req, res) => {
   Skill.create(req.body)
       .then((skill) =>res.json(skill))
-      .catch((err)=>res.jsone(err));
+      .catch((err)=>res.json(err));
 });
 
 router.post('/edit', (req, res) => {
   Skill.update(req.body.deltas, {where: {id: req.body.id, userId: req.userId}})
       .then((skill) =>res.json(skill))
-      .catch((err)=>res.jsone(err));
+      .catch((err)=>res.json(err));
 });
 
 router.delete('/delete/:id', (req, res) => {
   Skill.destroy({where: {id: req.params.id, userId: req.userId}})
       .then((skill) =>res.json(skill))
-      .catch((err)=>res.jsone(err));
+      .catch((err)=>res.json(err));
 });
 
 module.exports = router;

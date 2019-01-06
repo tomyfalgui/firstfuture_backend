@@ -10,14 +10,14 @@ const wrongStudent = require('../docs/json samples/signup/user/2.json');
 const validCredentialsWrongStudent = require('../docs/json samples/login/user/2/valid.json');
 const wrongCompany = require('../docs/json samples/signup/company/1.json');
 const validCredentialsWrongCompany = require('../docs/json samples/login/company/1/valid.json');
-const newSkill = require('../docs/newSkill.json');
+const newLanguage = require('../docs/newLanguage.json');
 
 const {sequelize} = require('../database');
 
 chai.use(chaiHttp);
 chai.should();
 
-describe('Skills', function() {
+describe('Languages', function() {
   let jwt; let wrongJwt; let wrongCompanyJwt;
 
   before('testing, clear database', async function() {
@@ -75,31 +75,33 @@ describe('Skills', function() {
         });
   });
 
-  describe('/api/skills/new', function() {
-    it('should be able to create new skills', function(done) {
-      chai.request(app).post('/api/skills/new')
+  describe('/api/languages/new', function() {
+    it('should be able to create new languages', function(done) {
+      chai.request(app).post('/api/languages/new')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + jwt)
-          .send(newSkill).end((err, res) => {
+          .send(newLanguage).end((err, res) => {
             res.should.have.status(200);
             res.body.should.have.property('id');
-            res.body.id.should.equal(5);
+            res.body.id.should.equal(7);
             res.body.should.have.property('name');
-            res.body.name.should.equal('node.js');
-            res.body.should.have.property('description');
-            res.body.description.should.equal('Can write RESTful services in node.js');
-            res.body.should.have.property('rating');
-            res.body.rating.should.equal(5);
+            res.body.name.should.equal('Bahasa');
+            res.body.should.have.property('speakingRating');
+            res.body.speakingRating.should.equal(5);
+            res.body.should.have.property('writingRating');
+            res.body.writingRating.should.equal(5);
+            res.body.should.have.property('readingRating');
+            res.body.readingRating.should.equal(5);
             res.body.should.have.property('userId');
             res.body.userId.should.equal(1);
             done();
           });
     });
 
-    it('should be not be able to create new skills if user is not authorized', function(done) {
-      chai.request(app).post('/api/skills/new')
+    it('should be not be able to create new languages if user is not authorized', function(done) {
+      chai.request(app).post('/api/languages/new')
           .set('content-type', 'application/json')
-          .send(newSkill).end((err, res) => {
+          .send(newLanguage).end((err, res) => {
             res.should.have.status(401);
             res.body.should.deep.equal({});
             res.error.text.should.equal('Unauthorized');
@@ -107,11 +109,11 @@ describe('Skills', function() {
           });
     });
 
-    it('should be not allow companies to create skills', function(done) {
-      chai.request(app).post('/api/skills/new')
+    it('should be not allow companies to create languages', function(done) {
+      chai.request(app).post('/api/languages/new')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + wrongCompanyJwt)
-          .send(newSkill).end((err, res) => {
+          .send(newLanguage).end((err, res) => {
             res.should.have.status(401);
             res.body.should.deep.equal({});
             res.error.text.should.equal('Unauthorized');
@@ -120,43 +122,42 @@ describe('Skills', function() {
     });
   });
 
-  describe('/api/skills/edit', function() {
-    it('should be able to edit skills', function(done) {
-      chai.request(app).post('/api/skills/edit')
+  describe('/api/languages/edit', function() {
+    it('should be able to edit languages', function(done) {
+      chai.request(app).post('/api/languages/edit')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + jwt)
-          .send({id: 5, deltas: {name: 'Express.js', description: 'Can use express to write RESTful web services'}}).end((err, res) => {
+          .send({id: 7, deltas: {speakingRating:4,  readingRating:4}}).end((err, res) => {
             res.should.have.status(200);
             res.body.should.deep.equal([1]);
             done();
           });
     });
-    it('should be not be able to edit skills if user is not authorized', function(done) {
-      chai.request(app).post('/api/skills/edit')
+    it('should be not be able to edit languages if user is not authorized', function(done) {
+      chai.request(app).post('/api/languages/edit')
           .set('content-type', 'application/json')
-          .send({id: 5, deltas: {name: 'Express.js', description: 'Can use express to write RESTful web services'}}).end((err, res) => {
+          .send({id: 7, deltas: {speakingRating:4,  readingRating:4}}).end((err, res) => {
             res.should.have.status(401);
             res.body.should.deep.equal({});
             res.error.text.should.equal('Unauthorized');
             done();
           });
     });
-
-    it('should be not be able to edit skills if the target skill does not belong to the user', function(done) {
-      chai.request(app).post('/api/skills/edit')
+    it('should be not be able to edit languages if the target languages does not belong to the user', function(done) {
+      chai.request(app).post('/api/languages/edit')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + wrongJwt)
-          .send({id: 5, deltas: {name: 'Express.js', description: 'Can use express to write RESTful web services'}}).end((err, res) => {
+          .send({id: 7, deltas: {speakingRating:4,  readingRating:4}}).end((err, res) => {
             res.should.have.status(200);
             res.body.should.deep.equal([0]);
             done();
           });
     });
-    it('should be not allow companies to edit skills', function(done) {
-      chai.request(app).post('/api/skills/edit')
+    it('should be not allow companies to edit languages', function(done) {
+      chai.request(app).post('/api/languages/edit')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + wrongCompanyJwt)
-          .send({id: 5, deltas: {name: 'Express.js', description: 'Can use express to write RESTful web services'}}).end((err, res) => {
+          .send({id: 7, deltas: {speakingRating:4,  readingRating:4}}).end((err, res) => {
             res.should.have.status(401);
             res.body.should.deep.equal({});
             res.error.text.should.equal('Unauthorized');
@@ -164,9 +165,9 @@ describe('Skills', function() {
           });
     });
   });
-  describe('/api/skills/delete/:id', function() {
-    it('should be not be able to delete skills if user is not authorized', function(done) {
-      chai.request(app).delete('/api/skills/delete/1')
+  describe('/api/languages/delete/:id', function() {
+    it('should be not be able to delete languages if user is not authorized', function(done) {
+      chai.request(app).delete('/api/languages/delete/1')
           .set('content-type', 'application/json')
           .send().end((err, res) => {
             res.should.have.status(401);
@@ -175,8 +176,8 @@ describe('Skills', function() {
             done();
           });
     });
-    it('should be not be able to delete skills if the target skill does not belong to the user', function(done) {
-      chai.request(app).delete('/api/skills/delete/1')
+    it('should be not be able to delete languages if the target skill does not belong to the user', function(done) {
+      chai.request(app).delete('/api/languages/delete/1')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + wrongJwt)
           .send().end((err, res) => {
@@ -185,8 +186,8 @@ describe('Skills', function() {
             done();
           });
     });
-    it('should not allow companies to delete skills', function(done) {
-      chai.request(app).delete('/api/skills/delete/1')
+    it('should not allow companies to delete languages', function(done) {
+      chai.request(app).delete('/api/languages/delete/1')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + wrongCompanyJwt)
           .send().end((err, res) => {
@@ -196,8 +197,8 @@ describe('Skills', function() {
             done();
           });
     });
-    it('should be able to delete skills', function(done) {
-      chai.request(app).delete('/api/skills/delete/1')
+    it('should be able to delete languages', function(done) {
+      chai.request(app).delete('/api/languages/delete/1')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + jwt)
           .send().end((err, res) => {

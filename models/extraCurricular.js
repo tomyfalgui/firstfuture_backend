@@ -5,6 +5,10 @@ module.exports = (sequelize, type) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    description: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
     yearsActive: {
       type: Sequelize.INTEGER(2),
       allowNull: false,

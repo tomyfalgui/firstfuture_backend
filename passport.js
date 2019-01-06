@@ -13,31 +13,63 @@ const jwtSettings = {
   secretOrKey: process.env.JWTSecret,
 };
 
-const companyJwtSettings = {
-  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.CompanyJWTSecret,
-};
-
 const localAuthFields = {
   usernameField: 'email',
   passwordField: 'password',
 };
 
 passport.use('local', new LocalStrategy(localAuthFields,
-    generateLocalCallback(User)
+  function(sentEmail, sentPassword, cb) {
+    return User.findOne({where: {email: sentEmail}}).then((user) => {
+      if (!user) {
+        return cb(null, false, {message: 'Invalid login'});
+      }
+      return validatePassword(sentPassword, user, cb);
+    }).catch((error) => cb(error));
+  }
 ));
 
 passport.use('company-local', new LocalStrategy(localAuthFields,
-    generateLocalCallback(Company)
+  function(sentEmail, sentPassword, cb) {
+    return Company.findOne({where: {email: sentEmail}}).then((company) => {
+      if (!company) {
+        return cb(null, false, {message: 'Invalid login'});
+      }
+      return validatePassword(sentPassword, company, cb, true);
+    }).catch((error) => cb(error));
+  }
 ));
 
 passport.use('jwt', new JWTStrategy(jwtSettings,
-    generateJWTCallback(User)
+  function(jwtPayload, cb) {
+    if(!jwtPayload.isCompany){
+    return User.findById(jwtPayload.id)
+        .then((user) => {
+          return cb(null, user);
+        })
+        .catch((error) => {
+          console.log(error);
+          return cb(error);
+        });
+    }
+    return cb(null,false);
+  }
 ));
 
-passport.use('company-jwt', new JWTStrategy(companyJwtSettings,
-    generateJWTCallback(Company)
-));
+passport.use('company-jwt', new JWTStrategy(jwtSettings,
+  function(jwtPayload, cb) {
+    if(jwtPayload.isCompany){
+      return Company.findById(jwtPayload.id)
+          .then((company) => {
+            return cb(null, company);
+          })
+          .catch((error) => {
+            console.log(error);
+            return cb(error);
+          });
+    }
+    return cb(null,false);
+}));
 
 /**
  * Generates a callback for the JWT strategy based on the model passed
@@ -45,20 +77,20 @@ passport.use('company-jwt', new JWTStrategy(companyJwtSettings,
  * @return {function} callback - generated callback function
  */
 function generateJWTCallback(model) {
-  return function(claims, cb) {
-    const validRole = model == Company ? claims.isCompany : !claims.isCompany;
-    if (validRole) {
+  let isComp = (model == Company ? true : false);
+  return (function(claims, cb) {
+    const assess = isComp ? claims.isCompany : !claims.isCompany;
+    if (assess) {
       return model.findById(claims.id)
           .then((user) => {
             return cb(null, user);
           })
           .catch((error) => {
-            console.log(error);
             return cb(error);
           });
     }
     return cb(null, false);
-  };
+  });
 }
 
 /**

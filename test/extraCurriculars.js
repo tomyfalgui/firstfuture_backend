@@ -10,14 +10,14 @@ const wrongStudent = require('../docs/json samples/signup/user/2.json');
 const validCredentialsWrongStudent = require('../docs/json samples/login/user/2/valid.json');
 const wrongCompany = require('../docs/json samples/signup/company/1.json');
 const validCredentialsWrongCompany = require('../docs/json samples/login/company/1/valid.json');
-const newSkill = require('../docs/newSkill.json');
+const newExtraCurricular = require('../docs/newExtraCurricular.json');
 
 const {sequelize} = require('../database');
 
 chai.use(chaiHttp);
 chai.should();
 
-describe('Skills', function() {
+describe('ExtraCurriculars', function() {
   let jwt; let wrongJwt; let wrongCompanyJwt;
 
   before('testing, clear database', async function() {
@@ -75,31 +75,31 @@ describe('Skills', function() {
         });
   });
 
-  describe('/api/skills/new', function() {
-    it('should be able to create new skills', function(done) {
-      chai.request(app).post('/api/skills/new')
+  describe('/api/extracurriculars/new', function() {
+    it('should be able to create new extracurriculars', function(done) {
+      chai.request(app).post('/api/extracurriculars/new')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + jwt)
-          .send(newSkill).end((err, res) => {
+          .send(newExtraCurricular).end((err, res) => {
             res.should.have.status(200);
             res.body.should.have.property('id');
             res.body.id.should.equal(5);
-            res.body.should.have.property('name');
-            res.body.name.should.equal('node.js');
+            res.body.should.have.property('orgName');
+            res.body.orgName.should.equal('GDG');
             res.body.should.have.property('description');
-            res.body.description.should.equal('Can write RESTful services in node.js');
-            res.body.should.have.property('rating');
-            res.body.rating.should.equal(5);
+            res.body.description.should.equal('Google Dev Group');
+            res.body.should.have.property('yearsActive');
+            res.body.yearsActive.should.equal(10);
             res.body.should.have.property('userId');
             res.body.userId.should.equal(1);
             done();
           });
     });
 
-    it('should be not be able to create new skills if user is not authorized', function(done) {
-      chai.request(app).post('/api/skills/new')
+    it('should be not be able to create new extracurriculars if user is not authorized', function(done) {
+      chai.request(app).post('/api/extracurriculars/new')
           .set('content-type', 'application/json')
-          .send(newSkill).end((err, res) => {
+          .send(newExtraCurricular).end((err, res) => {
             res.should.have.status(401);
             res.body.should.deep.equal({});
             res.error.text.should.equal('Unauthorized');
@@ -107,11 +107,11 @@ describe('Skills', function() {
           });
     });
 
-    it('should be not allow companies to create skills', function(done) {
-      chai.request(app).post('/api/skills/new')
+    it('should be not allow companies to create extracurriculars', function(done) {
+      chai.request(app).post('/api/extracurriculars/new')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + wrongCompanyJwt)
-          .send(newSkill).end((err, res) => {
+          .send(newExtraCurricular).end((err, res) => {
             res.should.have.status(401);
             res.body.should.deep.equal({});
             res.error.text.should.equal('Unauthorized');
@@ -120,43 +120,42 @@ describe('Skills', function() {
     });
   });
 
-  describe('/api/skills/edit', function() {
-    it('should be able to edit skills', function(done) {
-      chai.request(app).post('/api/skills/edit')
+  describe('/api/extracurriculars/edit', function() {
+    it('should be able to edit extracurriculars', function(done) {
+      chai.request(app).post('/api/extracurriculars/edit')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + jwt)
-          .send({id: 5, deltas: {name: 'Express.js', description: 'Can use express to write RESTful web services'}}).end((err, res) => {
+          .send({id: 5, deltas: {positionsHeld:["President","Secretary-General"]}}).end((err, res) => {
             res.should.have.status(200);
             res.body.should.deep.equal([1]);
             done();
           });
     });
-    it('should be not be able to edit skills if user is not authorized', function(done) {
-      chai.request(app).post('/api/skills/edit')
+    it('should be not be able to edit extracurriculars if user is not authorized', function(done) {
+      chai.request(app).post('/api/extracurriculars/edit')
           .set('content-type', 'application/json')
-          .send({id: 5, deltas: {name: 'Express.js', description: 'Can use express to write RESTful web services'}}).end((err, res) => {
+          .send({id: 5, deltas: {positionsHeld:["President","Secretary-General"]}}).end((err, res) => {
             res.should.have.status(401);
             res.body.should.deep.equal({});
             res.error.text.should.equal('Unauthorized');
             done();
           });
     });
-
-    it('should be not be able to edit skills if the target skill does not belong to the user', function(done) {
-      chai.request(app).post('/api/skills/edit')
+    it('should be not be able to edit extracurriculars if the target extracurriculars does not belong to the user', function(done) {
+      chai.request(app).post('/api/extracurriculars/edit')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + wrongJwt)
-          .send({id: 5, deltas: {name: 'Express.js', description: 'Can use express to write RESTful web services'}}).end((err, res) => {
+          .send({id: 5, deltas: {positionsHeld:["President","Secretary-General"]}}).end((err, res) => {
             res.should.have.status(200);
             res.body.should.deep.equal([0]);
             done();
           });
     });
-    it('should be not allow companies to edit skills', function(done) {
-      chai.request(app).post('/api/skills/edit')
+    it('should be not allow companies to edit extracurriculars', function(done) {
+      chai.request(app).post('/api/extracurriculars/edit')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + wrongCompanyJwt)
-          .send({id: 5, deltas: {name: 'Express.js', description: 'Can use express to write RESTful web services'}}).end((err, res) => {
+          .send({id: 5, deltas: {positionsHeld:["President","Secretary-General"]}}).end((err, res) => {
             res.should.have.status(401);
             res.body.should.deep.equal({});
             res.error.text.should.equal('Unauthorized');
@@ -164,9 +163,9 @@ describe('Skills', function() {
           });
     });
   });
-  describe('/api/skills/delete/:id', function() {
-    it('should be not be able to delete skills if user is not authorized', function(done) {
-      chai.request(app).delete('/api/skills/delete/1')
+  describe('/api/extracurriculars/delete/:id', function() {
+    it('should be not be able to delete extracurriculars if user is not authorized', function(done) {
+      chai.request(app).delete('/api/extracurriculars/delete/1')
           .set('content-type', 'application/json')
           .send().end((err, res) => {
             res.should.have.status(401);
@@ -175,8 +174,8 @@ describe('Skills', function() {
             done();
           });
     });
-    it('should be not be able to delete skills if the target skill does not belong to the user', function(done) {
-      chai.request(app).delete('/api/skills/delete/1')
+    it('should be not be able to delete extracurriculars if the target skill does not belong to the user', function(done) {
+      chai.request(app).delete('/api/extracurriculars/delete/1')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + wrongJwt)
           .send().end((err, res) => {
@@ -185,8 +184,8 @@ describe('Skills', function() {
             done();
           });
     });
-    it('should not allow companies to delete skills', function(done) {
-      chai.request(app).delete('/api/skills/delete/1')
+    it('should not allow companies to delete extracurriculars', function(done) {
+      chai.request(app).delete('/api/extracurriculars/delete/1')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + wrongCompanyJwt)
           .send().end((err, res) => {
@@ -196,8 +195,8 @@ describe('Skills', function() {
             done();
           });
     });
-    it('should be able to delete skills', function(done) {
-      chai.request(app).delete('/api/skills/delete/1')
+    it('should be able to delete extracurriculars', function(done) {
+      chai.request(app).delete('/api/extracurriculars/delete/1')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + jwt)
           .send().end((err, res) => {

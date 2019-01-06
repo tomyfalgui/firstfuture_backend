@@ -19,8 +19,8 @@ router.post('/edit', (req, res) => {
       .catch((err) => res.json(err));
 });
 
-router.delete('/delete', (req, res) => {
-  WorkExperience.destroy({where: {id: req.query.id, userId: req.userId}})
+router.delete('/delete/:id', (req, res) => {
+  WorkExperience.destroy({where: {id: req.params.id, userId: req.userId}})
       .then((workExperiences) => res.json(workExperiences))
       .catch((err) => res.json(err));
 });

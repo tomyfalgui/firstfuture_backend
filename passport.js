@@ -1,7 +1,7 @@
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
 const LocalStrategy = require('passport-local').Strategy;
-const {User, Company} = require('./database.js');
+const { User, Company } = require('./database.js');
 const bcrypt = require('bcrypt');
 // eslint-disable-next-line no-unused-vars
 require('dotenv').config();
@@ -19,57 +19,20 @@ const localAuthFields = {
 };
 
 passport.use('local', new LocalStrategy(localAuthFields,
-  function(sentEmail, sentPassword, cb) {
-    return User.findOne({where: {email: sentEmail}}).then((user) => {
-      if (!user) {
-        return cb(null, false, {message: 'Invalid login'});
-      }
-      return validatePassword(sentPassword, user, cb);
-    }).catch((error) => cb(error));
-  }
+  generateLocalCallback(User)
 ));
 
 passport.use('company-local', new LocalStrategy(localAuthFields,
-  function(sentEmail, sentPassword, cb) {
-    return Company.findOne({where: {email: sentEmail}}).then((company) => {
-      if (!company) {
-        return cb(null, false, {message: 'Invalid login'});
-      }
-      return validatePassword(sentPassword, company, cb, true);
-    }).catch((error) => cb(error));
-  }
+  generateLocalCallback(Company)
 ));
 
 passport.use('jwt', new JWTStrategy(jwtSettings,
-  function(jwtPayload, cb) {
-    if(!jwtPayload.isCompany){
-    return User.findById(jwtPayload.id)
-        .then((user) => {
-          return cb(null, user);
-        })
-        .catch((error) => {
-          console.log(error);
-          return cb(error);
-        });
-    }
-    return cb(null,false);
-  }
+  generateJWTCallback(User)
 ));
 
 passport.use('company-jwt', new JWTStrategy(jwtSettings,
-  function(jwtPayload, cb) {
-    if(jwtPayload.isCompany){
-      return Company.findById(jwtPayload.id)
-          .then((company) => {
-            return cb(null, company);
-          })
-          .catch((error) => {
-            console.log(error);
-            return cb(error);
-          });
-    }
-    return cb(null,false);
-}));
+  generateJWTCallback(Company)
+));
 
 /**
  * Generates a callback for the JWT strategy based on the model passed
@@ -78,16 +41,16 @@ passport.use('company-jwt', new JWTStrategy(jwtSettings,
  */
 function generateJWTCallback(model) {
   let isComp = (model == Company ? true : false);
-  return (function(claims, cb) {
+  return (function (claims, cb) {
     const assess = isComp ? claims.isCompany : !claims.isCompany;
     if (assess) {
       return model.findById(claims.id)
-          .then((user) => {
-            return cb(null, user);
-          })
-          .catch((error) => {
-            return cb(error);
-          });
+        .then((user) => {
+          return cb(null, user);
+        })
+        .catch((error) => {
+          return cb(error);
+        });
     }
     return cb(null, false);
   });
@@ -100,10 +63,10 @@ function generateJWTCallback(model) {
  */
 function generateLocalCallback(model) {
   const isCompany = model == Company ? true : false;
-  return function(sentEmail, sentPassword, cb) {
-    return model.findOne({where: {email: sentEmail}}).then((out) => {
+  return function (sentEmail, sentPassword, cb) {
+    return model.findOne({ where: { email: sentEmail } }).then((out) => {
       if (!out) {
-        return cb(null, false, {message: 'Invalid login'});
+        return cb(null, false, { message: 'Invalid login' });
       } else return validatePassword(sentPassword, out, cb, isCompany);
     }).catch((error) => cb(error));
   };
@@ -117,11 +80,11 @@ function generateLocalCallback(model) {
  * @param {boolean} isCompany - if the user is or is not a company
  */
 function validatePassword(candidate, user, cb, isCompany = false) {
-  bcrypt.compare(candidate, user.password, function(err, res) {
+  bcrypt.compare(candidate, user.password, function (err, res) {
     if (res) {
-      return cb(null, {id: user.id, isCompany: isCompany},
-          {message: 'Logged in'});
+      return cb(null, { id: user.id, isCompany: isCompany },
+        { message: 'Logged in' });
     }
-    return cb(null, false, {message: 'Incorrect email or password.'});
+    return cb(null, false, { message: 'Incorrect email or password.' });
   });
 }

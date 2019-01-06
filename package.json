@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "node ./node_modules/mocha/bin/mocha"
+    "test": "node ./node_modules/mocha/bin/mocha",
+    "lint": "./node_modules/.bin/eslint index.js passport.js ./routes/*.js ./models/*.js ./middleware/*.js ./test/*.js ",
+    "lint-fix": "./node_modules/.bin/eslint index.js passport.js ./routes/*.js ./middleware/*.js ./test/*.js --fix"
   },
   "author": "Brennan Matriano",
   "license": "ISC",
@@ -34,6 +36,8 @@
     "eslint-config-google": "^0.11.0",
     "jsdoc": "^3.5.5",
     "mocha": "^5.2.0",
+    "nodemailer": "^5.0.0",
+    "nodemailer-express-handlebars": "^3.0.0",
     "nodemon": "^1.18.9"
   }
 }

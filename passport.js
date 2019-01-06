@@ -24,31 +24,31 @@ const localAuthFields = {
 };
 
 passport.use('local', new LocalStrategy(localAuthFields,
-    function(sentEmail, sentPassword, cb) {
-      return User.findOne({where: {email: sentEmail}}).then((user) => {
-        if (!user) {
-          return cb(null, false, {message: 'Invalid login'});
-        }
-        return validatePassword(sentPassword, user, cb);
-      }).catch((error) => cb(error));
-    }
+    generateLocalCallback(User)
 ));
 
 passport.use('company-local', new LocalStrategy(localAuthFields,
-    function(sentEmail, sentPassword, cb) {
-      return Company.findOne({where: {email: sentEmail}}).then((company) => {
-        if (!company) {
-          return cb(null, false, {message: 'Invalid login'});
-        }
-        return validatePassword(sentPassword, company, cb, true);
-      }).catch((error) => cb(error));
-    }
+    generateLocalCallback(Company)
 ));
 
 passport.use('jwt', new JWTStrategy(jwtSettings,
-    function(jwtPayload, cb) {
-      if(!jwtPayload.isCompany){
-      return User.findById(jwtPayload.id)
+    generateJWTCallback(User)
+));
+
+passport.use('company-jwt', new JWTStrategy(companyJwtSettings,
+    generateJWTCallback(Company)
+));
+
+/**
+ * Generates a callback for the JWT strategy based on the model passed
+ * @param {object} model - sequelize model
+ * @return {function} callback - generated callback function
+ */
+function generateJWTCallback(model) {
+  return function(claims, cb) {
+    const validRole = model == Company ? claims.isCompany : !claims.isCompany;
+    if (validRole) {
+      return model.findById(claims.id)
           .then((user) => {
             return cb(null, user);
           })
@@ -56,37 +56,39 @@ passport.use('jwt', new JWTStrategy(jwtSettings,
             console.log(error);
             return cb(error);
           });
-      }
-      return cb(null,false);
     }
-));
+    return cb(null, false);
+  };
+}
 
-passport.use('company-jwt', new JWTStrategy(companyJwtSettings,
-    function(jwtPayload, cb) {
-      if(jwtPayload.isCompany){
-        return Company.findById(jwtPayload.id)
-            .then((company) => {
-              return cb(null, company);
-            })
-            .catch((error) => {
-              console.log(error);
-              return cb(error);
-            });
-      }
-      return cb(null,false);
-  }));
+/**
+ * Generates a callback for the local strategy based on the model passed
+ * @param {object} model - sequelize model
+ * @return {function} callback - generated callback function
+ */
+function generateLocalCallback(model) {
+  const isCompany = model == Company ? true : false;
+  return function(sentEmail, sentPassword, cb) {
+    return model.findOne({where: {email: sentEmail}}).then((out) => {
+      if (!out) {
+        return cb(null, false, {message: 'Invalid login'});
+      } else return validatePassword(sentPassword, out, cb, isCompany);
+    }).catch((error) => cb(error));
+  };
+}
 
 /**
  * Determines if password input matches the passport stored in the database.
- * @constructor
- * @param {object} candidate - The password input by the user.
+ * @param {string} candidate - The password input by the user.
  * @param {object} user - The object holding the password stored in the DB.
  * @param {function} cb - The cb of the function.
+ * @param {boolean} isCompany - if the user is or is not a company
  */
 function validatePassword(candidate, user, cb, isCompany = false) {
   bcrypt.compare(candidate, user.password, function(err, res) {
     if (res) {
-      return cb(null, {id: user.id, isCompany: isCompany}, {message: 'Logged In Successfully'});
+      return cb(null, {id: user.id, isCompany: isCompany},
+          {message: 'Logged in'});
     }
     return cb(null, false, {message: 'Incorrect email or password.'});
   });

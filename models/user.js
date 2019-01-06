@@ -28,6 +28,10 @@ module.exports = (sequelize, type) => {
       type: Sequelize.STRING,
       allowNull: true,
     },
+    passwordResetToken: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
     // Contact Information
     email: {
       type: Sequelize.STRING,

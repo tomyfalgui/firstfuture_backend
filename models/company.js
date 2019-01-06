@@ -9,6 +9,10 @@ module.exports = (sequelize, type) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    passwordResetToken: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
     profilePicture: {
       type: Sequelize.STRING,
       allowNull: true,

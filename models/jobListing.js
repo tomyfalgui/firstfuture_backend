@@ -41,6 +41,7 @@ module.exports = (sequelize, type) => {
       allowNull: false,
       get() {
         try {
+          // eslint-disable-next-line prefer-const
           let results = this.getDataValue('strands').split(';');
           for (let i = 0; i < results.length; i++) {
             results[i] = parseInt(results[i]);

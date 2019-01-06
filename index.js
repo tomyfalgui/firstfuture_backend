@@ -37,7 +37,7 @@ app.use(cors());
 
 // Routes
 const protectedUser = passport.authenticate('jwt', {session: false});
-const protectedCompany = passport.authenticate('company-jwt', {session: false});
+
 app.use('/api/auth', auth);
 app.use('/api/users', users);
 app.use('/api/companies', companies);

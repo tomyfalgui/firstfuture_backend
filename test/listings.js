@@ -18,7 +18,7 @@ chai.use(chaiHttp);
 chai.should();
 
 describe('Listings', function() {
-  let jwt,wrongJwt,wrongUserJwt;
+  let jwt; let wrongJwt; let wrongUserJwt;
 
   before('testing, clear database', async function() {
     await sequelize.sync({force: true, truncate: true, cascade: true});
@@ -85,23 +85,23 @@ describe('Listings', function() {
             res.body.should.have.property('id');
             res.body.id.should.equal(1);
             res.body.should.have.property('strands');
-            res.body.strands.should.deep.equal([1,2,3]);
+            res.body.strands.should.deep.equal([1, 2, 3]);
             res.body.should.have.property('position');
-            res.body.position.should.equal("Web Developer Intern");
+            res.body.position.should.equal('Web Developer Intern');
             res.body.should.have.property('description');
-            res.body.description.should.equal("You will be working to develop an app to do app things");
+            res.body.description.should.equal('You will be working to develop an app to do app things');
             res.body.should.have.property('deadline');
-            res.body.deadline.should.equal("2018-11-22T08:37:22.000Z");
+            res.body.deadline.should.equal('2018-11-22T08:37:22.000Z');
             res.body.should.have.property('companyId');
             res.body.companyId.should.equal(1);
             res.body.should.have.property('category');
             res.body.category.should.equal(5);
             res.body.should.have.property('street');
-            res.body.street.should.equal("Katipunan Ave.");
+            res.body.street.should.equal('Katipunan Ave.');
             res.body.should.have.property('barangay');
-            res.body.barangay.should.equal("Loyola Heights");
+            res.body.barangay.should.equal('Loyola Heights');
             res.body.should.have.property('city');
-            res.body.city.should.equal("Quezon City");
+            res.body.city.should.equal('Quezon City');
             res.body.should.have.property('province');
             res.body.province.should.equal('NCR');
             done();
@@ -146,7 +146,7 @@ describe('Listings', function() {
     it('should be not be able to edit listings if user is not authorized', function(done) {
       chai.request(app).post('/api/listings/edit')
           .set('content-type', 'application/json')
-          .send({id:  1, deltas: {position: 'Front-end Web Developer Intern', description: 'Will front-end'}}).end((err, res) => {
+          .send({id: 1, deltas: {position: 'Front-end Web Developer Intern', description: 'Will front-end'}}).end((err, res) => {
             res.should.have.status(401);
             res.body.should.deep.equal({});
             res.error.text.should.equal('Unauthorized');
@@ -220,7 +220,7 @@ describe('Listings', function() {
   });
 
 
-  after('testing, clear database', async function () {
-    await sequelize.sync({ force: true, truncate: true, cascade: true });
+  after('testing, clear database', async function() {
+    await sequelize.sync({force: true, truncate: true, cascade: true});
   });
 });

@@ -125,7 +125,7 @@ describe('ExtraCurriculars', function() {
       chai.request(app).post('/api/extracurriculars/edit')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + jwt)
-          .send({id: 5, deltas: {positionsHeld:["President","Secretary-General"]}}).end((err, res) => {
+          .send({id: 5, deltas: {positionsHeld: ['President', 'Secretary-General']}}).end((err, res) => {
             res.should.have.status(200);
             res.body.should.deep.equal([1]);
             done();
@@ -134,7 +134,7 @@ describe('ExtraCurriculars', function() {
     it('should be not be able to edit extracurriculars if user is not authorized', function(done) {
       chai.request(app).post('/api/extracurriculars/edit')
           .set('content-type', 'application/json')
-          .send({id: 5, deltas: {positionsHeld:["President","Secretary-General"]}}).end((err, res) => {
+          .send({id: 5, deltas: {positionsHeld: ['President', 'Secretary-General']}}).end((err, res) => {
             res.should.have.status(401);
             res.body.should.deep.equal({});
             res.error.text.should.equal('Unauthorized');
@@ -145,7 +145,7 @@ describe('ExtraCurriculars', function() {
       chai.request(app).post('/api/extracurriculars/edit')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + wrongJwt)
-          .send({id: 5, deltas: {positionsHeld:["President","Secretary-General"]}}).end((err, res) => {
+          .send({id: 5, deltas: {positionsHeld: ['President', 'Secretary-General']}}).end((err, res) => {
             res.should.have.status(200);
             res.body.should.deep.equal([0]);
             done();
@@ -155,7 +155,7 @@ describe('ExtraCurriculars', function() {
       chai.request(app).post('/api/extracurriculars/edit')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + wrongCompanyJwt)
-          .send({id: 5, deltas: {positionsHeld:["President","Secretary-General"]}}).end((err, res) => {
+          .send({id: 5, deltas: {positionsHeld: ['President', 'Secretary-General']}}).end((err, res) => {
             res.should.have.status(401);
             res.body.should.deep.equal({});
             res.error.text.should.equal('Unauthorized');
@@ -208,7 +208,7 @@ describe('ExtraCurriculars', function() {
   });
 
 
-  after('testing, clear database', async function () {
-    await sequelize.sync({ force: true, truncate: true, cascade: true });
+  after('testing, clear database', async function() {
+    await sequelize.sync({force: true, truncate: true, cascade: true});
   });
 });

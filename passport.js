@@ -1,7 +1,7 @@
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
 const LocalStrategy = require('passport-local').Strategy;
-const { User, Company } = require('./database.js');
+const {User, Company} = require('./database.js');
 const bcrypt = require('bcrypt');
 // eslint-disable-next-line no-unused-vars
 require('dotenv').config();
@@ -19,19 +19,19 @@ const localAuthFields = {
 };
 
 passport.use('local', new LocalStrategy(localAuthFields,
-  generateLocalCallback(User)
+    generateLocalCallback(User)
 ));
 
 passport.use('company-local', new LocalStrategy(localAuthFields,
-  generateLocalCallback(Company)
+    generateLocalCallback(Company)
 ));
 
 passport.use('jwt', new JWTStrategy(jwtSettings,
-  generateJWTCallback(User)
+    generateJWTCallback(User)
 ));
 
 passport.use('company-jwt', new JWTStrategy(jwtSettings,
-  generateJWTCallback(Company)
+    generateJWTCallback(Company)
 ));
 
 /**
@@ -40,17 +40,17 @@ passport.use('company-jwt', new JWTStrategy(jwtSettings,
  * @return {function} callback - generated callback function
  */
 function generateJWTCallback(model) {
-  let isComp = (model == Company ? true : false);
-  return (function (claims, cb) {
+  const isComp = (model == Company ? true : false);
+  return (function(claims, cb) {
     const assess = isComp ? claims.isCompany : !claims.isCompany;
     if (assess) {
       return model.findById(claims.id)
-        .then((user) => {
-          return cb(null, user);
-        })
-        .catch((error) => {
-          return cb(error);
-        });
+          .then((user) => {
+            return cb(null, user);
+          })
+          .catch((error) => {
+            return cb(error);
+          });
     }
     return cb(null, false);
   });
@@ -63,10 +63,10 @@ function generateJWTCallback(model) {
  */
 function generateLocalCallback(model) {
   const isCompany = model == Company ? true : false;
-  return function (sentEmail, sentPassword, cb) {
-    return model.findOne({ where: { email: sentEmail } }).then((out) => {
+  return function(sentEmail, sentPassword, cb) {
+    return model.findOne({where: {email: sentEmail}}).then((out) => {
       if (!out) {
-        return cb(null, false, { message: 'Invalid login' });
+        return cb(null, false, {message: 'Invalid login'});
       } else return validatePassword(sentPassword, out, cb, isCompany);
     }).catch((error) => cb(error));
   };
@@ -80,11 +80,11 @@ function generateLocalCallback(model) {
  * @param {boolean} isCompany - if the user is or is not a company
  */
 function validatePassword(candidate, user, cb, isCompany = false) {
-  bcrypt.compare(candidate, user.password, function (err, res) {
+  bcrypt.compare(candidate, user.password, function(err, res) {
     if (res) {
-      return cb(null, { id: user.id, isCompany: isCompany },
-        { message: 'Logged in' });
+      return cb(null, {id: user.id, isCompany: isCompany},
+          {message: 'Logged in'});
     }
-    return cb(null, false, { message: 'Incorrect email or password.' });
+    return cb(null, false, {message: 'Incorrect email or password.'});
   });
 }

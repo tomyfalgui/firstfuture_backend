@@ -210,7 +210,7 @@ describe('Work Experiences', function() {
   });
 
 
-  after('testing, clear database', async function () {
-    await sequelize.sync({ force: true, truncate: true, cascade: true });
+  after('testing, clear database', async function() {
+    await sequelize.sync({force: true, truncate: true, cascade: true});
   });
 });

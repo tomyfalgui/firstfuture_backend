@@ -53,7 +53,7 @@ Company.hasMany(JobListing,{ onDelete: 'CASCADE' });
 Company.hasMany(CompanyPicture, {onDelete:'CASCADE'});
 JobListing.hasMany(Bookmark, { onDelete: 'CASCADE' });
 JobListing.hasMany(jobListingSkill, { onDelete: 'CASCADE' });
-JobListing.hasMany(Application, { onDelete: 'CASCADE' });
+JobListing.hasMany(Application, { onDelete: 'SET NULL' });
 
 sequelize.sync({force:true});
 

@@ -3,12 +3,12 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-require('dotenv').config({path: '../.env'});
+require('dotenv').config({ path: '../.env' });
 const bcrypt = require('bcrypt');
 const smtpTransport = require('../mailer');
 const crypto = require('crypto');
 // eslint-disable-next-line max-len
-const {User, ExtraCurricular, Skill, Language, WorkExperience, Company} = require('../database');
+const { User, ExtraCurricular, Skill, Language, WorkExperience, Company } = require('../database');
 
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
@@ -22,8 +22,9 @@ router.post('/login/company', (req, res) => {
 
 router.post('/signup/user', (req, res) => {
   const plaintext = req.body.user.password;
+  delete req.body.user.verified;
   req.body.user.password = encryptPassword(plaintext);
-  User.create(req.body.user).then((user)=>{
+  User.create(req.body.user).then((user) => {
     const id = user.id;
 
     const promisesSkill = [];
@@ -49,34 +50,34 @@ router.post('/signup/user', (req, res) => {
       promisesLanguage.push(Language.create(language));
     }
 
-    out.user = user;
-
     Promise.all([
-      Promise.all(promisesSkill).then((results)=>{
-        out.skills = results;
-      }),
-      Promise.all(promisesExtraCurricular).then((results)=>{
-        out.extraCurriculars = results;
-      }),
-      Promise.all(promisesWorkExperience).then((results)=>{
-        out.workExperiences = results;
-      }),
-      Promise.all(promisesLanguage).then((results)=>{
-        out.languages = results;
-      })])
-        .then((output)=>{
-          res.json(out);
-        })
-        .catch((err) => res.json(err));
-  })
+      Promise.all(promisesSkill),
+      Promise.all(promisesExtraCurricular),
+      Promise.all(promisesWorkExperience),
+      Promise.all(promisesLanguage)
+    ])
+      .then((output) => {
+        updateAndMail(user,true,'emailVerification', 'First Future - Email Verification', process.env.VERIFICATION_URL,res);
+      })
       .catch((err) => res.json(err));
+  })
+    .catch((err) => res.json(err));
 });
 
 router.post('/signup/company', (req, res) => {
+  delete req.body.verified;
   req.body.password = encryptPassword(req.body.password);
   Company.create(req.body)
-      .then((company) => res.json(company))
-      .catch((err) => res.json(err));
+    .then((company) => updateAndMail(company,false,'emailVerification', 'First Future - Email Verification', process.env.VERIFICATION_URL,res))
+    .catch((err) => res.json(err));
+});
+
+router.post('/verify/student', (req,res)=>{
+  validateUser(User,req,res);
+});
+
+router.post('/verify/company', (req,res)=>{
+  validateUser(Company,req,res);
 });
 
 router.post('/account_recovery/student', (req, res) => {
@@ -105,9 +106,9 @@ function passwordReset(model, req, res) {
   try {
     const isStudent = (model == User);
     // eslint-disable-next-line max-len
-    const secret = isStudent? process.env.JWTSecret : process.env.CompanyJWTSecret;
+    const secret = process.env.JWTSecret;
     const decoded = jwt.verify(req.body.token, secret);
-    const validRole = isStudent? decoded.isStudent : !decoded.isStudent;
+    const validRole = isStudent ? decoded.isStudent : !decoded.isStudent;
     if (validRole) {
       const deltas = {
         password: encryptPassword(req.body.newPassword),
@@ -119,7 +120,33 @@ function passwordReset(model, req, res) {
           passwordResetToken: decoded.resetToken,
         },
       };
-      model.update(deltas, identifiers).then(()=> {
+      model.update(deltas, identifiers).then(() => {
+        res.json(true);
+      });
+    } else throw new Error('Role mismatch');
+  } catch (err) {
+    res.json(err);
+  }
+}
+
+function validateUser(model, req, res) {
+  try {
+    const isStudent = (model == User);
+    // eslint-disable-next-line max-len
+    const secret = process.env.JWTSecret;
+    const decoded = jwt.verify(req.body.token, secret);
+    const validRole = isStudent ? decoded.isStudent : !decoded.isStudent;
+    if (validRole) {
+      const deltas = {
+        verified: true
+      };
+      const identifiers = {
+        where: {
+          id: decoded.user,
+          passwordResetToken: decoded.resetToken,
+        },
+      };
+      model.update(deltas, identifiers).then(() => {
         res.json(true);
       });
     } else throw new Error('Role mismatch');
@@ -136,35 +163,44 @@ function passwordReset(model, req, res) {
  */
 function recoverAccount(model, req, res) {
   const isStudent = model == User ? true : false;
-  model.findOne({where: {email: req.body.email}}).then((out)=>{
-    const buffer = crypto.randomBytes(30).toString('hex');
+  model.findOne({ where: { email: req.body.email, verified : true}}).then((out) => {
+    updateAndMail(out, isStudent, 'forgotPasswordUser', 'Password Reset', process.env.RESET_URL, res)
+  })
+    .catch((err) => res.json(new Error('Unable to reset password')));
+}
+
+function updateAndMail(out, isStudent, template, subject, targetURL, res) {
+  const buffer = crypto.randomBytes(30).toString('hex');
+  out.update({passwordResetToken: buffer}).then(() => {
+    const name = isStudent ? out.firstName : out.userName;
     const claims = {
       exp: Math.floor(Date.now() / 1000) + (60 * 60),
       user: out.id,
       resetToken: buffer,
       isStudent: isStudent,
     };
-    const passwordResetJWT = jwt.sign(claims, process.env.JWTSecret);
-    out.update({passwordResetToken: buffer}).then(()=>{
-      const name = isStudent ? out.firstName : userName;
-      const data = {
-        to: out.email,
-        from: process.env.MAILER_SERVICE_USER,
-        template: 'forgotPasswordUser',
-        subject: 'Password reset instructions',
-        context: {
-          url: process.env.RESET_URL + passwordResetJWT,
-          name: name,
-        },
-      };
-      smtpTransport.sendMail(data, function(err) {
-        if (!err) {
-          res.json(true);
-        } else res.json(err);
-      });
-    });
-  })
-      .catch((err)=> res.json(new Error('Unable to reset password')));
+    const jwtToSend = jwt.sign(claims, process.env.JWTSecret);
+    const emailContext = {
+      url: targetURL + jwtToSend,
+      name: name,
+    }
+    sendMail(out.email, template, subject, emailContext, res);
+  });
+}
+
+function sendMail(email, template, subject, context, res) {
+  const data = {
+    to: email,
+    from: process.env.MAILER_SERVICE_USER,
+    template: template,
+    subject: subject,
+    context: context
+  };
+  smtpTransport.sendMail(data, function (err) {
+    if (!err) {
+      res.json(true);
+    } else res.json(new Error('Unable to reset password'));
+  });
 }
 
 /**
@@ -185,19 +221,19 @@ function encryptPassword(plaintext) {
  * @param {Response} res - HTTP response
  */
 function login(strategy, req, res) {
-  passport.authenticate(strategy, {session: false}, (err, user, info) => {
+  passport.authenticate(strategy, { session: false }, (err, user, info) => {
     if (err || !user) {
       return res.status(400).json({
         message: 'Something is not right',
         user: user,
       });
     }
-    req.login(user, {session: false}, (err) => {
+    req.login(user, { session: false }, (err) => {
       if (err) {
         res.send(err);
       }
       const token = jwt.sign(user, process.env.JWTSecret);
-      return res.json({user, token});
+      return res.json({ user, token });
     });
   })(req, res);
 }

@@ -13,6 +13,11 @@ module.exports = (sequelize, type) => {
       type: Sequelize.STRING,
       allowNull: true,
     },
+    verified: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
     profilePicture: {
       type: Sequelize.STRING,
       allowNull: true,

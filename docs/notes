@@ -17,3 +17,5 @@ Honors can be formatted as needed depending on formatting
 - standardize responses
 - error handling
 - rework search, address
+- delete uneditable keys middleware
+- move editables to env (esp in mailer)

@@ -24,6 +24,11 @@ module.exports = (sequelize, type) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    verified: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
     profilePicturePath: {
       type: Sequelize.STRING,
       allowNull: true,

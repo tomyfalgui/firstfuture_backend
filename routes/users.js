@@ -13,10 +13,14 @@ router.delete('*', passport.authenticate('jwt', {session: false}));
 router.delete('*', extractUserId);
 
 router.post('/edit', (req, res) => {
+  delete req.body.user.verified;
   User.update(req.body.deltas, {
     where: {
       id: req.userId}})
-      .then((user) => res.json(user))
+      .then((user) => {
+        delete user.password;
+        res.json(user);
+      })
       .catch((err)=> res.json(err));
 });
 

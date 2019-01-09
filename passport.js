@@ -64,7 +64,8 @@ function generateJWTCallback(model) {
 function generateLocalCallback(model) {
   const isCompany = model == Company ? true : false;
   return function(sentEmail, sentPassword, cb) {
-    return model.findOne({where: {email: sentEmail, verified : true}}).then((out) => {
+    let criteria = {email: sentEmail, verified: true};
+    return model.findOne({where: criteria}).then((out) => {
       if (!out) {
         return cb(null, false, {message: 'Invalid login'});
       } else return validatePassword(sentPassword, out, cb, isCompany);

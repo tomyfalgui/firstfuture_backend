@@ -10,6 +10,7 @@ router.post('*', passport.authenticate('jwt', {session: false}));
 router.post('*', extractUserId);
 router.delete('*', passport.authenticate('jwt', {session: false}));
 router.delete('*', extractUserId);
+router.get('*',passport.authenticate(['jwt','company-jwt'], {session: false}));
 
 router.post('/new', (req, res, next) => {
   ProfilePicture.count({where: {userId: req.userId}})
@@ -42,7 +43,7 @@ router.delete('/delete', (req, res) => {
       .catch((err)=>res.json(err));
 });
 
-router.get('/show/:id', (req, res, next)=>{
+router.get('/show/:id', usersOnly, (req, res, next)=>{
   ProfilePicture.findOne({
     where: {
       userId: req.params.id}})

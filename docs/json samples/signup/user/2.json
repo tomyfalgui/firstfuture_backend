@@ -2,15 +2,12 @@
     "user":{
     	"firstName":"Rye",
     	"lastName":"Bread",
-    	"middleName":"Round",
+    	"middleName":"White",
     	"userName":"Sandwich",
     	"password":"cakes",
-    	"email":"rye@google.com",
+    	"email":"brennan.matriano@obf.ateneo.edu",
     	"phone":"87000",
-    	"street":"317 Katipunan",
-    	"barangay":"Loyola Heights",
-    	"city":"Quezon City",
-    	"province":"NCR",
+    	"city":1336,
     	"birthdate": "2018-11-22",
     	"sex":0,
     	"isGraduate":true,
@@ -18,6 +15,7 @@
     	"shs":"AHS",
     	"strand":0,
     	"generalAverage":99.87,
+    	"gradeCeiling":100,
     	"honors":{},
     	"englishSpeakingRating":10,
     	"englishWritingRating":10,
@@ -42,29 +40,30 @@
     	{
     		"orgName":"MISA",
     		"yearsActive":10,
-    		"positionsHeld":["President","Secretary General"]
+    		"positionsHeld":["President","Secretary General"],
+    		"startDate":"2018-10-22"
     	},
     	{
     		"orgName":"UXSoc",
     		"yearsActive":99,
-    		"positionsHeld":["President","Secretary","Director"]
-    		
+    		"positionsHeld":["President","Secretary","Director"],
+    		"startDate":"2018-10-22",
+    		"endDate":"2018-11-22"
     	}],
     "workExperiences":[
     	{
     		"company":"Oracle",
     		"typeOfWork":"DBA",
-    		"hours":100
+    		"hours":100,
+    		"startDate":"2018-12-22",
+    		"endDate": "2018-12-31"
     	},
     	{
     		"company":"Google",
     		"typeOfWork":"SRE",
-    		"hours":100
-    	},
-		{
-    		"company":"Palantir",
-    		"typeOfWork":"UX Lead",
-    		"hours":300
+    		"hours":100,
+    		"startDate": "2018-10-22",
+    		"endDate": "2018-11-22"
     	}
     	],
     	"languages":[
@@ -86,5 +85,5 @@
     			"writingRating":9,
     			"readingRating":7
     		}
-    		]
+    		]	
 }

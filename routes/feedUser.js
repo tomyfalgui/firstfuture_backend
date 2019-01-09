@@ -29,12 +29,13 @@ router.get('/', (req, res, next)=>{
       ],
       limit: feedSize})
         .then((results)=>{
-          if (results.length > 0) {
-            res.json({
-              posts: results,
-              fetchOlderThan: results[results.length-1].updatedAt,
-            });
-          } else res.json([]);
+          for(let i=0; i < results.length; i++){
+            results[i].update({viewCount:results[i].viewCount++});
+          }
+          res.json({
+            posts: results,
+            fetchOlderThan: results[results.length-1].updatedAt,
+          });
         })
         .catch((err)=>res.json(err));
   }).catch((err)=>res.json(err));

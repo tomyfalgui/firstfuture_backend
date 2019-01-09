@@ -19,11 +19,12 @@ const listings = require('./routes/listings');
 const auth = require('./routes/auth');
 const feedUser = require('./routes/feedUser');
 const skills = require('./routes/skills');
-const extraCurr = require('./routes/extraCurricular');
+const extraCurr = require('./routes/extraCurriculars');
 const languages = require('./routes/languages');
 const workExp = require('./routes/workExperiences');
 const profilePicture = require('./routes/profilePicture');
 const companyPicture = require('./routes/companyPicture');
+const location = require('./routes/locations');
 
 const app = express();
 
@@ -41,8 +42,8 @@ const protectedUser = passport.authenticate('jwt', {session: false});
 app.use('/api/auth', auth);
 app.use('/api/users', users);
 app.use('/api/companies', companies);
-app.use('/api/bookmarks', protectedUser, bookmarks);
-app.use('/api/applications', protectedUser, applications);
+app.use('/api/bookmarks', [protectedUser, extractUserId], bookmarks);
+app.use('/api/applications', [protectedUser, extractUserId], applications);
 app.use('/api/listings', listings);
 app.use('/api/feed/user', [protectedUser, extractUserId], feedUser);
 app.use('/api/skills', [protectedUser, extractUserId], skills);
@@ -51,6 +52,7 @@ app.use('/api/languages', [protectedUser, extractUserId], languages);
 app.use('/api/workexperiences', [protectedUser, extractUserId], workExp);
 app.use('/api/profilepicture', profilePicture);
 app.use('/api/companypicture', companyPicture);
+app.use('/api/locations', passport.authenticate(['jwt','company-jwt'], {session: false}), location);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

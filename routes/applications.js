@@ -2,9 +2,6 @@ const express = require('express');
 // eslint-disable-next-line new-cap
 const router = express.Router();
 const { Application } = require('../database');
-const { extractUserId } = require('../middleware/id.js');
-
-router.use(extractUserId);
 
 router.post('/new', (req, res) => {
     Application.create({
@@ -50,13 +47,14 @@ router.delete('/delete/:id', (req, res) => {
         .catch((err) => res.json(err));
 });
 
-router.get('/show-status/:status', (req, res) => {
+router.get('/show/status/:status', (req, res) => {
     Application.findAll({
             where: {
-                status: req.params.status
+                status: req.params.status,
+                userId: req.userId
             }
         })
-        .then((application) => res.json(application))
+        .then((applications) => res.json(applications))
         .catch((err) => res.json(err));
 });
 

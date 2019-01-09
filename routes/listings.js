@@ -11,6 +11,7 @@ router.post('*', passport.authenticate('company-jwt', { session: false }));
 router.post('*', extractUserId);
 router.delete('*', passport.authenticate('company-jwt', { session: false }));
 router.delete('*', extractUserId);
+router.get('*', passport.authenticate(['jwt','company-jwt'], {session: false}));
 
 router.post('/new', (req, res) => {
     req.body.companyId = req.userId;
@@ -47,7 +48,10 @@ router.get('/show/:id', (req, res) => {
                 id: req.params.id
             }
         })
-        .then((listing) => res.json(listing))
+        .then((listing) => {
+            listing.update({viewCount: listing.viewCount+1});
+            res.json(listing);
+        })
         .catch((err) => res.json(err));
 });
 

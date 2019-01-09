@@ -1,10 +1,17 @@
 const express = require('express');
 // eslint-disable-next-line new-cap
 const router = express.Router();
-const {Bookmark} = require('../database');
-const {extractUserId, userIdToBody} = require('../middleware/id.js');
+const {Bookmark,JobListing} = require('../database');
+const {userIdToBody} = require('../middleware/id.js');
 
-router.use(extractUserId);
+router.get('/show', (req,res) => {
+  Bookmark.findAll({
+    where:{userId:req.userId}, 
+    include:[JobListing]})
+    .then((listings)=>{
+      res.json(listings);
+    });
+});
 
 router.post('/new', userIdToBody, (req, res) => {
   Bookmark.create(req.body)

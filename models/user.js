@@ -53,23 +53,6 @@ module.exports = (sequelize, type) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    // Address Section
-    street: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    barangay: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    city: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    province: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
     // Birthday
     birthdate: {
       type: Sequelize.DATE,
@@ -98,6 +81,10 @@ module.exports = (sequelize, type) => {
       allowNull: false,
     },
     generalAverage: {
+      type: Sequelize.FLOAT,
+      allowNull: false,
+    },
+    gradeCeiling: {
       type: Sequelize.FLOAT,
       allowNull: false,
     },

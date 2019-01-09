@@ -3,12 +3,14 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({path: '../.env'});
 const bcrypt = require('bcrypt');
 const smtpTransport = require('../mailer');
+// replace on sequelize scopes
+const _ = require('lodash');
 const crypto = require('crypto');
 // eslint-disable-next-line max-len
-const { User, ExtraCurricular, Skill, Language, WorkExperience, Company } = require('../database');
+const {User, ExtraCurricular, Skill, Language, WorkExperience, Company} = require('../database');
 
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
@@ -22,17 +24,15 @@ router.post('/login/company', (req, res) => {
 
 router.post('/signup/user', (req, res) => {
   const plaintext = req.body.user.password;
-  delete req.body.user.verified;
   req.body.user.password = encryptPassword(plaintext);
-  User.create(req.body.user).then((user) => {
+  User.create(_.omit(req.body.user,['verified'])).then((user) => {
     const id = user.id;
 
     const promisesSkill = [];
     const promisesExtraCurricular = [];
     const promisesWorkExperience = [];
     const promisesLanguage = [];
-    const out = {};
-
+    
     for (const skill of req.body.skills) {
       skill.userId = id;
       promisesSkill.push(Skill.create(skill));
@@ -54,30 +54,33 @@ router.post('/signup/user', (req, res) => {
       Promise.all(promisesSkill),
       Promise.all(promisesExtraCurricular),
       Promise.all(promisesWorkExperience),
-      Promise.all(promisesLanguage)
+      Promise.all(promisesLanguage),
     ])
       .then((output) => {
-        updateAndMail(user,true,'emailVerification', 'First Future - Email Verification', process.env.VERIFICATION_URL,res);
+        updateAndMail(user, true, 'emailVerification', 'First Future - Email Verification', process.env.VERIFICATION_URL, res);
       })
-      .catch((err) => res.json(err));
+      .catch((err) => {
+        user.destroy();
+        res.json(err)
+      });
   })
-    .catch((err) => res.json(err));
+      .catch((err) => res.json(err));
 });
 
 router.post('/signup/company', (req, res) => {
   delete req.body.verified;
   req.body.password = encryptPassword(req.body.password);
   Company.create(req.body)
-    .then((company) => updateAndMail(company,false,'emailVerification', 'First Future - Email Verification', process.env.VERIFICATION_URL,res))
-    .catch((err) => res.json(err));
+      .then((company) => updateAndMail(company, false, 'emailVerification', 'First Future - Email Verification', process.env.VERIFICATION_URL, res))
+      .catch((err) => res.json(err));
 });
 
-router.post('/verify/student', (req,res)=>{
-  validateUser(User,req,res);
+router.post('/verify/student', (req, res)=>{
+  validateUser(User, req, res);
 });
 
-router.post('/verify/company', (req,res)=>{
-  validateUser(Company,req,res);
+router.post('/verify/company', (req, res)=>{
+  validateUser(Company, req, res);
 });
 
 router.post('/account_recovery/student', (req, res) => {
@@ -138,7 +141,7 @@ function validateUser(model, req, res) {
     const validRole = isStudent ? decoded.isStudent : !decoded.isStudent;
     if (validRole) {
       const deltas = {
-        verified: true
+        verified: true,
       };
       const identifiers = {
         where: {
@@ -163,10 +166,10 @@ function validateUser(model, req, res) {
  */
 function recoverAccount(model, req, res) {
   const isStudent = model == User ? true : false;
-  model.findOne({ where: { email: req.body.email, verified : true}}).then((out) => {
-    updateAndMail(out, isStudent, 'forgotPasswordUser', 'Password Reset', process.env.RESET_URL, res)
+  model.findOne({where: {email: req.body.email, verified: true}}).then((out) => {
+    updateAndMail(out, isStudent, 'forgotPasswordUser', 'Password Reset', process.env.RESET_URL, res);
   })
-    .catch((err) => res.json(new Error('Unable to reset password')));
+      .catch((err) => res.json(new Error('Unable to reset password')));
 }
 
 function updateAndMail(out, isStudent, template, subject, targetURL, res) {
@@ -180,10 +183,11 @@ function updateAndMail(out, isStudent, template, subject, targetURL, res) {
       isStudent: isStudent,
     };
     const jwtToSend = jwt.sign(claims, process.env.JWTSecret);
+    console.log(jwtToSend);
     const emailContext = {
       url: targetURL + jwtToSend,
       name: name,
-    }
+    };
     sendMail(out.email, template, subject, emailContext, res);
   });
 }
@@ -194,9 +198,9 @@ function sendMail(email, template, subject, context, res) {
     from: process.env.MAILER_SERVICE_USER,
     template: template,
     subject: subject,
-    context: context
+    context: context,
   };
-  smtpTransport.sendMail(data, function (err) {
+  smtpTransport.sendMail(data, function(err) {
     if (!err) {
       res.json(true);
     } else res.json(new Error('Unable to reset password'));
@@ -221,19 +225,19 @@ function encryptPassword(plaintext) {
  * @param {Response} res - HTTP response
  */
 function login(strategy, req, res) {
-  passport.authenticate(strategy, { session: false }, (err, user, info) => {
+  passport.authenticate(strategy, {session: false}, (err, user, info) => {
     if (err || !user) {
       return res.status(400).json({
         message: 'Something is not right',
         user: user,
       });
     }
-    req.login(user, { session: false }, (err) => {
+    req.login(user, {session: false}, (err) => {
       if (err) {
         res.send(err);
       }
       const token = jwt.sign(user, process.env.JWTSecret);
-      return res.json({ user, token });
+      return res.json({user, token});
     });
   })(req, res);
 }

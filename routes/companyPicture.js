@@ -10,6 +10,7 @@ router.post('*', passport.authenticate('company-jwt', {session: false}));
 router.post('*', extractUserId);
 router.delete('*', passport.authenticate('company-jwt', {session: false}));
 router.delete('*', extractUserId);
+const usersOnly = passport.authenticate(['jwt','company-jwt'], {session: false});
 
 router.post('/new/profile', (req, res, next) => {
   Company.findOne({where: {id: req.userId}}).then((company) => {
@@ -42,7 +43,7 @@ router.delete('/delete/:id', (req, res) => {
       .catch((err) => res.json(err));
 });
 
-router.get('/show/:id', (req, res, next) => {
+router.get('/show/:id', usersOnly, (req, res, next) => {
   CompanyPicture.findOne({
     where: {
       companyId: req.params.id,

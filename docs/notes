@@ -19,3 +19,10 @@ Honors can be formatted as needed depending on formatting
 - rework search, address
 - delete uneditable keys middleware
 - move editables to env (esp in mailer)
+- sequelize utilize scopes
+- specify which values need to be send so that the createdBy updatedBy don't get student
+- replace consecutive queries with include and joins
+- move passport auth to middleware folder
+- rebuild test cases and docs
+- add show routes for all models
+- endpoint for setting status of applications by companies

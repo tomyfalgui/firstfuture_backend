@@ -52,7 +52,7 @@ router.get('/show/:id', userOnly, (req, res) => {
       .catch((err) => res.json(err));
 });
 
-router.get('/show/:id/applications', companyOnly, (req, res) => {
+router.get('/show/:id/applications', [companyOnly, extractUserId], (req, res) => {
   JobListing.findOne({
     where: {
       id: req.params.id,

@@ -13,7 +13,7 @@ module.exports = (sequelize, type) => {
     },
   },{
     defaultScope:{
-      attributes:['userId','jobListingId','status','createdAt'],
+      attributes: {exclude:['updatedAt']},
     },
   });
 };

@@ -31,7 +31,7 @@ const sequelize = new Sequelize(process.env.DB_URL, {
         acquire: 30000,
         idle: 10000
     },
-    logging: false
+    logging: true
 });
 
 const User = userModel(sequelize, Sequelize);
@@ -63,7 +63,7 @@ WorkExperience.belongsTo(User, { onDelete: 'CASCADE' });
 ExtraCurricular.belongsTo(User, { onDelete: 'CASCADE' });
 Bookmark.belongsTo(User, { onDelete: 'CASCADE' });
 Application.belongsTo(User, { onDelete: 'CASCADE' });
-Application.belongsTo(JobListing, { onDelete: 'CASCADE' });
+Application.belongsTo(JobListing, { onDelete: 'SET NULL' });
 
 
 Company.hasMany(JobListing, { onDelete: 'CASCADE', foreignKey:'companyId' });
@@ -81,14 +81,14 @@ Company.belongsTo(City, {foreignKey: 'city'});
 Province.hasMany(City,{foreignKey: 'provCode', targetKey: 'provCode'});
 Region.hasMany(City,{foreignKey: 'regDesc', targetKey: 'regCode'});
 
-sequelize.sync({force: true}).then(()=>{
-    const locations = [Region, Province, City,];
-    const data = [regions, provinces, cities,];
+// sequelize.sync({force: true}).then(()=>{
+//     const locations = [Region, Province, City,];
+//     const data = [regions, provinces, cities,];
 
-    for (let i = 0; i < locations.length; i++) {
-        locations[i].bulkCreate(data[i].RECORDS);
-    }
-});
+//     for (let i = 0; i < locations.length; i++) {
+//         locations[i].bulkCreate(data[i].RECORDS);
+//     }
+// });
 
 module.exports = { User, Company, ExtraCurricular, Skill, Language, 
     WorkExperience, JobListing, Bookmark, ProfilePicture, Application, 

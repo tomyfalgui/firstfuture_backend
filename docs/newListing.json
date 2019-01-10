@@ -1,18 +1,18 @@
 {
+    "position": "Web Developer Intern",
+    "description": "You will be working to develop an app to do app things",
+    "deadline": "2018-11-22T08:37:22.000Z",
+    "category": 5,
+    "industry":1,
+    "viewCount": 1,
+    "requiredSkills": ["Node.js","Sequelize"],
+    "benefits":["1000 pesos daily allowance","room and board"],
+    "isImmersion":false,
     "strands": [
         1,
         2,
         3
     ],
-    "position": "Web Developer Intern",
-    "description": "You will be working to develop an app to do app things",
-    "deadline": "2018-11-22T08:37:22.000Z",
-    "category": 5,
-    "viewCount": 1,
-    "street": "Katipunan Ave.",
-    "barangay": "Loyola Heights",
-    "city": "Quezon City",
-    "province": "NCR",
     "createdAt": "2018-12-26T15:06:47.000Z",
     "updatedAt": "2018-12-26T15:06:47.000Z"
 }

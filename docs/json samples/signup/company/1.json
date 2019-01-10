@@ -3,10 +3,8 @@
 	"password":"Bing is better",
 	"companyName":"Google",
 	"email":"google@gmail.com",
+	"verified":true,
 	"description":"Google is an ad company",
-   	"street":"317 Katipunan",
-    "barangay":"Loyola Heights",
-   	"city":"Quezon City",
-	"province":"NCR",
+   	"city":1336,
 	"contactNumber":"099129291"
 }

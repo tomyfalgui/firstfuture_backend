@@ -7,5 +7,9 @@ module.exports = (sequelize, type) => {
     jobListingId: {
       type: Sequelize.INTEGER(11),
     },
+  },{
+    defaultScope:{
+      attributes: {exclude: ['createdAt','updatedAt']}
+    }
   });
 };

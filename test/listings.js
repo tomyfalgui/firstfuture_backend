@@ -11,7 +11,10 @@ const validCredentialsCompany = require('../docs/json samples/login/company/1/va
 const wrongCompany = require('../docs/json samples/signup/company/2.json');
 const validCredentialsWrongCompany = require('../docs/json samples/login/company/2/valid.json');
 const newListing = require('../docs/newListing.json');
-
+const {Region, Province, City} = require('../database');
+const cities = require('../docs/locations/refcitymun.json');
+const provinces = require('../docs/locations/refprovince.json');
+const regions = require('../docs/locations/refregion.json');
 const {sequelize} = require('../database');
 
 chai.use(chaiHttp);
@@ -21,7 +24,15 @@ describe('Listings', function() {
   let jwt; let wrongJwt; let wrongUserJwt;
 
   before('testing, clear database', async function() {
-    await sequelize.sync({force: true, truncate: true, cascade: true});
+    await sequelize.sync({force: true, truncate: true, cascade: true})
+        .then(()=>{
+          const locations = [Region, Province, City];
+          const data = [regions, provinces, cities];
+
+          for (let i = 0; i < locations.length; i++) {
+            locations[i].bulkCreate(data[i].RECORDS);
+          }
+        });
   });
 
   before('testing, create profile', (done) => {
@@ -96,14 +107,6 @@ describe('Listings', function() {
             res.body.companyId.should.equal(1);
             res.body.should.have.property('category');
             res.body.category.should.equal(5);
-            res.body.should.have.property('street');
-            res.body.street.should.equal('Katipunan Ave.');
-            res.body.should.have.property('barangay');
-            res.body.barangay.should.equal('Loyola Heights');
-            res.body.should.have.property('city');
-            res.body.city.should.equal('Quezon City');
-            res.body.should.have.property('province');
-            res.body.province.should.equal('NCR');
             done();
           });
     });

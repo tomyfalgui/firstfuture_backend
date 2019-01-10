@@ -3,14 +3,12 @@ const express = require('express');
 const router = express.Router();
 require('dotenv').config();
 const {CompanyPicture, Company} = require('../database');
-const passport = require('passport');
 const {extractUserId} = require('../middleware/id.js');
+const {userOnly, companyOnly} = require('../middleware/auth');
 
-router.post('*', passport.authenticate('company-jwt', {session: false}));
-router.post('*', extractUserId);
-router.delete('*', passport.authenticate('company-jwt', {session: false}));
-router.delete('*', extractUserId);
-const usersOnly = passport.authenticate(['jwt','company-jwt'], {session: false});
+router.post('*', [companyOnly, extractUserId]);
+router.delete('*', [companyOnly, extractUserId]);
+router.get('*', userOnly);
 
 router.post('/new/profile', (req, res, next) => {
   Company.findOne({where: {id: req.userId}}).then((company) => {
@@ -43,7 +41,7 @@ router.delete('/delete/:id', (req, res) => {
       .catch((err) => res.json(err));
 });
 
-router.get('/show/:id', usersOnly, (req, res, next) => {
+router.get('/show/:id', (req, res, next) => {
   CompanyPicture.findOne({
     where: {
       companyId: req.params.id,
@@ -56,6 +54,12 @@ router.get('/show/:id', usersOnly, (req, res, next) => {
       .catch((err) => res.json(err));
 });
 
+/**
+ * Creates an image for the company specified in the request
+ * @param {Boolean} isProfile - If image to be added is a profile pic or not
+ * @param {Request} req - HTTP Request
+ * @param {Response} res - HTTP Response
+ */
 function createCompanyPicture(isProfile, req, res) {
   CompanyPicture.create({
     image: req.files.image.data,
@@ -63,18 +67,27 @@ function createCompanyPicture(isProfile, req, res) {
     companyId: req.userId,
   })
       .then(() => {
-      isProfile ? company.update({profilePicture: image.id}).then(()=>res.json(true)) : company.update({coverPicture: image.id}).then(()=>res.json(true));
+    isProfile ? company.update({profilePicture: image.id}).then(res.json(true))
+     : company.update({coverPicture: image.id}).then(res.json(true));
       })
       .catch((err) => res.json(err));
 }
+
+/**
+ * Updates an image for the company specified in the request
+ * @param {Boolean} isProfile - If image to be updated is a profile pic or not
+ * @param {Request} req - HTTP Request
+ * @param {Response} res - HTTP Response
+ */
 function updateCompanyPicture(isProfile, req, res) {
+  const imageId = isProfile ? company.profilePicture : company.coverPicture;
   CompanyPicture.update({
     image: req.files.image.data,
     mimetype: req.files.image.mimetype,
   },
   {
     where: {
-      companyId: (isProfile ? parseInt(company.profilePicture) : parseInt(company.coverPicture)),
+      id: parseInt(imageId),
     },
   })
       .then((image) => {

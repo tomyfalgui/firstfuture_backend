@@ -13,16 +13,15 @@ Hashing is done on the server side to reduce transfer volumes
 Honors can be formatted as needed depending on formatting
 
 - search improvements
-- link jobListingSkill to jobLIsting
-- standardize responses
-- error handling
 - rework search, address
-- delete uneditable keys middleware
 - move editables to env (esp in mailer)
-- sequelize utilize scopes
-- specify which values need to be send so that the createdBy updatedBy don't get student
 - replace consecutive queries with include and joins
-- move passport auth to middleware folder
 - rebuild test cases and docs
 - add show routes for all models
 - endpoint for setting status of applications by companies
+- scopes for login, reg etc.
+- control inputs to accept only the necessary
+- limit job listing selection to those before deadline passes
+- resend email verification
+- Prevent more than one applciation per user per job listing
+- differentiate invalid query (i.e. wrong company for /show/id/applications) and no entries

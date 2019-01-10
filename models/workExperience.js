@@ -32,6 +32,9 @@ module.exports = (sequelize, type) => {
           throw new Error('Start date can\'t be after the end date!');
         }
       }
+    },
+    defaultScope:{
+      attributes: {exclude: ['createdAt','updatedAt']}
     }
   });
 };

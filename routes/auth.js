@@ -1,16 +1,15 @@
+require('dotenv').config({path: '../.env'});
 const express = require('express');
 // eslint-disable-next-line new-cap
 const router = express.Router();
-const jwt = require('jsonwebtoken');
+const {User, ExtraCurricular, Skill,
+  Language, WorkExperience, Company} = require('../database');
 const passport = require('passport');
-require('dotenv').config({path: '../.env'});
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const smtpTransport = require('../mailer');
-// replace on sequelize scopes
-const _ = require('lodash');
 const crypto = require('crypto');
-// eslint-disable-next-line max-len
-const {User, ExtraCurricular, Skill, Language, WorkExperience, Company} = require('../database');
+
 
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
@@ -25,14 +24,21 @@ router.post('/login/company', (req, res) => {
 router.post('/signup/user', (req, res) => {
   const plaintext = req.body.user.password;
   req.body.user.password = encryptPassword(plaintext);
-  User.create(_.omit(req.body.user,['verified'])).then((user) => {
+  User.create(req.body.user,
+  // {fields: ['id','firstName','lastName','password','middleName','userName',
+  //     'email','phone','birthdate','sex','isGraduate','graduationDate','shs',
+  //     'strand','generalAverage','gradeCeiling','honors',
+  //     'englishSpeakingRating','englishWritingRating','englishReadingRating',
+  //     'filipinoSpeakingRating','filipinoWritingRating',
+  //     'filipinoReadingRating',]}
+  ).then((user) => {
     const id = user.id;
 
     const promisesSkill = [];
     const promisesExtraCurricular = [];
     const promisesWorkExperience = [];
     const promisesLanguage = [];
-    
+
     for (const skill of req.body.skills) {
       skill.userId = id;
       promisesSkill.push(Skill.create(skill));
@@ -56,22 +62,30 @@ router.post('/signup/user', (req, res) => {
       Promise.all(promisesWorkExperience),
       Promise.all(promisesLanguage),
     ])
-      .then((output) => {
-        updateAndMail(user, true, 'emailVerification', 'First Future - Email Verification', process.env.VERIFICATION_URL, res);
-      })
-      .catch((err) => {
-        user.destroy();
-        res.json(err)
-      });
+        .then(() => {
+          updateAndMail(user, true, 'emailVerification',
+              'First Future - Email Verification', process.env.VERIFY_URL);
+          res.json(true);
+        })
+        .catch((err) => {
+          user.destroy();
+          res.json(err);
+        });
   })
       .catch((err) => res.json(err));
 });
 
 router.post('/signup/company', (req, res) => {
-  delete req.body.verified;
   req.body.password = encryptPassword(req.body.password);
-  Company.create(req.body)
-      .then((company) => updateAndMail(company, false, 'emailVerification', 'First Future - Email Verification', process.env.VERIFICATION_URL, res))
+  Company.create(req.body,
+      // {fields:['userName','email', 'password','companyName'
+      // ,'contactNumber','desciption','city']}
+  ).then((company) => {
+    updateAndMail(company, false, 'emailVerification',
+        'First Future - Email Verification',
+        process.env.VERIFICATION_URL);
+    res.json(true);
+  })
       .catch((err) => res.json(err));
 });
 
@@ -132,6 +146,12 @@ function passwordReset(model, req, res) {
   }
 }
 
+/**
+ * Checks if the given token is valid; if yes, verifies the user
+ * @param {object} model - Sequelize model
+ * @param {Request} req - HTTP Request
+ * @param {Response} res - HTTP Response
+ */
 function validateUser(model, req, res) {
   try {
     const isStudent = (model == User);
@@ -142,6 +162,7 @@ function validateUser(model, req, res) {
     if (validRole) {
       const deltas = {
         verified: true,
+        passwordResetToken: null,
       };
       const identifiers = {
         where: {
@@ -149,8 +170,11 @@ function validateUser(model, req, res) {
           passwordResetToken: decoded.resetToken,
         },
       };
-      model.update(deltas, identifiers).then(() => {
-        res.json(true);
+      model.update(deltas, identifiers).then((out) => {
+        // if out is [0] i.e. the transaction didn't work, return error
+        if (out) {
+          res.json(true);
+        } else res.json(new Error('Error validating user'));
       });
     } else throw new Error('Role mismatch');
   } catch (err) {
@@ -166,13 +190,25 @@ function validateUser(model, req, res) {
  */
 function recoverAccount(model, req, res) {
   const isStudent = model == User ? true : false;
-  model.findOne({where: {email: req.body.email, verified: true}}).then((out) => {
-    updateAndMail(out, isStudent, 'forgotPasswordUser', 'Password Reset', process.env.RESET_URL, res);
-  })
+  model.findOne({where: {email: req.body.email, verified: true}})
+      .then((out) => {
+        updateAndMail(out, isStudent, 'forgotPasswordUser',
+            'Password Reset', process.env.RESET_URL);
+        res.json(true);
+      })
       .catch((err) => res.json(new Error('Unable to reset password')));
 }
 
-function updateAndMail(out, isStudent, template, subject, targetURL, res) {
+/**
+ * Updates the user's passwordResetToken field and sends email with
+ * the arguments specified
+ * @param {object} out - Sequelize Instance
+ * @param {Boolean} isStudent - If the model to use is Company or not
+ * @param {String} template - Specifies which template to use
+ * @param {String} subject - Specifies the subject field of email to send
+ * @param {String} targetURL - Specifies which url to send with the email
+ */
+function updateAndMail(out, isStudent, template, subject, targetURL) {
   const buffer = crypto.randomBytes(30).toString('hex');
   out.update({passwordResetToken: buffer}).then(() => {
     const name = isStudent ? out.firstName : out.userName;
@@ -188,11 +224,19 @@ function updateAndMail(out, isStudent, template, subject, targetURL, res) {
       url: targetURL + jwtToSend,
       name: name,
     };
-    sendMail(out.email, template, subject, emailContext, res);
+    sendMail(out.email, template, subject, emailContext);
   });
 }
 
-function sendMail(email, template, subject, context, res) {
+/**
+ * Composes email to send to the specified address witht the stated contents
+ * @param {String} email - Receipient of the email being sent
+ * @param {String} template - Specifies which template to use
+ * @param {String} subject -  Specifies the subject field of email to send
+ * @param {object} context - Content to fill out the template with
+ * @return {Promise} - Returns the mail sending as a promise
+ */
+function sendMail(email, template, subject, context) {
   const data = {
     to: email,
     from: process.env.MAILER_SERVICE_USER,
@@ -200,11 +244,7 @@ function sendMail(email, template, subject, context, res) {
     subject: subject,
     context: context,
   };
-  smtpTransport.sendMail(data, function(err) {
-    if (!err) {
-      res.json(true);
-    } else res.json(new Error('Unable to reset password'));
-  });
+  return smtpTransport.sendMail(data);
 }
 
 /**

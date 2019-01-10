@@ -1,10 +1,10 @@
+require('dotenv').config({path: '../.env'});
 const express = require('express');
 // eslint-disable-next-line new-cap
 const router = express.Router();
 const {JobListing, User} = require('../database');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-require('dotenv').config({path: '../.env'});
 
 const feedSize = parseInt(process.env.feedSize);
 
@@ -23,14 +23,13 @@ router.get('/', (req, res, next)=>{
           },
           {updatedAt: {[Op.lt]: fetchOlderThan}},
         ]},
-      logging: console.log,
       order: [
         ['updatedAt', 'DESC'],
       ],
       limit: feedSize})
         .then((results)=>{
-          for(let i=0; i < results.length; i++){
-            results[i].update({viewCount:results[i].viewCount++});
+          for (let i=0; i < results.length; i++) {
+            results[i].update({viewCount: results[i].viewCount+1});
           }
           res.json({
             posts: results,

@@ -18,14 +18,6 @@ module.exports = (sequelize, type) => {
       allowNull: false,
       defaultValue: false
     },
-    profilePicture: {
-      type: Sequelize.STRING,
-      allowNull: true,
-    },
-    coverPicture: {
-      type: Sequelize.STRING,
-      allowNull: true,
-    },
     email: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -42,28 +34,22 @@ module.exports = (sequelize, type) => {
       allowNull: false,
     },
     contactNumber: {
-      type: Sequelize.STRING,
+      type: Sequelize.JSON,
       allowNull: false,
     },
     description: {
       type: Sequelize.TEXT,
       allowNull: true,
     },
-    street: {
-      type: Sequelize.STRING,
-      allowNull: false,
+  },{
+    defaultScope:{
+      attributes:['userName','email',
+      'companyName','contactNumber','desciption','city']
     },
-    barangay: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    city: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    province: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
+    scopes:{
+      auth:{
+        attributes:['id','password','email','verified']
+      },
+    }
   });
 };

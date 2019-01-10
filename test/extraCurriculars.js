@@ -11,7 +11,10 @@ const validCredentialsWrongStudent = require('../docs/json samples/login/user/2/
 const wrongCompany = require('../docs/json samples/signup/company/1.json');
 const validCredentialsWrongCompany = require('../docs/json samples/login/company/1/valid.json');
 const newExtraCurricular = require('../docs/newExtraCurricular.json');
-
+const {Region, Province, City} = require('../database');
+const cities = require('../docs/locations/refcitymun.json');
+const provinces = require('../docs/locations/refprovince.json');
+const regions = require('../docs/locations/refregion.json');
 const {sequelize} = require('../database');
 
 chai.use(chaiHttp);
@@ -21,7 +24,15 @@ describe('ExtraCurriculars', function() {
   let jwt; let wrongJwt; let wrongCompanyJwt;
 
   before('testing, clear database', async function() {
-    await sequelize.sync({force: true, truncate: true, cascade: true});
+    await sequelize.sync({force: true, truncate: true, cascade: true})
+        .then(()=>{
+          const locations = [Region, Province, City];
+          const data = [regions, provinces, cities];
+
+          for (let i = 0; i < locations.length; i++) {
+            locations[i].bulkCreate(data[i].RECORDS);
+          }
+        });
   });
 
   before('testing, create profile', (done) => {

@@ -11,7 +11,10 @@ const validCredentialsWrongStudent = require('../docs/json samples/login/user/2/
 const wrongCompany = require('../docs/json samples/signup/company/1.json');
 const validCredentialsWrongCompany = require('../docs/json samples/login/company/1/valid.json');
 const newWorkExperience = require('../docs/newWorkExperience.json');
-
+const {Region, Province, City} = require('../database');
+const cities = require('../docs/locations/refcitymun.json');
+const provinces = require('../docs/locations/refprovince.json');
+const regions = require('../docs/locations/refregion.json');
 const {sequelize} = require('../database');
 
 chai.use(chaiHttp);
@@ -21,7 +24,15 @@ describe('Work Experiences', function() {
   let jwt; let wrongJwt; let wrongCompanyJwt;
 
   before('testing, clear database', async function() {
-    await sequelize.sync({force: true, truncate: true, cascade: true});
+    await sequelize.sync({force: true, truncate: true, cascade: true})
+        .then(()=>{
+          const locations = [Region, Province, City];
+          const data = [regions, provinces, cities];
+
+          for (let i = 0; i < locations.length; i++) {
+            locations[i].bulkCreate(data[i].RECORDS);
+          }
+        });
   });
 
   before('testing, create profile', (done) => {
@@ -83,7 +94,7 @@ describe('Work Experiences', function() {
           .send(newWorkExperience).end((err, res) => {
             res.should.have.status(200);
             res.body.should.have.property('id');
-            res.body.id.should.equal(7);
+            res.body.id.should.equal(5);
             res.body.should.have.property('company');
             res.body.company.should.equal('Twitter');
             res.body.should.have.property('typeOfWork');
@@ -127,7 +138,7 @@ describe('Work Experiences', function() {
       chai.request(app).post('/api/workexperiences/edit')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + jwt)
-          .send({id: 7, deltas: {description: 'Developed a Flask App to monitor database clusters'}}).end((err, res) => {
+          .send({id: 5, deltas: {description: 'Developed a Flask App to monitor database clusters'}}).end((err, res) => {
             res.should.have.status(200);
             res.body.should.deep.equal([1]);
             done();
@@ -136,7 +147,7 @@ describe('Work Experiences', function() {
     it('should be not be able to edit work experience entries if user is not authorized', function(done) {
       chai.request(app).post('/api/workexperiences/edit')
           .set('content-type', 'application/json')
-          .send({id: 7, deltas: {description: 'Developed a Flask App to monitor database clusters'}}).end((err, res) => {
+          .send({id: 5, deltas: {description: 'Developed a Flask App to monitor database clusters'}}).end((err, res) => {
             res.should.have.status(401);
             res.body.should.deep.equal({});
             res.error.text.should.equal('Unauthorized');
@@ -147,7 +158,7 @@ describe('Work Experiences', function() {
       chai.request(app).post('/api/workexperiences/edit')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + wrongJwt)
-          .send({id: 7, deltas: {description: 'Developed a Flask App to monitor database clusters'}}).end((err, res) => {
+          .send({id: 5, deltas: {description: 'Developed a Flask App to monitor database clusters'}}).end((err, res) => {
             res.should.have.status(200);
             res.body.should.deep.equal([0]);
             done();

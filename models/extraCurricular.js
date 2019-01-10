@@ -30,7 +30,10 @@ module.exports = (sequelize, type) => {
         if((this.startDate>this.endDate) && (this.endDate != null)){
           throw new Error('Start date can\'t be after the end date!');
         }
-      }
-    }
+      },
+    },
+    defaultScope:{
+      attributes: {exclude: ['createdAt','updatedAt']}
+    },
   });
 };

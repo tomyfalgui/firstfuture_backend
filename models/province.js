@@ -22,5 +22,13 @@ module.exports = (sequelize, type) => {
   {
     freezeTableName: true,
     timestamps: false,
+    defaultScope:{
+      attributes:['provDesc','provCode']
+    },
+    scopes:{
+      nameOnly:{
+        attributes:['provDesc'],
+      }
+    },
   });
 };

@@ -16,25 +16,26 @@ module.exports = (sequelize, type) => {
       type: Sequelize.INTEGER(2),
       allowNull: false,
     },
+    industry: {
+      type: Sequelize.INTEGER(2),
+      allowNull: false,
+    },
     viewCount: {
       type: Sequelize.INTEGER(6),
+      defaultValue: 0,
       allowNull: false,
     },
-    street: {
-      type: Sequelize.STRING,
+    requiredSkills: {
+      type: Sequelize.JSON,
       allowNull: false,
     },
-    barangay: {
-      type: Sequelize.STRING,
+    benefits: {
+      type: Sequelize.JSON,
       allowNull: false,
     },
-    city: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    province: {
-      type: Sequelize.STRING,
-      allowNull: false,
+    isImmersion:{
+      type: Sequelize.BOOLEAN,
+      allowNull: false
     },
     strands: {
       type: Sequelize.STRING,
@@ -55,5 +56,9 @@ module.exports = (sequelize, type) => {
         this.setDataValue('strands', val.join(';'));
       },
     },
+  },{
+    defaultScope:{
+      attributes: {exclude: ['createdAt','updatedAt']}
+    }
   });
 };

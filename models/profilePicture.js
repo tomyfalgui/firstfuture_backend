@@ -10,5 +10,10 @@ module.exports = (sequelize, type) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+  },
+  {
+    defaultScope:{
+      attributes: {exclude: ['createdAt','updatedAt']}
+    },
   });
 };

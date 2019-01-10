@@ -2,11 +2,9 @@
 	"userName":"Twitter URecruiting",
 	"password":"getitright",
 	"companyName":"Twitter",
-	"email":"twitter@twitter.com",
+	"email":"twitter2@twitter.com",
+	"verified":true,
 	"description":"Twitter is an ad company",
-   	"street":"317 Katipunan",
-    "barangay":"Loyola Heights",
-   	"city":"Quezon City",
-	"province":"NCR",
+	"city":1337,
 	"contactNumber":"099129291"
 }

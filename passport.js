@@ -35,6 +35,23 @@ passport.use('company-jwt', new JWTStrategy(jwtSettings,
 ));
 
 /**
+ * Generates a callback for the local strategy based on the model passed
+ * @param {object} model - sequelize model
+ * @return {function} callback - generated callback function
+ */
+function generateLocalCallback(model) {
+  const isCompany = model == Company ? true : false;
+  return function(sentEmail, sentPassword, cb) {
+    const criteria = {email: sentEmail, verified: true};
+    return model.scope('auth').findOne({where: criteria}).then((out) => {
+      if (!out) {
+        return cb(null, false, {message: 'Invalid login'});
+      } else return validatePassword(sentPassword, out, cb, isCompany);
+    }).catch((error) => cb(error));
+  };
+}
+
+/**
  * Generates a callback for the JWT strategy based on the model passed
  * @param {object} model - sequelize model
  * @return {function} callback - generated callback function
@@ -44,7 +61,7 @@ function generateJWTCallback(model) {
   return (function(claims, cb) {
     const assess = isComp ? claims.isCompany : !claims.isCompany;
     if (assess) {
-      return model.findById(claims.id)
+      return model.scope('auth').findById(claims.id)
           .then((user) => {
             return cb(null, user);
           })
@@ -54,23 +71,6 @@ function generateJWTCallback(model) {
     }
     return cb(null, false);
   });
-}
-
-/**
- * Generates a callback for the local strategy based on the model passed
- * @param {object} model - sequelize model
- * @return {function} callback - generated callback function
- */
-function generateLocalCallback(model) {
-  const isCompany = model == Company ? true : false;
-  return function(sentEmail, sentPassword, cb) {
-    let criteria = {email: sentEmail, verified: true};
-    return model.findOne({where: criteria}).then((out) => {
-      if (!out) {
-        return cb(null, false, {message: 'Invalid login'});
-      } else return validatePassword(sentPassword, out, cb, isCompany);
-    }).catch((error) => cb(error));
-  };
 }
 
 /**

@@ -1,16 +1,14 @@
+require('dotenv').config();
 const express = require('express');
 // eslint-disable-next-line new-cap
 const router = express.Router();
-require('dotenv').config();
 const {ProfilePicture} = require('../database');
-const passport = require('passport');
 const {extractUserId} = require('../middleware/id.js');
+const {studentOnly, userOnly} = require('../middleware/auth');
 
-router.post('*', passport.authenticate('jwt', {session: false}));
-router.post('*', extractUserId);
-router.delete('*', passport.authenticate('jwt', {session: false}));
-router.delete('*', extractUserId);
-router.get('*',passport.authenticate(['jwt','company-jwt'], {session: false}));
+router.post('*', [studentOnly, extractUserId]);
+router.delete('*', [studentOnly, extractUserId]);
+router.get('*', userOnly);
 
 router.post('/new', (req, res, next) => {
   ProfilePicture.count({where: {userId: req.userId}})
@@ -43,7 +41,7 @@ router.delete('/delete', (req, res) => {
       .catch((err)=>res.json(err));
 });
 
-router.get('/show/:id', usersOnly, (req, res, next)=>{
+router.get('/show/:id', (req, res, next)=>{
   ProfilePicture.findOne({
     where: {
       userId: req.params.id}})

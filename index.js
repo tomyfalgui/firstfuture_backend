@@ -4,9 +4,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const cors = require('cors');
-const passport = require('passport');
 const fileUpload = require('express-fileupload');
 const {extractUserId} = require('./middleware/id');
+const {userOnly, studentOnly} = require('./middleware/auth');
 const helmet = require('helmet');
 require('./passport.js');
 
@@ -36,23 +36,23 @@ app.use(bodyParser.raw({inflate: true, limit: '150kb'}));
 app.use(fileUpload());
 app.use(cors());
 
+
 // Routes
-const protectedUser = passport.authenticate('jwt', {session: false});
 
 app.use('/api/auth', auth);
 app.use('/api/users', users);
 app.use('/api/companies', companies);
-app.use('/api/bookmarks', [protectedUser, extractUserId], bookmarks);
-app.use('/api/applications', [protectedUser, extractUserId], applications);
+app.use('/api/bookmarks', [studentOnly, extractUserId], bookmarks);
+app.use('/api/applications', extractUserId, applications);
 app.use('/api/listings', listings);
-app.use('/api/feed/user', [protectedUser, extractUserId], feedUser);
-app.use('/api/skills', [protectedUser, extractUserId], skills);
-app.use('/api/extracurriculars', [protectedUser, extractUserId], extraCurr);
-app.use('/api/languages', [protectedUser, extractUserId], languages);
-app.use('/api/workexperiences', [protectedUser, extractUserId], workExp);
+app.use('/api/feed/user', [studentOnly, extractUserId], feedUser);
+app.use('/api/skills', [studentOnly, extractUserId], skills);
+app.use('/api/extracurriculars', [studentOnly, extractUserId], extraCurr);
+app.use('/api/languages', [studentOnly, extractUserId], languages);
+app.use('/api/workexperiences', [studentOnly, extractUserId], workExp);
 app.use('/api/profilepicture', profilePicture);
 app.use('/api/companypicture', companyPicture);
-app.use('/api/locations', passport.authenticate(['jwt','company-jwt'], {session: false}), location);
+app.use('/api/locations', userOnly, location);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

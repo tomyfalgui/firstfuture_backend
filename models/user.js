@@ -115,5 +115,19 @@ module.exports = (sequelize, type) => {
       type: Sequelize.INTEGER(2),
       allowNull: false,
     },
+  },{
+    // By default allows access only to user visible data
+    defaultScope:{
+      attributes:['id','firstName','lastName','middleName','userName','email'
+      ,'phone','birthdate','sex','isGraduate','graduationDate','shs','strand',
+      'generalAverage','gradeCeiling','honors','englishSpeakingRating','englishWritingRating',
+      'englishReadingRating','filipinoSpeakingRating','filipinoWritingRating',
+      'filipinoReadingRating',],
+    },
+    scopes : {
+      auth:{
+        attributes:['id','password','email','verified']
+      },
+    }
   });
 };

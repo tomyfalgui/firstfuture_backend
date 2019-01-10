@@ -9,7 +9,6 @@ const workExperienceModel = require('./models/workExperience');
 const skillModel = require('./models/skill');
 const bookmarkModel = require('./models/bookmark');
 const jobListingModel = require('./models/jobListing');
-const jobListingSkillModel = require('./models/jobListingSkill');
 const profilePictureModel = require('./models/profilePicture');
 const applicationModel = require('./models/application');
 const companyPictureModel = require('./models/companyPicture');
@@ -33,7 +32,7 @@ const sequelize = new Sequelize(process.env.DB_URL, {
         idle: 10000
     },
     logging: false
-})
+});
 
 const User = userModel(sequelize, Sequelize);
 const Company = companyModel(sequelize, Sequelize);
@@ -43,9 +42,7 @@ const Language = languageModel(sequelize, Sequelize);
 const WorkExperience = workExperienceModel(sequelize, Sequelize);
 const Bookmark = bookmarkModel(sequelize, Sequelize);
 const JobListing = jobListingModel(sequelize, Sequelize);
-const jobListingSkill = jobListingSkillModel(sequelize, Sequelize);
 const Application = applicationModel(sequelize, Sequelize);
-// Temp, remove on working directory
 const ProfilePicture = profilePictureModel(sequelize, Sequelize);
 const CompanyPicture = companyPictureModel(sequelize, Sequelize);
 const City = cityModel(sequelize, Sequelize);
@@ -66,21 +63,25 @@ WorkExperience.belongsTo(User, { onDelete: 'CASCADE' });
 ExtraCurricular.belongsTo(User, { onDelete: 'CASCADE' });
 Bookmark.belongsTo(User, { onDelete: 'CASCADE' });
 Application.belongsTo(User, { onDelete: 'CASCADE' });
+Application.belongsTo(JobListing, { onDelete: 'CASCADE' });
 
-Company.hasMany(JobListing, { onDelete: 'CASCADE' });
+
+Company.hasMany(JobListing, { onDelete: 'CASCADE', foreignKey:'companyId' });
 Company.hasMany(CompanyPicture, { onDelete: 'CASCADE' });
 JobListing.hasMany(Bookmark, { onDelete: 'CASCADE' });
-JobListing.hasMany(jobListingSkill, { onDelete: 'CASCADE' });
 JobListing.hasMany(Application, { onDelete: 'SET NULL' });
+JobListing.belongsTo(Company, { onDelete: 'CASCADE', foreignKey:'companyId' });
 Bookmark.belongsTo(JobListing, { onDelete: 'CASCADE' });
 City.belongsTo(Province, {foreignKey: 'provCode', targetKey: 'provCode'});
 City.belongsTo(Region,{foreignKey: 'regDesc', targetKey: 'regCode'});
 City.hasMany(User, {foreignKey: 'city'});
 User.belongsTo(City, {foreignKey: 'city'})
+City.hasMany(Company, {foreignKey: 'city'});
+Company.belongsTo(City, {foreignKey: 'city'});
 Province.hasMany(City,{foreignKey: 'provCode', targetKey: 'provCode'});
 Region.hasMany(City,{foreignKey: 'regDesc', targetKey: 'regCode'});
 
-sequelize.sync({ force: true }).then(async ()=>{
+sequelize.sync({force: true}).then(()=>{
     const locations = [Region, Province, City,];
     const data = [regions, provinces, cities,];
 
@@ -89,4 +90,6 @@ sequelize.sync({ force: true }).then(async ()=>{
     }
 });
 
-module.exports = { User, Company, ExtraCurricular, Skill, Language, WorkExperience, JobListing, jobListingSkill, Bookmark, ProfilePicture, Application, CompanyPicture, Region, City, Province, sequelize };
+module.exports = { User, Company, ExtraCurricular, Skill, Language, 
+    WorkExperience, JobListing, Bookmark, ProfilePicture, Application, 
+    CompanyPicture, Region, City, Province, sequelize };

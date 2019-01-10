@@ -24,5 +24,13 @@ module.exports = (sequelize, type) => {
   }, {
     timestamps: false,
     freezeTableName: true,
+    defaultScope:{
+      attributes:['citymunDesc','id']
+    },
+    scopes:{
+      nameOnly:{
+        attributes:['citymunDesc'],
+      }
+    },
   });
 };

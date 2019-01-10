@@ -9,6 +9,11 @@ module.exports = (sequelize, type) => {
     },
     status: {
       type: Sequelize.INTEGER(2),
+      defaultValue:0
+    },
+  },{
+    defaultScope:{
+      attributes:['userId','jobListingId','status','createdAt'],
     },
   });
 };

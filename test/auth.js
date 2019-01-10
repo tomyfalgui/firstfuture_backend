@@ -11,23 +11,36 @@ const validCredentialsCompany = require('../docs/json samples/login/company/1/va
 const invalidCredentialsStudent = require('../docs/json samples/login/user/1/invalid.json');
 const invalidCredentialsCompany = require('../docs/json samples/login/company/1/invalid.json');
 const {sequelize, User, Company} = require('../database');
+const {Region, Province, City} = require('../database');
+const cities = require('../docs/locations/refcitymun.json');
+const provinces = require('../docs/locations/refprovince.json');
+const regions = require('../docs/locations/refregion.json');
 
 chai.use(chaiHttp);
 chai.should();
 
 describe('User', function() {
   before('testing, clear database', async function() {
-    await sequelize.sync({force: true, truncate: true, cascade: true});
+    await sequelize.sync({force: true, truncate: true, cascade: true})
+        .then(()=>{
+          const locations = [Region, Province, City];
+          const data = [regions, provinces, cities];
+
+          for (let i = 0; i < locations.length; i++) {
+            locations[i].bulkCreate(data[i].RECORDS);
+          }
+        });
   });
 
   describe('/api/auth/signup/user', ()=>{
     it('should create a user when data is posted', function(done) {
+      // eslint-disable-next-line no-invalid-this
+      this.timeout(7000);
       chai.request(app).post('/api/auth/signup/user').set('content-type', 'application/json')
           .send(sampleStudent).end((err, res)=>{
             res.should.have.status(200);
             res.should.be.json;
-            res.body.should.be.a('object');
-            res.body.should.have.property('user');
+            res.body.should.equal(true);
             done();
           });
     });
@@ -80,24 +93,16 @@ describe('User', function() {
           });
     });
   });
-
-  after('testing, clear database', async function() {
-    await sequelize.sync({force: true, truncate: true, cascade: true});
-  });
 });
 
 describe('Companies', function() {
-  before('testing, clear database', async function() {
-    await sequelize.sync({force: true, truncate: true, cascade: true});
-  });
-
   describe('/api/auth/signup/company', ()=>{
     it('should create a company when data is posted', function(done) {
       chai.request(app).post('/api/auth/signup/company').set('content-type', 'application/json')
           .send(sampleCompany).end((err, res)=>{
             res.should.have.status(200);
             res.should.be.json;
-            res.body.should.be.a('object');
+            res.body.should.equal(true);
             done();
           });
     });

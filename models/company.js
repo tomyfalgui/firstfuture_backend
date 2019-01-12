@@ -44,12 +44,15 @@ module.exports = (sequelize, type) => {
   },{
     defaultScope:{
       attributes:['userName','email',
-      'companyName','contactNumber','desciption','city']
+      'companyName','contactNumber','description','city']
     },
     scopes:{
       auth:{
         attributes:['id','password','email','verified']
       },
+      nameOnly:{
+        attributes:['companyName']
+      }
     }
   });
 };

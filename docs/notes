@@ -11,17 +11,3 @@ English and Filipino skills are assumed per user, but other languages are not an
 STRING is VARCHAR(255) by default in Sequelize
 Hashing is done on the server side to reduce transfer volumes
 Honors can be formatted as needed depending on formatting
-
-- search improvements
-- rework search, address
-- move editables to env (esp in mailer)
-- replace consecutive queries with include and joins
-- rebuild test cases and docs
-- add show routes for all models
-- endpoint for setting status of applications by companies
-- scopes for login, reg etc.
-- control inputs to accept only the necessary
-- limit job listing selection to those before deadline passes
-- resend email verification
-- Prevent more than one applciation per user per job listing
-- differentiate invalid query (i.e. wrong company for /show/id/applications) and no entries

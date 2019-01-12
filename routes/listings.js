@@ -1,7 +1,7 @@
 const express = require('express');
 // eslint-disable-next-line new-cap
 const router = express.Router();
-const {JobListing, Application} = require('../database');
+const {JobListing, Application, Company, City} = require('../database');
 const {extractUserId} = require('../middleware/id.js');
 const {userOnly, companyOnly} = require('../middleware/auth');
 const Sequelize = require('sequelize');
@@ -44,6 +44,7 @@ router.get('/show/:id', userOnly, (req, res) => {
     where: {
       id: req.params.id,
     },
+    include: [Company],
   })
       .then((listing) => {
         listing.update({viewCount: listing.viewCount+1});
@@ -56,14 +57,14 @@ router.get('/show/:id/applications', [companyOnly, extractUserId], (req, res) =>
   JobListing.findOne({
     where: {
       id: req.params.id,
-      companyId: req.userId
+      companyId: req.userId,
     },
     include: [Application],
   })
-    .then((listing) => {
-      res.json(listing);
-    })
-    .catch((err) => res.json(err));
+      .then((listing) => {
+        res.json(listing);
+      })
+      .catch((err) => res.json(err));
 });
 
 // pmac super search
@@ -119,7 +120,7 @@ router.get('/search', userOnly, (req, res) => {
 });
 
 // refined search to position only
-router.get('/simple-search', userOnly, (req, res) => {
+router.get('/search/position', userOnly, (req, res) => {
   const {term} = req.query;
   term = term.toLowerCase();
 
@@ -137,6 +138,22 @@ router.get('/simple-search', userOnly, (req, res) => {
         res.json(listings);
       })
       .catch((err) => console.log(err));
+});
+
+router.get('/search/location/:cityId', userOnly, (req, res) => {
+  City.scope('nameOnly').findAll({
+    where: {
+      id: req.params.cityId,
+    },
+    include: [{
+      model: Company.scope('nameOnly'),
+      include: [{
+        model: JobListing,
+      }],
+    }],
+  }).then((listings)=>{
+    res.json(listings);
+  });
 });
 
 module.exports = router;

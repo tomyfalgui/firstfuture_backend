@@ -101,12 +101,12 @@ router.post('/account_recovery/student', (req, res) => {
   recoverAccount(User, req, res);
 });
 
-router.post('/password_reset/student', (req, res) => {
-  passwordReset(User, req, res);
-});
-
 router.post('/account_recovery/company', (req, res) => {
   recoverAccount(Company, req, res);
+});
+
+router.post('/password_reset/student', (req, res) => {
+  passwordReset(User, req, res);
 });
 
 router.post('/password_reset/company', (req, res) => {

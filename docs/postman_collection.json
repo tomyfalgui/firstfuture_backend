@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "10e4b1f0-b731-4d74-812e-9be635d899a6",
+		"_postman_id": "b6ec2499-7531-466f-bed8-fc2d226c7fbc",
 		"name": "Firstfuture copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -35,11 +35,10 @@
 							"raw": "{\n\t\"id\":1,\n\t\"deltas\":{\n\t\t\"companyName\":\"Bing\",\n\t    \"description\": \"Suprise it's actually bing\"\n\t}\n}"
 						},
 						"url": {
-							"raw": "localhost:3000/api/companies/edit",
+							"raw": "{{url}}/api/companies/edit",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"companies",
@@ -69,11 +68,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:3000/api/companies/delete",
+							"raw": "{{url}}/api/companies/delete",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"companies",
@@ -93,11 +91,34 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:3000/api/companies/show/1",
+							"raw": "{{url}}/api/companies/show/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
+							"path": [
+								"api",
+								"companies",
+								"show",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Company Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/companies/show/1",
+							"host": [
+								"{{url}}"
+							],
 							"path": [
 								"api",
 								"companies",
@@ -134,11 +155,10 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/companypicture/new/profile",
+							"raw": "{{url}}/api/companypicture/new/profile",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"companypicture",
@@ -175,11 +195,10 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/companypicture/new/cover",
+							"raw": "{{url}}/api/companypicture/new/cover",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"companypicture",
@@ -210,11 +229,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:3000/api/companypicture/show/1",
+							"raw": "{{url}}/api/companypicture/show/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"companypicture",
@@ -245,11 +263,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:3000/api/companypicture/show/1",
+							"raw": "{{url}}/api/companypicture/show/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"companypicture",
@@ -273,7 +290,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ2NjEwNDM5fQ.8r7O3FDHACPkDaIyL_6MMmsmcFZkkoLB5SS627HIS7Y",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55Ijp0cnVlLCJpYXQiOjE1NDcxMzcyMjV9.5TllXn-XyZ0bzwrgSqzAuZCsSBxH9AcNACL35PVkWhE",
 									"type": "string"
 								}
 							]
@@ -289,14 +306,13 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"strands\": [\n        1,\n        2,\n        3\n    ],\n    \"position\": \"Web Developer Intern\",\n    \"description\": \"You will be working to develop an app to do app things\",\n    \"deadline\": \"2018-11-22T08:37:22.000Z\",\n    \"category\": 5,\n    \"viewCount\": 1,\n    \"street\": \"Katipunan Ave.\",\n    \"barangay\": \"Loyola Heights\",\n    \"city\": \"Quezon City\",\n    \"province\": \"NCR\",\n    \"createdAt\": \"2018-12-26T15:06:47.000Z\",\n    \"updatedAt\": \"2018-12-26T15:06:47.000Z\"\n}"
+							"raw": "{\r\n    \"position\": \"Web Developer\",\r\n    \"description\": \"You will be working to develop an app to do app things\",\r\n    \"deadline\": \"2018-11-22T08:37:22.000Z\",\r\n    \"category\": 5,\r\n    \"industry\":1,\r\n    \"viewCount\": 1,\r\n    \"requiredSkills\": [\"Node.js\",\"Sequelize\"],\r\n    \"benefits\":[\"1000 pesos daily allowance\",\"room and board\"],\r\n    \"isImmersion\":true,\r\n    \"strands\": [\r\n        1,\r\n        2,\r\n        3\r\n    ],\r\n    \"createdAt\": \"2018-12-26T15:06:47.000Z\",\r\n    \"updatedAt\": \"2018-12-26T15:06:47.000Z\"\r\n}"
 						},
 						"url": {
-							"raw": "localhost:3000/api/listings/new",
+							"raw": "{{url}}/api/listings/new",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"listings",
@@ -309,6 +325,16 @@
 				{
 					"name": "Show Listing",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55IjpmYWxzZSwiaWF0IjoxNTQ3MjkwNjMzfQ.z8REXoRe7GD5r5jbH7TE-RGOSIkhSfJ-JqWy2YruZTg",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -316,16 +342,15 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:3000/api/listings/show/1",
+							"raw": "{{url}}/api/listings/show/2",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"listings",
 								"show",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -341,11 +366,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:3000/api/listings/search/?/developer",
+							"raw": "{{url}}/api/listings/search/?/developer",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"listings",
@@ -358,6 +382,21 @@
 									"value": null
 								}
 							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Listing by Position",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
 						}
 					},
 					"response": []
@@ -389,11 +428,10 @@
 							"raw": "{\n\t\"id\":1,\n\t\"deltas\":{\n\t    \"strands\": [1,2],\n\t    \"position\": \"Front-End Web Developer Intern\",\n\t    \"description\": \"You will be working to develop an app to do app things\"\n\t}\n}"
 						},
 						"url": {
-							"raw": "localhost:3000/api/listings/edit",
+							"raw": "{{url}}/api/listings/edit",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"listings",
@@ -423,11 +461,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:3000/api/listings/delete?id=1",
+							"raw": "{{url}}/api/listings/delete?id=1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"listings",
@@ -438,6 +475,112 @@
 									"key": "id",
 									"value": "1"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Apps For Listing",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55Ijp0cnVlLCJpYXQiOjE1NDcyOTEyMzV9.VopS0pAn_p5no96FZq9dpKxMChsXsmrwglOlgba_SNw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/listings/show/1/applications",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"listings",
+								"show",
+								"1",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download All Apps For Listing",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55Ijp0cnVlLCJpYXQiOjE1NDcyOTEyMzV9.VopS0pAn_p5no96FZq9dpKxMChsXsmrwglOlgba_SNw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/listings/show/1/applications/download",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"listings",
+								"show",
+								"1",
+								"applications",
+								"download"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Listing By Location",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55IjpmYWxzZSwiaWF0IjoxNTQ3MjkwNjMzfQ.z8REXoRe7GD5r5jbH7TE-RGOSIkhSfJ-JqWy2YruZTg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/listings/search/location/1337",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"listings",
+								"search",
+								"location",
+								"1337"
 							]
 						}
 					},
@@ -472,15 +615,13 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"user\":{\r\n    \t\"firstName\":\"Plain\",\r\n    \t\"lastName\":\"Bread\",\r\n    \t\"middleName\":\"White\",\r\n    \t\"userName\":\"Sandwich\",\r\n    \t\"password\":\"sandwiches\",\r\n    \t\"email\":\"sandwich@google.com\",\r\n    \t\"phone\":\"87000\",\r\n    \t\"street\":\"317 Katipunan\",\r\n    \t\"barangay\":\"Loyola Heights\",\r\n    \t\"city\":\"Quezon City\",\r\n    \t\"province\":\"NCR\",\r\n    \t\"birthdate\": \"2018-11-22\",\r\n    \t\"sex\":0,\r\n    \t\"isGraduate\":true,\r\n    \t\"graduationDate\": \"2018-11-22\",\r\n    \t\"shs\":\"AHS\",\r\n    \t\"strand\":0,\r\n    \t\"generalAverage\":99.87,\r\n    \t\"honors\":{},\r\n    \t\"englishSpeakingRating\":10,\r\n    \t\"englishWritingRating\":10,\r\n    \t\"englishReadingRating\":10,\r\n    \t\"filipinoSpeakingRating\":10,\r\n    \t\"filipinoWritingRating\":10,\r\n    \t\"filipinoReadingRating\":10\r\n    },\r\n    \"skills\":[\r\n    \t{\r\n    \t\t\"name\":\"Spanish\",\r\n    \t\t\"description\":\"Can speak Spanish\",\r\n    \t\t\"rating\":10\r\n    \t},\r\n    \t{\r\n    \t\t\"name\":\"MySQL\",\r\n    \t\t\"description\":\"Can database\",\r\n    \t\t\"rating\":10\r\n    \t}\r\n    \t],\r\n    \"extracurriculars\":[\r\n    \t{\r\n    \t\t\"orgName\":\"MISA\",\r\n    \t\t\"yearsActive\":10,\r\n    \t\t\"positionsHeld\":[\"President\",\"Secretary General\"]\r\n    \t},\r\n    \t{\r\n    \t\t\"orgName\":\"UXSoc\",\r\n    \t\t\"yearsActive\":99,\r\n    \t\t\"positionsHeld\":[\"President\",\"Secretary\",\"Director\"]\r\n    \t\t\r\n    \t}],\r\n    \"workExperiences\":[\r\n    \t{\r\n    \t\t\"company\":\"Oracle\",\r\n    \t\t\"typeOfWork\":\"DBA\",\r\n    \t\t\"hours\":100\r\n    \t},\r\n    \t{\r\n    \t\t\"company\":\"Google\",\r\n    \t\t\"typeOfWork\":\"SRE\",\r\n    \t\t\"hours\":100\r\n    \t},\r\n\t\t{\r\n    \t\t\"company\":\"Palantir\",\r\n    \t\t\"typeOfWork\":\"UX Lead\",\r\n    \t\t\"hours\":300\r\n    \t}\r\n    \t],\r\n    \t\"languages\":[\r\n    \t\t{\r\n    \t\t\t\"name\":\"Spanish\",\r\n    \t\t\t\"speakingRating\":1,\r\n    \t\t\t\"writingRating\":9,\r\n    \t\t\t\"readingRating\":7\r\n    \t\t},\r\n    \t\t{\r\n    \t\t\t\"name\":\"German\",\r\n    \t\t\t\"speakingRating\":1,\r\n    \t\t\t\"writingRating\":9,\r\n    \t\t\t\"readingRating\":7\r\n    \t\t},\r\n    \t\t{\r\n    \t\t\t\"name\":\"Hokien\",\r\n    \t\t\t\"speakingRating\":1,\r\n    \t\t\t\"writingRating\":9,\r\n    \t\t\t\"readingRating\":7\r\n    \t\t}\r\n    \t\t]\r\n}"
+							"raw": "{\r\n    \"user\":{\r\n    \t\"firstName\":\"White\",\r\n    \t\"lastName\":\"Bread\",\r\n    \t\"middleName\":\"White\",\r\n    \t\"userName\":\"Sandwich\",\r\n    \t\"password\":\"sandwiches\",\r\n    \t\"email\":\"student@gmail.com\",\r\n    \t\"phone\":\"87000\",\r\n    \t\"city\":1336,\r\n    \t\"birthdate\": \"2018-11-22\",\r\n    \t\"sex\":0,\r\n    \t\"isGraduate\":false,\r\n    \t\"verified\":true,\r\n    \t\"graduationDate\": \"2018-11-22\",\r\n    \t\"shs\":\"AHS\",\r\n    \t\"strand\":0,\r\n    \t\"generalAverage\":99.87,\r\n    \t\"gradeCeiling\":100,\r\n    \t\"honors\":{},\r\n    \t\"englishSpeakingRating\":10,\r\n    \t\"englishWritingRating\":10,\r\n    \t\"englishReadingRating\":10,\r\n    \t\"filipinoSpeakingRating\":10,\r\n    \t\"filipinoWritingRating\":10,\r\n    \t\"filipinoReadingRating\":10\r\n    },\r\n    \"skills\":[\r\n    \t{\r\n    \t\t\"name\":\"Spanish\",\r\n    \t\t\"description\":\"Can speak Spanish\",\r\n    \t\t\"rating\":10\r\n    \t},\r\n    \t{\r\n    \t\t\"name\":\"MySQL\",\r\n    \t\t\"description\":\"Can database\",\r\n    \t\t\"rating\":10\r\n    \t}\r\n    \t],\r\n    \"extracurriculars\":[\r\n    \t{\r\n    \t\t\"orgName\":\"MISA\",\r\n    \t\t\"yearsActive\":10,\r\n    \t\t\"positionsHeld\":[\"President\",\"Secretary General\"],\r\n    \t\t\"startDate\":\"2018-10-22\"\r\n    \t},\r\n    \t{\r\n    \t\t\"orgName\":\"UXSoc\",\r\n    \t\t\"yearsActive\":99,\r\n    \t\t\"positionsHeld\":[\"President\",\"Secretary\",\"Director\"],\r\n    \t\t\"startDate\":\"2018-10-22\",\r\n    \t\t\"endDate\":\"2018-11-22\"\r\n    \t}],\r\n    \"workExperiences\":[\r\n    \t{\r\n    \t\t\"company\":\"Oracle\",\r\n    \t\t\"typeOfWork\":\"DBA\",\r\n    \t\t\"hours\":100,\r\n    \t\t\"startDate\":\"2018-12-22\",\r\n    \t\t\"endDate\": \"2018-12-31\"\r\n    \t},\r\n    \t{\r\n    \t\t\"company\":\"Google\",\r\n    \t\t\"typeOfWork\":\"SRE\",\r\n    \t\t\"hours\":100,\r\n    \t\t\"startDate\": \"2018-10-22\",\r\n    \t\t\"endDate\": \"2018-11-22\"\r\n    \t}\r\n    \t],\r\n    \t\"languages\":[\r\n    \t\t{\r\n    \t\t\t\"name\":\"Spanish\",\r\n    \t\t\t\"speakingRating\":1,\r\n    \t\t\t\"writingRating\":9,\r\n    \t\t\t\"readingRating\":7\r\n    \t\t},\r\n    \t\t{\r\n    \t\t\t\"name\":\"German\",\r\n    \t\t\t\"speakingRating\":1,\r\n    \t\t\t\"writingRating\":9,\r\n    \t\t\t\"readingRating\":7\r\n    \t\t},\r\n    \t\t{\r\n    \t\t\t\"name\":\"Hokien\",\r\n    \t\t\t\"speakingRating\":1,\r\n    \t\t\t\"writingRating\":9,\r\n    \t\t\t\"readingRating\":7\r\n    \t\t}\r\n    \t\t]\t\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/auth/signup/user",
-							"protocol": "http",
+							"raw": "{{url}}/api/auth/signup/user",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"auth",
@@ -489,6 +630,42 @@
 							]
 						},
 						"description": "Signup User\n\t"
+					},
+					"response": []
+				},
+				{
+					"name": "Student Email Verification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NDcxNDM3MzcsInVzZXIiOjEsInJlc2V0VG9rZW4iOiIyMjhmMzk1ZDllNTg2MjJmZTg3NjQ3ZjcxMTM5ZjNjOTQwMmU1MThjZTMyNzVhOGU5Y2JjYjc2M2VmYjEiLCJpc1N0dWRlbnQiOnRydWUsImlhdCI6MTU0NzE0MDEzN30.BkP9-rbKLbcjiC5YBCM7NEu0X9gp4AIe50Ata76r2XE",
+									"type": "text"
+								},
+								{
+									"key": "newPassword",
+									"value": "1234",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/verify/student",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"verify",
+								"student"
+							]
+						}
 					},
 					"response": []
 				},
@@ -516,15 +693,13 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\":\"sandwich@google.com\",\n\t\"password\": \"sandwiches\"\n}"
+							"raw": "{\n\t\"email\":\"brennanmato@gmail.com\",\n\t\"password\": \"sandwiches\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/auth/login/user",
-							"protocol": "http",
+							"raw": "{{url}}/api/auth/login/user",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"auth",
@@ -552,12 +727,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/auth/account_recovery/student",
-							"protocol": "http",
+							"raw": "{{url}}/api/auth/account_recovery/student",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"auth",
@@ -589,17 +762,82 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/auth/password_reset/student",
-							"protocol": "http",
+							"raw": "{{url}}/api/auth/password_reset/student",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"auth",
 								"password_reset",
 								"student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Company Signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"userName\":\"Google URecruiting\",\r\n\t\"password\":\"Bing is better\",\r\n\t\"companyName\":\"Google\",\r\n\t\"email\":\"google.test@gmail.com\",\r\n\t\"description\":\"Google is an ad company\",\r\n   \t\"city\":1337,\r\n   \t\"verified\":true,\r\n    \"contactNumber\":\"1090920\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/signup/company",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup",
+								"company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Company Email Verification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NDcwMzAyODcsInVzZXIiOjEsInJlc2V0VG9rZW4iOiJiZDZlMTlhYzEwMTU4NTdjN2Y3NTg1NTE4ZWQyMzI1NjUzZjIyNzEwYzJiNTY3ODBkYzBhZGZhODhmZjIiLCJpc1N0dWRlbnQiOmZhbHNlLCJpYXQiOjE1NDcwMjY2ODd9.lSLKy_S31a2TnhhTEpqj4gLjJjHbEXmk8RJBTBEUqs8",
+									"type": "text"
+								},
+								{
+									"key": "newPassword",
+									"value": "1234",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/verify/company",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"verify",
+								"company"
 							]
 						}
 					},
@@ -629,50 +867,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\"email\" : \"google@gmail.com\",\r\n\t\"password\": \"Bing is better\"\r\n}"
+							"raw": "{\r\n\t\"email\" : \"brennanmato@gmail.com\",\r\n\t\"password\": \"Bing is better\"\r\n}"
 						},
 						"url": {
-							"raw": "localhost:3000/api/auth/login/company",
+							"raw": "{{url}}/api/auth/login/company",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"auth",
 								"login",
-								"company"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Company Signup",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"userName\":\"Google URecruiting\",\r\n\t\"password\":\"Bing is better\",\r\n\t\"companyName\":\"Google\",\r\n\t\"email\":\"google@gmail.com\",\r\n\t\"description\":\"Google is an ad company\",\r\n   \t\"street\":\"317 Katipunan\",\r\n    \"barangay\":\"Loyola Heights\",\r\n   \t\"city\":\"Quezon City\",\r\n    \"province\":\"NCR\",\r\n    \"contactNumber\":\"1090920\"\r\n}"
-						},
-						"url": {
-							"raw": "localhost:3000/api/auth/signup/company",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"auth",
-								"signup",
 								"company"
 							]
 						}
@@ -695,12 +900,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/auth/account_recovery/company",
-							"protocol": "http",
+							"raw": "{{url}}/api/auth/account_recovery/company",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"auth",
@@ -732,12 +935,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/auth/password_reset/company",
-							"protocol": "http",
+							"raw": "{{url}}/api/auth/password_reset/company",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"auth",
@@ -761,7 +962,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ2NjExMjk5fQ.rotNBYHT9gL9OmiPSv_qrf690KXoDQEKq8E7Dgw_CV0",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55IjpmYWxzZSwiaWF0IjoxNTQ3MDI2Njc2fQ.MbrWDxRbQBgdBlHKd5sfAZUcEgJ7YklvnX4ibScltXk",
 									"type": "string"
 								}
 							]
@@ -780,24 +981,15 @@
 							"raw": "{\n\t\"jobListingId\": 1\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/bookmarks/new/?",
-							"protocol": "http",
+							"raw": "{{url}}/api/bookmarks/new/",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"bookmarks",
 								"new",
 								""
-							],
-							"query": [
-								{
-									"key": "salt",
-									"value": "j",
-									"disabled": true
-								}
 							]
 						}
 					},
@@ -823,12 +1015,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/bookmarks/delete/1",
-							"protocol": "http",
+							"raw": "{{url}}/api/bookmarks/delete/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"bookmarks",
@@ -837,6 +1027,39 @@
 							]
 						},
 						"description": "delete by id number"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bookmarked Listings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55IjpmYWxzZSwiaWF0IjoxNTQ3MDI2Njc2fQ.MbrWDxRbQBgdBlHKd5sfAZUcEgJ7YklvnX4ibScltXk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/bookmarks/show",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"bookmarks",
+								"show"
+							]
+						}
 					},
 					"response": []
 				}
@@ -853,7 +1076,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTIyNjIwfQ.yttvizZb9vBnbmIS2XH4Yv5zRc97e9aVSXgqczcbvO8",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55IjpmYWxzZSwiaWF0IjoxNTQ3MjkxMTgxfQ.rAtIHkmUhSUuJp_cv8Dh0MLL3UofeZ0eECz7OewoWNg",
 									"type": "string"
 								}
 							]
@@ -865,12 +1088,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/applications/show/1",
-							"protocol": "http",
+							"raw": "{{url}}/api/applications/show/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"applications",
@@ -889,7 +1110,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTIyNjIwfQ.yttvizZb9vBnbmIS2XH4Yv5zRc97e9aVSXgqczcbvO8",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55IjpmYWxzZSwiaWF0IjoxNTQ3MjkxMTgxfQ.rAtIHkmUhSUuJp_cv8Dh0MLL3UofeZ0eECz7OewoWNg",
 									"type": "string"
 								}
 							]
@@ -905,15 +1126,13 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"applicantId\":1,\n\t\"jobListingId\":1,\n\t\"status\":1\n}"
+							"raw": "{\n\t\"jobListingId\":4\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/applications/new",
-							"protocol": "http",
+							"raw": "{{url}}/api/applications/new",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"applications",
@@ -931,7 +1150,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTIyNjIwfQ.yttvizZb9vBnbmIS2XH4Yv5zRc97e9aVSXgqczcbvO8",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55Ijp0cnVlLCJpYXQiOjE1NDcyOTEyMzV9.VopS0pAn_p5no96FZq9dpKxMChsXsmrwglOlgba_SNw",
 									"type": "string"
 								}
 							]
@@ -947,20 +1166,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"applicantId\":1,\n\t\"jobListingId\":1,\n\t\"status\":2\n}"
+							"raw": "{\n\t\"id\":1,\n\t\"status\":2\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/applications/edit/1",
-							"protocol": "http",
+							"raw": "{{url}}/api/applications/edit",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"applications",
-								"edit",
-								"1"
+								"edit"
 							]
 						}
 					},
@@ -986,17 +1202,50 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/applications/delete/1",
-							"protocol": "http",
+							"raw": "{{url}}/api/applications/delete/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"applications",
 								"delete",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55IjpmYWxzZSwiaWF0IjoxNTQ3MjkxMTgxfQ.rAtIHkmUhSUuJp_cv8Dh0MLL3UofeZ0eECz7OewoWNg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/applications/show/status/0",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"applications",
+								"show",
+								"status",
+								"0"
 							]
 						}
 					},
@@ -1015,7 +1264,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ2NTg5NTM1fQ.EurOykcDT7IASe-JlrYWBvurC311vYkBc4EQUYjCIDI",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55IjpmYWxzZSwiaWF0IjoxNTQ2Nzg1ODczfQ.tIvUMdnXuMAGVFqIrZQPDtAAPGO7pGOe9XQudxnATX0",
 									"type": "string"
 								}
 							]
@@ -1034,12 +1283,10 @@
 							"raw": "{\n\t\"name\":\"Name\",\n\t\"description\": \"description\",\n\t\"rating\":5\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/skills/new",
-							"protocol": "http",
+							"raw": "{{url}}/api/skills/new",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"skills",
@@ -1073,15 +1320,13 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \t\t\"company\":\"PoGo\",\r\n    \t\t\"typeOfWork\":\"Catch\",\r\n    \t\t\"hours\":1000\r\n    \t}"
+							"raw": "{\r\n   \t\"company\":\"PoGo\",\r\n   \t\"typeOfWork\":\"Catch\",\r\n  \t\"hours\":1000,\r\n   \t\"startDate\":\"2018-10-22\",\r\n\t\"endDate\":\"2018-11-22\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/workexperiences/new",
-							"protocol": "http",
+							"raw": "{{url}}/api/workexperiences/new",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"workexperiences",
@@ -1118,12 +1363,10 @@
 							"raw": "{\r\n    \t\t\t\"name\":\"new lang\",\r\n    \t\t\t\"speakingRating\":1,\r\n    \t\t\t\"writingRating\":9,\r\n    \t\t\t\"readingRating\":7\r\n    \t\t}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/language/new",
-							"protocol": "http",
+							"raw": "{{url}}/api/language/new",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"language",
@@ -1157,15 +1400,13 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \t\t\"orgName\":\"MISA\",\r\n    \t\t\"yearsActive\":10,\r\n    \t\t\"positionsHeld\":[\"Secretary General\"]\r\n    \t}"
+							"raw": "{\r\n    \"orgName\":\"MISA\",\r\n   \t\"yearsActive\":10,\r\n    \"positionsHeld\":[\"Secretary General\"],\r\n\t\"updatedAt\": \"2019-01-09T15:58:53.448Z\",\r\n    \"createdAt\": \"2019-01-09T15:58:53.448Z\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/users/new/extraCurricular",
-							"protocol": "http",
+							"raw": "{{url}}/api/users/new/extraCurricular",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"users",
@@ -1184,7 +1425,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ2MDA3MjAzfQ.0XxkQGrPNuAnQGyGLTchsGpbm4zxJnbcCKwKeml0nho",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55IjpmYWxzZSwiaWF0IjoxNTQ2Nzg1NDIyfQ.Kxjpma-DoheYAYi2SFNLpko7AINe80MbzvusWTcVvfM",
 									"type": "string"
 								}
 							]
@@ -1210,17 +1451,14 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/users/new/profilePicture",
-							"protocol": "http",
+							"raw": "{{url}}/api/profilepicture/new",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
-								"users",
-								"new",
-								"profilePicture"
+								"profilepicture",
+								"new"
 							]
 						}
 					},
@@ -1234,7 +1472,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ2NjE2NjE4fQ.4sA58AOhzArDrwwc9Sp7Rpg6gLQBRkJOyTAc3epRk_s",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55IjpmYWxzZSwiaWF0IjoxNTQ2Nzk0MjA0fQ.W6l83YjeYCPq8NbIW5ocDvzag_xRVbQPkHVHJMEzwBQ",
 									"type": "string"
 								}
 							]
@@ -1250,15 +1488,13 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\":3,\n\t\"deltas\":{\n\t\t\"name\": \"Node.js\",\n\t\t\"description\": \"Can make web services\"\n\t}\n}"
+							"raw": "{\n\t\"id\":1,\n\t\"deltas\":{\n\t\t\"name\": \"Node.js\",\n\t\t\"description\": \"Can make web services\"\n\t}\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/skills/edit",
-							"protocol": "http",
+							"raw": "{{url}}/api/skills/edit",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"skills",
@@ -1295,12 +1531,10 @@
 							"raw": "{\n\t\"id\":4,\n\t\"deltas\":{\n\t\t\"company\": \"Atlassian\"\n\t}\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/users/edit/workExperience",
-							"protocol": "http",
+							"raw": "{{url}}/api/users/edit/workExperience",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"users",
@@ -1338,12 +1572,10 @@
 							"raw": "{\n\t\"id\":4,\n\t\"deltas\":{\n\t\t\"name\": \"Navajo\",\n\t\t\"speakingRating\": 5\n\t}\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/users/edit/language",
-							"protocol": "http",
+							"raw": "{{url}}/api/users/edit/language",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"users",
@@ -1381,12 +1613,10 @@
 							"raw": "{\n\t\"id\":4,\n\t\"deltas\":{\n\t\t\"orgName\": \"CompSAT\",\n\t\t\"yearsActive\": 5\n\t}\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/users/edit/extraCurricular",
-							"protocol": "http",
+							"raw": "{{url}}/api/users/edit/extraCurricular",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"users",
@@ -1405,7 +1635,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ1OTY4NjU4fQ.b9v0lRt5ArFDtACQPRutTCMVRW6EqCBx0-Uej81w9cE",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55IjpmYWxzZSwiaWF0IjoxNTQ2Nzg2MzY3fQ.a22giAU47N-ZV4MYM-A2vfZhIdYpFeCYKJKLSoV0168",
 									"type": "string"
 								}
 							]
@@ -1417,12 +1647,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/users/delete",
-							"protocol": "http",
+							"raw": "{{url}}/api/users/delete",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"users",
@@ -1445,7 +1673,7 @@
 								}
 							]
 						},
-						"method": "POST",
+						"method": "DELETE",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -1456,19 +1684,18 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\":\"Name\",\n\t\"description\": \"description\",\n\t\"rating\":5\n}"
+							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/skills/new",
-							"protocol": "http",
+							"raw": "{{url}}/api/skills/delete/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"skills",
-								"new"
+								"delete",
+								"1"
 							]
 						}
 					},
@@ -1484,17 +1711,14 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/users/show/profilePicture/1",
-							"protocol": "http",
+							"raw": "{{url}}/api/profilepicture/show/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
-								"users",
+								"profilepicture",
 								"show",
-								"profilePicture",
 								"1"
 							]
 						}
@@ -1511,17 +1735,55 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/users/show/1",
-							"protocol": "http",
+							"raw": "{{url}}/api/users/show/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"users",
 								"show",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55IjpmYWxzZSwiaWF0IjoxNTQ3MzAyOTYyfQ.kq7rFSi7MtIrLFpakDmrQTs8F3gWxUNhHM3JHf39FPI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"deltas\":{\n\t\t\"strand\":1\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/users/edit",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"edit"
 							]
 						}
 					},
@@ -1535,6 +1797,16 @@
 				{
 					"name": "User Feed",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55IjpmYWxzZSwiaWF0IjoxNTQ3MDI2Njc2fQ.MbrWDxRbQBgdBlHKd5sfAZUcEgJ7YklvnX4ibScltXk",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -1542,7 +1814,88 @@
 							"raw": ""
 						},
 						"url": {
+							"raw": "{{url}}/api/feed/user",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"feed",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "Get Provinces",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55IjpmYWxzZSwiaWF0IjoxNTQ3MDI1MjU2fQ.Uq_StpMknGxO990Ka_fcT7BzBok0nTIqwWDu8e5YqR0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
 							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/locations/provinces/01",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"locations",
+								"provinces",
+								"01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cities and Municipalities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNDb21wYW55IjpmYWxzZSwiaWF0IjoxNTQ3MDI1MjU2fQ.Uq_StpMknGxO990Ka_fcT7BzBok0nTIqwWDu8e5YqR0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/locations/cities/0133",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"locations",
+								"cities",
+								"0133"
+							]
 						}
 					},
 					"response": []

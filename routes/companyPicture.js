@@ -11,7 +11,7 @@ router.delete('*', [companyOnly, extractUserId]);
 router.get('*', userOnly);
 
 router.post('/new/profile', (req, res, next) => {
-  Company.findOne({where: {id: req.userId}}).then((company) => {
+  Company.findByPk(req.userId).then((company) => {
     if (company.profilePicture == null) {
       createCompanyPicture(true, req, res);
     } else {
@@ -21,7 +21,7 @@ router.post('/new/profile', (req, res, next) => {
 });
 
 router.post('/new/cover', (req, res, next) => {
-  Company.findOne({where: {id: req.userId}}).then((company) => {
+  Company.findByPk(req.userId).then((company) => {
     if (company.coverPicture == null) {
       createCompanyPicture(false, req, res);
     } else {

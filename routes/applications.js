@@ -8,9 +8,11 @@ router.delete('*', studentOnly);
 router.get('*', studentOnly);
 
 router.post('/new', studentOnly, (req, res) => {
-  Application.create({
-    userId: req.userId,
-    jobListingId: req.body.jobListingId,
+  Application.findCreateFind({
+    where: {
+      userId: req.userId,
+      jobListingId: req.body.jobListingId,
+    },
   })
       .then((application) => res.json(application))
       .catch((err) => res.json(err));

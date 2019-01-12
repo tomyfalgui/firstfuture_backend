@@ -128,6 +128,9 @@ module.exports = (sequelize, type) => {
       auth:{
         attributes:['id','password','email','verified']
       },
+      minimal:{
+        attributes:['id','firstName','lastName']
+      }
     }
   });
 };

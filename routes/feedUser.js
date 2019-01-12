@@ -22,6 +22,7 @@ router.get('/', (req, res, next)=>{
             {strands: {[Op.like]: '%;' + user.dataValues.strand}}],
           },
           {updatedAt: {[Op.lt]: fetchOlderThan}},
+          {isImmersion: !user.isGraduate},
         ]},
       order: [
         ['updatedAt', 'DESC'],

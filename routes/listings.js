@@ -1,11 +1,12 @@
 const express = require('express');
 // eslint-disable-next-line new-cap
 const router = express.Router();
-const {JobListing, Application, Company, City} = require('../database');
+const {JobListing, Application, Company, City, User} = require('../database');
 const {extractUserId} = require('../middleware/id.js');
 const {userOnly, companyOnly} = require('../middleware/auth');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const csvConverter = require('json-2-csv');
 
 router.post('*', [companyOnly, extractUserId]);
 router.delete('*', [companyOnly, extractUserId]);
@@ -53,16 +54,46 @@ router.get('/show/:id', userOnly, (req, res) => {
       .catch((err) => res.json(err));
 });
 
+// eslint-disable-next-line max-len
 router.get('/show/:id/applications', [companyOnly, extractUserId], (req, res) => {
   JobListing.findOne({
     where: {
       id: req.params.id,
       companyId: req.userId,
     },
-    include: [Application],
+    include: [{
+      model: Application,
+      include: [User.scope('minimal')],
+    }],
   })
       .then((listing) => {
         res.json(listing);
+      })
+      .catch((err) => res.json(err));
+});
+
+// eslint-disable-next-line max-len
+router.get('/show/:id/applications/download', [companyOnly, extractUserId], (req, res) => {
+  JobListing.findOne({
+    where: {
+      id: req.params.id,
+      companyId: req.userId,
+    },
+    attributes: ['position'],
+    include: [{
+      model: Application,
+      include: [User.scope('minimal')],
+    }],
+    raw: true,
+  })
+      .then((listing) => {
+        const filename = listing.position+'-'+new Date().toLocaleDateString();
+        res.setHeader('Content-disposition',
+            'attachment; filename='+filename+'.csv');
+        res.set('Content-Type', 'text/csv');
+        csvConverter.json2csvAsync(listing).then((csv)=>{
+          res.status(200).send(csv);
+        });
       })
       .catch((err) => res.json(err));
 });

@@ -117,9 +117,9 @@ describe('Applications', function() {
         });
 
         it('should be not be able to create new job applicationif user is not authorized', function(done) {
-            chai.request(app).post('/api/languages/new')
+            chai.request(app).post('/api/applications/new')
                 .set('content-type', 'application/json')
-                .send(newLanguage).end((err, res) => {
+                .send(newApplication).end((err, res) => {
                     res.should.have.status(401);
                     res.body.should.deep.equal({});
                     res.error.text.should.equal('Unauthorized');
@@ -128,10 +128,10 @@ describe('Applications', function() {
         });
 
         it('should not allow companies to apply to a job listing', function(done) {
-            chai.request(app).post('/api/languages/new')
+            chai.request(app).post('/api/applications/new')
                 .set('content-type', 'application/json')
                 .set('Authorization', 'Bearer ' + wrongCompanyJwt)
-                .send(newLanguage).end((err, res) => {
+                .send(newApplication).end((err, res) => {
                     res.should.have.status(401);
                     res.body.should.deep.equal({});
                     res.error.text.should.equal('Unauthorized');
@@ -140,4 +140,97 @@ describe('Applications', function() {
         });
     });
 
+    //edit
+    describe('/api/applications/edit', function() {
+        it('should be able to edit applications', function(done) {
+            chai.request(app).post('/api/applications/edit')
+                .set('content-type', 'application/json')
+                .set('Authorization', 'Bearer ' + jwt)
+                .send({ id: 1, deltas: { status: 2 } }).end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.deep.equal([1]);
+                    done();
+                });
+        });
+        it('should be not be able to edit applications if user is not authorized', function(done) {
+            chai.request(app).post('/api/applications/edit')
+                .set('content-type', 'application/json')
+                .send({ id: 1, deltas: { status: 2 } }).end((err, res) => {
+                    res.should.have.status(401);
+                    res.body.should.deep.equal({});
+                    res.error.text.should.equal('Unauthorized');
+                    done();
+                });
+        });
+        it('should be not be able to edit applications if the target applications does not belong to the user', function(done) {
+            chai.request(app).post('/api/applications/edit')
+                .set('content-type', 'application/json')
+                .set('Authorization', 'Bearer ' + wrongJwt)
+                .send({ id: 1, deltas: { status: 2 } }).end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.deep.equal([0]);
+                    done();
+                });
+        });
+        it('should be not allow companies to edit applications', function(done) {
+            chai.request(app).post('/api/applications/edit')
+                .set('content-type', 'application/json')
+                .set('Authorization', 'Bearer ' + wrongCompanyJwt)
+                .send({ id: 1, deltas: { status: 2 } }).end((err, res) => {
+                    res.should.have.status(401);
+                    res.body.should.deep.equal({});
+                    res.error.text.should.equal('Unauthorized');
+                    done();
+                });
+        });
+    });
+
+    //delete
+    describe('/api/applications/delete/:id', function() {
+        it('should be not be able to delete applications if user is not authorized', function(done) {
+            chai.request(app).delete('/api/applications/delete/1')
+                .set('content-type', 'application/json')
+                .send().end((err, res) => {
+                    res.should.have.status(401);
+                    res.body.should.deep.equal({});
+                    res.error.text.should.equal('Unauthorized');
+                    done();
+                });
+        });
+        it('should be not be able to delete applications if the target skill does not belong to the user', function(done) {
+            chai.request(app).delete('/api/applications/delete/1')
+                .set('content-type', 'application/json')
+                .set('Authorization', 'Bearer ' + wrongJwt)
+                .send().end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.deep.equal(0);
+                    done();
+                });
+        });
+        it('should not allow companies to delete applications', function(done) {
+            chai.request(app).delete('/api/applications/delete/1')
+                .set('content-type', 'application/json')
+                .set('Authorization', 'Bearer ' + wrongCompanyJwt)
+                .send().end((err, res) => {
+                    res.should.have.status(401);
+                    res.body.should.deep.equal({});
+                    res.error.text.should.equal('Unauthorized');
+                    done();
+                });
+        });
+        it('should be able to delete applications', function(done) {
+            chai.request(app).delete('/api/applications/delete/1')
+                .set('content-type', 'application/json')
+                .set('Authorization', 'Bearer ' + jwt)
+                .send().end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.equal(1);
+                    done();
+                });
+        });
+    });
+
+    after('testing, clear database', async function() {
+        await sequelize.sync({ force: true, truncate: true, cascade: true });
+    });
 });

@@ -7,8 +7,8 @@ require('dotenv').config({path: '../.env'});
 Promise.longStackTraces();
 
 var imapConfig = {
-    user: process.env.MAILER_USER,
-    password: process.env.MAILER_PASSWORD,
+    user: process.env.MAILER_SERVICE_USER,
+    password: process.env.MAILER_SERVICE_PASSWORD,
     host: 'imap.gmail.com',
     port: 993,
     tls: true

@@ -1,6 +1,9 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 var Imap = require("imap");
 var MailParser = require("mailparser").MailParser;
 var Promise = require("bluebird");
+require('dotenv').config({path: '../.env'});
 Promise.longStackTraces();
 
 var imapConfig = {
@@ -66,7 +69,10 @@ function processMessage(msg, seqno) {
     parser.on('data', data => {
         if (data.type === 'text') {
             // console.log(seqno);
-            console.log(data.text.slice(80, 348)); /* data.html*/
+            console.log(data.text.slice(
+                data.text.indexOf('[') + 1,
+                data.text.indexOf(']')
+            )); /* data.html*/
         }
 
         // if (data.type === 'attachment') {

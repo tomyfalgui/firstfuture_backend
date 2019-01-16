@@ -1,6 +1,4 @@
 {
     "name": "Bahasa",
-    "speakingRating": 5, 
-    "writingRating": 5,
-    "readingRating":5
+    "rating": 5
 }

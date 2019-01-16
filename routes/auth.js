@@ -219,7 +219,6 @@ function updateAndMail(out, isStudent, template, subject, targetURL) {
       isStudent: isStudent,
     };
     const jwtToSend = jwt.sign(claims, process.env.JWTSecret);
-    console.log(jwtToSend);
     const emailContext = {
       url: targetURL + jwtToSend,
       name: name,

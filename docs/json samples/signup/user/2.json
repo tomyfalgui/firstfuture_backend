@@ -70,21 +70,15 @@
     	"languages":[
     		{
     			"name":"Spanish",
-    			"speakingRating":1,
-    			"writingRating":9,
-    			"readingRating":7
+    			"rating":1
     		},
     		{
     			"name":"German",
-    			"speakingRating":1,
-    			"writingRating":9,
-    			"readingRating":7
+    			"rating":1
     		},
     		{
     			"name":"Hokien",
-    			"speakingRating":1,
-    			"writingRating":9,
-    			"readingRating":7
+    			"rating":1
     		}
-    		]	
+    	]	
 }

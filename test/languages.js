@@ -97,12 +97,8 @@ describe('Languages', function() {
             res.body.id.should.equal(7);
             res.body.should.have.property('name');
             res.body.name.should.equal('Bahasa');
-            res.body.should.have.property('speakingRating');
-            res.body.speakingRating.should.equal(5);
-            res.body.should.have.property('writingRating');
-            res.body.writingRating.should.equal(5);
-            res.body.should.have.property('readingRating');
-            res.body.readingRating.should.equal(5);
+            res.body.should.have.property('rating');
+            res.body.rating.should.equal(5);
             res.body.should.have.property('userId');
             res.body.userId.should.equal(1);
             done();
@@ -138,7 +134,7 @@ describe('Languages', function() {
       chai.request(app).post('/api/languages/edit')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + jwt)
-          .send({id: 7, deltas: {speakingRating: 4, readingRating: 4}}).end((err, res) => {
+          .send({id: 7, deltas: {rating: 10}}).end((err, res) => {
             res.should.have.status(200);
             res.body.should.deep.equal([1]);
             done();
@@ -147,7 +143,7 @@ describe('Languages', function() {
     it('should be not be able to edit languages if user is not authorized', function(done) {
       chai.request(app).post('/api/languages/edit')
           .set('content-type', 'application/json')
-          .send({id: 7, deltas: {speakingRating: 4, readingRating: 4}}).end((err, res) => {
+          .send({id: 7, deltas: {rating: 10}}).end((err, res) => {
             res.should.have.status(401);
             res.body.should.deep.equal({});
             res.error.text.should.equal('Unauthorized');
@@ -158,7 +154,7 @@ describe('Languages', function() {
       chai.request(app).post('/api/languages/edit')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + wrongJwt)
-          .send({id: 7, deltas: {speakingRating: 4, readingRating: 4}}).end((err, res) => {
+          .send({id: 7, deltas: {rating: 10}}).end((err, res) => {
             res.should.have.status(200);
             res.body.should.deep.equal([0]);
             done();
@@ -168,7 +164,7 @@ describe('Languages', function() {
       chai.request(app).post('/api/languages/edit')
           .set('content-type', 'application/json')
           .set('Authorization', 'Bearer ' + wrongCompanyJwt)
-          .send({id: 7, deltas: {speakingRating: 4, readingRating: 4}}).end((err, res) => {
+          .send({id: 7, deltas: {rating: 10}}).end((err, res) => {
             res.should.have.status(401);
             res.body.should.deep.equal({});
             res.error.text.should.equal('Unauthorized');

@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const smtpTransport = require('../mailer');
 const crypto = require('crypto');
-
+const { execute } = require('../email-parser');
 
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
@@ -245,6 +245,10 @@ function sendMail(email, template, subject, context) {
     context: context,
   };
   return smtpTransport.sendMail(data);
+}
+
+function parseMail() {
+  
 }
 
 /**

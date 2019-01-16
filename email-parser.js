@@ -3,7 +3,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const Imap = require("imap");
 const MailParser = require("mailparser").MailParser;
 const Promise = require("bluebird");
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: '.env' });
 Promise.longStackTraces();
 
 const imapConfig = {
@@ -30,7 +30,7 @@ function execute() {
             console.error(err);
             return;
         }
-        imap.search(["UNSEEN", ['SUBJECT', 'First Future - Email Verification']], function(err, results) {
+        imap.search(["UNANSWERED", ['SUBJECT', 'First Future - Email Verification']], function(err, results) {
             if (!results || !results.length) {
                 console.log("No unread mails");
                 imap.end();
@@ -55,10 +55,11 @@ function processMessage(msg, seqno) {
 
     parser.on('data', data => {
         if (data.type === 'text') {
-            console.log(data.text.slice(
+            let output = data.text.slice(
                 data.text.indexOf('[') + 1,
                 data.text.indexOf(']')
-            ));
+            )
+            console.log(output);
         }
     });
 
@@ -71,3 +72,5 @@ function processMessage(msg, seqno) {
         parser.end();
     });
 }
+
+module.exports = execute;

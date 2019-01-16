@@ -93,6 +93,7 @@ describe('Bookmarks', function() {
     before('testing, create listing', (done) => {
         chai.request(app).post('/api/listings/new')
             .set('content-type', 'application/json')
+            .set('Authorization', 'Bearer ' + jwt)
             .send(sampleListing).end((err, res) => {
                 done();
             });
@@ -180,6 +181,16 @@ describe('Bookmarks', function() {
                   done();
                 });
           });
+          it('should not delete a non-existing bookmark', function(done) {
+              chai.request(app).delete('/api/bookmarks/delete/500')
+                .set('content-type', 'application/json')
+                .set('Authorization', 'Bearer ' + jwt)
+                .send().end((err, res) => {
+                    res.should.have.status(400);
+                    res.error.text.should.equal(err);
+                    done();
+                })
+          })
           it('should be able to delete bookmarks', function(done) {
             chai.request(app).delete('/api/bookmarks/delete/1')
                 .set('content-type', 'application/json')

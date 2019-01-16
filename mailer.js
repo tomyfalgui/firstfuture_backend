@@ -6,8 +6,8 @@ const path = require('path');
 let smtpTransport = nodemailer.createTransport({
     service: process.env.MAILER_SERVICE_PROVIDER,
     auth: {
-        user: process.env.MAILER_USER,
-        pass: process.env.MAILER_PASSWORD
+        user: process.env.MAILER_SERVICE_USER,
+        pass: process.env.MAILER_SERVICE_PASSWORD
     }
 });
 

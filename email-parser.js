@@ -73,4 +73,4 @@ function processMessage(msg, seqno) {
     });
 }
 
-module.exports = execute;
+module.exports.processMessage = processMessage;

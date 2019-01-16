@@ -6,6 +6,10 @@ module.exports = (sequelize, type) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    jobLocation: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     description: {
       type: Sequelize.TEXT,
       allowNull: false,

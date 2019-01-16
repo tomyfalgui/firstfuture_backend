@@ -77,6 +77,7 @@ describe('User', function() {
                     done();
                 });
         });
+
         describe('/api/auth/login/user', () => {
             it('should be able to login with the given credentials', function(done) {
                 chai.request(app).post('/api/auth/login/user').set('content-type', 'application/json')

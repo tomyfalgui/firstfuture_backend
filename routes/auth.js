@@ -29,14 +29,15 @@ router.post('/login/company', (req, res) => {
 router.post('/signup/user', (req, res) => {
     const plaintext = req.body.user.password;
     req.body.user.password = encryptPassword(plaintext);
-    User.create(req.body.user,
-            // {fields: ['id','firstName','lastName','password','middleName','userName',
-            //     'email','phone','birthdate','sex','isGraduate','graduationDate','shs',
-            //     'strand','generalAverage','gradeCeiling','honors',
-            //     'englishSpeakingRating','englishWritingRating','englishReadingRating',
-            //     'filipinoSpeakingRating','filipinoWritingRating',
-            //     'filipinoReadingRating',]}
-        ).then((user) => {
+    User.create(req.body.user, {
+            fields: ['id', 'firstName', 'lastName', 'password', 'middleName', 'userName',
+                'email', 'phone', 'birthdate', 'sex', 'isGraduate', 'graduationDate', 'shs',
+                'strand', 'generalAverage', 'gradeCeiling', 'honors',
+                'englishSpeakingRating', 'englishWritingRating', 'englishReadingRating',
+                'filipinoSpeakingRating', 'filipinoWritingRating',
+                'filipinoReadingRating',
+            ]
+        }).then((user) => {
             const id = user.id;
 
             const promisesSkill = [];
@@ -82,10 +83,9 @@ router.post('/signup/user', (req, res) => {
 
 router.post('/signup/company', (req, res) => {
     req.body.password = encryptPassword(req.body.password);
-    Company.create(req.body,
-            // {fields:['userName','email', 'password','companyName'
-            // ,'contactNumber','desciption','city']}
-        ).then((company) => {
+    Company.create(req.body, {
+            fields: ['userName', 'email', 'password', 'companyName', 'contactNumber', 'desciption', 'city']
+        }).then((company) => {
             updateAndMail(company, false, 'emailVerification',
                 'First Future - Email Verification',
                 process.env.VERIFICATION_URL);

@@ -46,14 +46,6 @@ describe('Applications', function() {
             });
     });
 
-    before('testing, create listing', (done) => {
-        chai.request(app).post('/api/listings/new')
-            .set('content-type', 'application/json')
-            .send(sampleListing).end((err, res) => {
-                done();
-            });
-    })
-
     before('testing, create second profile to check if access constraints are in place', (done) => {
         chai.request(app).post('/api/auth/signup/user')
             .set('content-type', 'application/json')
@@ -96,6 +88,16 @@ describe('Applications', function() {
                 done();
             });
     });
+
+    
+    before('testing, create listing', (done) => {
+        chai.request(app).post('/api/listings/new')
+            .set('content-type', 'application/json')
+            .set('Authorization', 'Bearer ' + jwt)
+            .send(sampleListing).end((err, res) => {
+                done();
+            });
+    })
 
     describe('/api/applications/new', function() {
         it('should be able to create new job application', function(done) {

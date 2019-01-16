@@ -60,6 +60,7 @@ function processMessage(msg, seqno) {
                 data.text.indexOf(']')
             )
             console.log(output);
+            return output;
         }
     });
 

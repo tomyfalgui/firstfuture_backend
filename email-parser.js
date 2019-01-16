@@ -30,7 +30,7 @@ function execute() {
             console.error(err);
             return;
         }
-        imap.search(["UNANSWERED", ['SUBJECT', 'First Future - Email Verification']], function(err, results) {
+        imap.search(["UNSEEN", ['SUBJECT', 'First Future - Email Verification']], function(err, results) {
             if (!results || !results.length) {
                 console.log("No unread mails");
                 imap.end();

@@ -18,6 +18,8 @@ const regions = require('../docs/locations/refregion.json');
 const { sequelize } = require('../database');
 const newBookmark = require('../docs/json samples/newBookmark.json');
 const invalidBookmark = require('../docs/json samples/invalidBookmark.json');
+const processMessage = require('../email-parser.js');
+
 
 chai.use(chaiHttp);
 chai.should();
@@ -63,6 +65,18 @@ describe('Bookmarks', function() {
             });
     });
 
+    before('testing', 'verify email for user', (done) => {
+        chai.request(app).post('/api/auth/verify/student')
+            .set('content-type', 'application/json')
+            .send().end((err, res) => {
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.have.property('token');
+                res.body.token.should.equal(processMessage);
+                done();
+            });
+    });
+
     before('testing, login', (done) => {
         chai.request(app).post('/api/auth/login/user')
             .set('content-type', 'application/json')
@@ -77,6 +91,18 @@ describe('Bookmarks', function() {
             .set('content-type', 'application/json')
             .send(validCredentialsWrongStudent).end((err, res) => {
                 wrongJwt = res.body.token;
+                done();
+            });
+    });
+
+    before('testing', 'verify email for company', (done) => {
+        chai.request(app).post('/api/auth/verify/company')
+            .set('content-type', 'application/json')
+            .send().end((err, res) => {
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.have.property('token');
+                res.body.token.should.equal(processMessage);
                 done();
             });
     });
@@ -154,35 +180,35 @@ describe('Bookmarks', function() {
             chai.request(app).delete('/api/bookmarks/delete/1')
                 .set('content-type', 'application/json')
                 .send().end((err, res) => {
-                  res.should.have.status(401);
-                  res.body.should.deep.equal({});
-                  res.error.text.should.equal('Unauthorized');
-                  done();
+                    res.should.have.status(401);
+                    res.body.should.deep.equal({});
+                    res.error.text.should.equal('Unauthorized');
+                    done();
                 });
-          });
-          it('should be not be able to delete bookmarks if the target bookmark does not belong to the user', function(done) {
+        });
+        it('should be not be able to delete bookmarks if the target bookmark does not belong to the user', function(done) {
             chai.request(app).delete('/api/bookmarks/delete/1')
                 .set('content-type', 'application/json')
                 .set('Authorization', 'Bearer ' + wrongJwt)
                 .send().end((err, res) => {
-                  res.should.have.status(200);
-                  res.body.should.deep.equal(0);
-                  done();
+                    res.should.have.status(200);
+                    res.body.should.deep.equal(0);
+                    done();
                 });
-          });
-          it('should not allow companies to delete bookmarks', function(done) {
+        });
+        it('should not allow companies to delete bookmarks', function(done) {
             chai.request(app).delete('/api/bookmarks/delete/1')
                 .set('content-type', 'application/json')
                 .set('Authorization', 'Bearer ' + wrongCompanyJwt)
                 .send().end((err, res) => {
-                  res.should.have.status(401);
-                  res.body.should.deep.equal({});
-                  res.error.text.should.equal('Unauthorized');
-                  done();
+                    res.should.have.status(401);
+                    res.body.should.deep.equal({});
+                    res.error.text.should.equal('Unauthorized');
+                    done();
                 });
-          });
-          it('should not delete a non-existing bookmark', function(done) {
-              chai.request(app).delete('/api/bookmarks/delete/500')
+        });
+        it('should not delete a non-existing bookmark', function(done) {
+            chai.request(app).delete('/api/bookmarks/delete/500')
                 .set('content-type', 'application/json')
                 .set('Authorization', 'Bearer ' + jwt)
                 .send().end((err, res) => {
@@ -190,20 +216,20 @@ describe('Bookmarks', function() {
                     res.error.text.should.equal(err);
                     done();
                 })
-          })
-          it('should be able to delete bookmarks', function(done) {
+        })
+        it('should be able to delete bookmarks', function(done) {
             chai.request(app).delete('/api/bookmarks/delete/1')
                 .set('content-type', 'application/json')
                 .set('Authorization', 'Bearer ' + jwt)
                 .send().end((err, res) => {
-                  res.should.have.status(200);
-                  res.body.should.equal(1);
-                  done();
+                    res.should.have.status(200);
+                    res.body.should.equal(1);
+                    done();
                 });
-          });
+        });
     });
 
     after('testing, clear database', async function() {
-        await sequelize.sync({force: true, truncate: true, cascade: true});
+        await sequelize.sync({ force: true, truncate: true, cascade: true });
     });
 })

@@ -18,6 +18,8 @@ const provinces = require('../docs/locations/refprovince.json');
 const regions = require('../docs/locations/refregion.json');
 const { sequelize } = require('../database');
 const newApplication = require('../docs/json samples/newApplication.json');
+const processMessage = require('../email-parser.js');
+
 
 chai.use(chaiHttp);
 chai.should();
@@ -62,6 +64,18 @@ describe('Applications', function() {
             });
     });
 
+    before('testing', 'verify email for user', (done) => {
+        chai.request(app).post('/api/auth/verify/student')
+            .set('content-type', 'application/json')
+            .send().end((err, res) => {
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.have.property('token');
+                res.body.token.should.equal(processMessage);
+                done();
+            });
+    });
+
     before('testing, login', (done) => {
         chai.request(app).post('/api/auth/login/user')
             .set('content-type', 'application/json')
@@ -80,6 +94,18 @@ describe('Applications', function() {
             });
     });
 
+    before('testing', 'verify email for company', (done) => {
+        chai.request(app).post('/api/auth/verify/company')
+            .set('content-type', 'application/json')
+            .send().end((err, res) => {
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.have.property('token');
+                res.body.token.should.equal(processMessage);
+                done();
+            });
+    });
+
     before('testing, login the company account to check if user and company profiles are segregated', (done) => {
         chai.request(app).post('/api/auth/login/company')
             .set('content-type', 'application/json')
@@ -89,7 +115,6 @@ describe('Applications', function() {
             });
     });
 
-    
     before('testing, create listing', (done) => {
         chai.request(app).post('/api/listings/new')
             .set('content-type', 'application/json')

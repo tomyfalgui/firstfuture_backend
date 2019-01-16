@@ -45,7 +45,7 @@ router.get('/show/:id', userOnly, (req, res) => {
     where: {
       id: req.params.id,
     },
-    include: [Company],
+    include: [Company,City],
   })
       .then((listing) => {
         listing.update({viewCount: listing.viewCount+1});
@@ -172,19 +172,11 @@ router.get('/search/position', userOnly, (req, res) => {
 });
 
 router.get('/search/location/:cityId', userOnly, (req, res) => {
-  City.scope('nameOnly').findAll({
-    where: {
-      id: req.params.cityId,
-    },
-    include: [{
-      model: Company.scope('nameOnly'),
-      include: [{
-        model: JobListing,
-      }],
-    }],
-  }).then((listings)=>{
+  JobListing.findAll({where:{city:req.params.cityId}}).then((listings)=>{
     res.json(listings);
-  });
+  }).catch((err)=>{
+    res.json(err);
+  })
 });
 
 module.exports = router;

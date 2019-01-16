@@ -17,7 +17,7 @@ router.post('/edit', (req, res) => {
       id: req.userId,
     },
     fields: ['id', 'firstName', 'lastName', 'password', 'middleName',
-      'userName', 'email', 'phone', 'birthdate', 'sex', 'isGraduate',
+      'email', 'phone', 'birthdate', 'sex', 'isGraduate',
       'graduationDate', 'shs', 'strand', 'generalAverage', 'gradeCeiling',
       'honors', 'englishSpeakingRating', 'englishWritingRating',
       'englishReadingRating', 'filipinoSpeakingRating',

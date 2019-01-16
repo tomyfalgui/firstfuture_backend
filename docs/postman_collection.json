@@ -306,7 +306,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"position\": \"Web Developer\",\r\n    \"description\": \"You will be working to develop an app to do app things\",\r\n    \"deadline\": \"2018-11-22T08:37:22.000Z\",\r\n    \"category\": 5,\r\n    \"industry\":1,\r\n    \"viewCount\": 1,\r\n    \"requiredSkills\": [\"Node.js\",\"Sequelize\"],\r\n    \"benefits\":[\"1000 pesos daily allowance\",\"room and board\"],\r\n    \"isImmersion\":true,\r\n    \"strands\": [\r\n        1,\r\n        2,\r\n        3\r\n    ],\r\n    \"createdAt\": \"2018-12-26T15:06:47.000Z\",\r\n    \"updatedAt\": \"2018-12-26T15:06:47.000Z\"\r\n}"
+							"raw": "{\r\n    \"position\": \"Web Developer\",\r\n    \"description\": \"You will be working to develop an app to do app things\",\r\n    \"deadline\": \"2018-11-22T08:37:22.000Z\",\r\n    \"category\": 5,\r\n    \"industry\":1,\r\n    \"viewCount\": 1,\r\n    \"jobLocation\":\"SM Aura\",\r\n    \"requiredSkills\": [\"Node.js\",\"Sequelize\"],\r\n    \"benefits\":[\"1000 pesos daily allowance\",\"room and board\"],\r\n    \"isImmersion\":true,\r\n    \"city\": 1336,\r\n    \"strands\": [\r\n        1,\r\n        2,\r\n        3\r\n    ],\r\n    \"createdAt\": \"2018-12-26T15:06:47.000Z\",\r\n    \"updatedAt\": \"2018-12-26T15:06:47.000Z\"\r\n}"
 						},
 						"url": {
 							"raw": "{{url}}/api/listings/new",

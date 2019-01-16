@@ -1,7 +1,12 @@
 const Sequelize = require('sequelize');
+
 module.exports = (sequelize, type) => {
   return sequelize.define('jobListing', {
     position: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    jobLocation: {
       type: Sequelize.STRING,
       allowNull: false,
     },
@@ -58,7 +63,7 @@ module.exports = (sequelize, type) => {
     },
   },{
     defaultScope:{
-      attributes: {exclude: ['createdAt','updatedAt']}
+      attributes: {exclude: ['createdAt','updatedAt']},
     },
     scopes:{
 

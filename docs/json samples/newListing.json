@@ -5,6 +5,7 @@
     "category": 5,
     "industry":1,
     "viewCount": 1,
+    "city":1337,
     "requiredSkills": ["Node.js","Sequelize"],
     "benefits":["1000 pesos daily allowance","room and board"],
     "isImmersion":false,

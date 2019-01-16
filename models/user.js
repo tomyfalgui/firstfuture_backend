@@ -15,11 +15,6 @@ module.exports = (sequelize, type) => {
     middleName: {
       type: Sequelize.STRING,
     },
-    // Account Information
-    userName: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
     password: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -118,7 +113,7 @@ module.exports = (sequelize, type) => {
   },{
     // By default allows access only to user visible data
     defaultScope:{
-      attributes:['id','firstName','lastName','middleName','userName','email'
+      attributes:['id','firstName','lastName','middleName','email'
       ,'phone','birthdate','sex','isGraduate','graduationDate','shs','strand',
       'generalAverage','gradeCeiling','honors','englishSpeakingRating','englishWritingRating',
       'englishReadingRating','filipinoSpeakingRating','filipinoWritingRating',

@@ -77,6 +77,8 @@ City.belongsTo(Region,{foreignKey: 'regDesc', targetKey: 'regCode'});
 City.hasMany(User, {foreignKey: 'city'});
 User.belongsTo(City, {foreignKey: 'city'})
 City.hasMany(Company, {foreignKey: 'city'});
+City.hasMany(JobListing, {foreignKey: 'city'});
+JobListing.belongsTo(City, { onDelete: 'CASCADE', foreignKey:'city' });
 Company.belongsTo(City, {foreignKey: 'city'});
 Province.hasMany(City,{foreignKey: 'provCode', targetKey: 'provCode'});
 Region.hasMany(City,{foreignKey: 'regDesc', targetKey: 'regCode'});

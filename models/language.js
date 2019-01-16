@@ -5,15 +5,7 @@ module.exports = (sequelize, type) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    speakingRating: {
-      type: Sequelize.INTEGER(2),
-      allowNull: false,
-    },
-    writingRating: {
-      type: Sequelize.INTEGER(2),
-      allowNull: false,
-    },
-    readingRating: {
+    rating: {
       type: Sequelize.INTEGER(2),
       allowNull: false,
     },

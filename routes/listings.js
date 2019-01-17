@@ -42,9 +42,20 @@ router.delete('/delete/:id', (req, res) => {
 
 router.get('/show/', [userOnly,extractUserId], (req, res) => {
   JobListing.findAll({
+    attributes:{
+      include: [[Sequelize.fn("COUNT", Sequelize.col("applications.id")), "applicationCount"]] 
+    },
     where: {
       companyId: req.userId
     },
+    include:
+      [
+        {
+          model: Application, 
+          attributes: []
+        }
+      ],
+    group: ['JobListing.id']
   })
     .then((listings) => {
       res.json(listings);

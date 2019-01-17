@@ -84,12 +84,12 @@ Province.hasMany(City, { foreignKey: 'provCode', targetKey: 'provCode' });
 Region.hasMany(City, { foreignKey: 'regDesc', targetKey: 'regCode' });
 
 sequelize.sync({ alter: true }).then(() => {
-    const locations = [Region, Province, City, ];
-    const data = [regions, provinces, cities, ];
+    // const locations = [Region, Province, City, ];
+    // const data = [regions, provinces, cities, ];
 
-    for (let i = 0; i < locations.length; i++) {
-        locations[i].bulkCreate(data[i].RECORDS);
-    }
+    // for (let i = 0; i < locations.length; i++) {
+    //     locations[i].bulkCreate(data[i].RECORDS);
+    // }
 });
 
 module.exports = {

@@ -86,27 +86,11 @@ module.exports = (sequelize, type) => {
     honors: {
       type: Sequelize.JSON,
     },
-    englishSpeakingRating: {
+    englishRating: {
       type: Sequelize.INTEGER(2),
       allowNull: false,
     },
-    englishWritingRating: {
-      type: Sequelize.INTEGER(2),
-      allowNull: false,
-    },
-    englishReadingRating: {
-      type: Sequelize.INTEGER(2),
-      allowNull: false,
-    },
-    filipinoSpeakingRating: {
-      type: Sequelize.INTEGER(2),
-      allowNull: false,
-    },
-    filipinoWritingRating: {
-      type: Sequelize.INTEGER(2),
-      allowNull: false,
-    },
-    filipinoReadingRating: {
+    filipinoRating: {
       type: Sequelize.INTEGER(2),
       allowNull: false,
     },
@@ -115,9 +99,8 @@ module.exports = (sequelize, type) => {
     defaultScope:{
       attributes:['id','firstName','lastName','middleName','email'
       ,'phone','birthdate','sex','isGraduate','graduationDate','shs','strand',
-      'generalAverage','gradeCeiling','honors','englishSpeakingRating','englishWritingRating',
-      'englishReadingRating','filipinoSpeakingRating','filipinoWritingRating',
-      'filipinoReadingRating',],
+      'generalAverage','gradeCeiling','honors','englishRating',
+      'filipinoRating',],
     },
     scopes : {
       auth:{

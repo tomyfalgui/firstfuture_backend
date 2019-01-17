@@ -28,9 +28,7 @@ router.post('/signup/user', (req, res) => {
   // {fields: ['id','firstName','lastName','password','middleName','userName',
   //     'email','phone','birthdate','sex','isGraduate','graduationDate','shs',
   //     'strand','generalAverage','gradeCeiling','honors',
-  //     'englishSpeakingRating','englishWritingRating','englishReadingRating',
-  //     'filipinoSpeakingRating','filipinoWritingRating',
-  //     'filipinoReadingRating',]}
+  //     'englishRating','filipinoRating',]}
   ).then((user) => {
     const id = user.id;
 

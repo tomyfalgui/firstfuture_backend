@@ -19,12 +19,9 @@ router.post('/edit', (req, res) => {
     fields: ['id', 'firstName', 'lastName', 'password', 'middleName',
       'email', 'phone', 'birthdate', 'sex', 'isGraduate',
       'graduationDate', 'shs', 'strand', 'generalAverage', 'gradeCeiling',
-      'honors', 'englishSpeakingRating', 'englishWritingRating',
-      'englishReadingRating', 'filipinoSpeakingRating',
-      'filipinoWritingRating', 'filipinoReadingRating'],
+      'honors', 'englishRating', 'filipinoRating'],
   })
       .then((user) => {
-        delete user.password;
         res.json(user);
       })
       .catch((err) => res.json(err));

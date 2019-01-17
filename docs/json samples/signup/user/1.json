@@ -18,12 +18,8 @@
     	"generalAverage":99.87,
     	"gradeCeiling":100,
     	"honors":{},
-    	"englishSpeakingRating":10,
-    	"englishWritingRating":10,
-    	"englishReadingRating":10,
-    	"filipinoSpeakingRating":10,
-    	"filipinoWritingRating":10,
-    	"filipinoReadingRating":10
+    	"englishRating":10,
+    	"filipinoRating":10
     },
     "skills":[
     	{

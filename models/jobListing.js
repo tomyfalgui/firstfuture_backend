@@ -63,10 +63,8 @@ module.exports = (sequelize, type) => {
     },
   },{
     defaultScope:{
-      attributes: {exclude: ['createdAt','updatedAt']},
     },
     scopes:{
-
     }
   });
 };

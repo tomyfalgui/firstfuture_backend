@@ -52,7 +52,7 @@ app.use('/api/languages', [studentOnly, extractUserId], languages);
 app.use('/api/workexperiences', [studentOnly, extractUserId], workExp);
 app.use('/api/profilepicture', profilePicture);
 app.use('/api/companypicture', companyPicture);
-app.use('/api/locations', userOnly, location);
+app.use('/api/locations', location);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

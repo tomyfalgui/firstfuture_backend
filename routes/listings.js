@@ -55,7 +55,7 @@ router.get('/show/', [userOnly,extractUserId], (req, res) => {
           attributes: []
         }
       ],
-    group: ['JobListing.id']
+    group: ['jobListing.id']
   })
     .then((listings) => {
       res.json(listings);

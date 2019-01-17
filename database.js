@@ -66,32 +66,46 @@ Application.belongsTo(User, { onDelete: 'CASCADE' });
 Application.belongsTo(JobListing, { onDelete: 'SET NULL' });
 
 
-Company.hasMany(JobListing, { onDelete: 'CASCADE', foreignKey:'companyId' });
+Company.hasMany(JobListing, { onDelete: 'CASCADE', foreignKey: 'companyId' });
 Company.hasMany(CompanyPicture, { onDelete: 'CASCADE' });
 JobListing.hasMany(Bookmark, { onDelete: 'CASCADE' });
 JobListing.hasMany(Application, { onDelete: 'SET NULL' });
-JobListing.belongsTo(Company, { onDelete: 'CASCADE', foreignKey:'companyId' });
+JobListing.belongsTo(Company, { onDelete: 'CASCADE', foreignKey: 'companyId' });
 Bookmark.belongsTo(JobListing, { onDelete: 'CASCADE' });
-City.belongsTo(Province, {foreignKey: 'provCode', targetKey: 'provCode'});
-City.belongsTo(Region,{foreignKey: 'regDesc', targetKey: 'regCode'});
-City.hasMany(User, {foreignKey: 'city'});
-User.belongsTo(City, {foreignKey: 'city'})
-City.hasMany(Company, {foreignKey: 'city'});
-City.hasMany(JobListing, {foreignKey: 'city'});
-JobListing.belongsTo(City, { onDelete: 'CASCADE', foreignKey:'city' });
-Company.belongsTo(City, {foreignKey: 'city'});
-Province.hasMany(City,{foreignKey: 'provCode', targetKey: 'provCode'});
-Region.hasMany(City,{foreignKey: 'regDesc', targetKey: 'regCode'});
+City.belongsTo(Province, { foreignKey: 'provCode', targetKey: 'provCode' });
+City.belongsTo(Region, { foreignKey: 'regDesc', targetKey: 'regCode' });
+City.hasMany(User, { foreignKey: 'city' });
+User.belongsTo(City, { foreignKey: 'city' })
+City.hasMany(Company, { foreignKey: 'city' });
+City.hasMany(JobListing, { foreignKey: 'city' });
+JobListing.belongsTo(City, { onDelete: 'CASCADE', foreignKey: 'city' });
+Company.belongsTo(City, { foreignKey: 'city' });
+Province.hasMany(City, { foreignKey: 'provCode', targetKey: 'provCode' });
+Region.hasMany(City, { foreignKey: 'regDesc', targetKey: 'regCode' });
 
-sequelize.sync({force: true}).then(()=>{
-    const locations = [Region, Province, City,];
-    const data = [regions, provinces, cities,];
+sequelize.sync({ force: true }).then(() => {
+    const locations = [Region, Province, City, ];
+    const data = [regions, provinces, cities, ];
 
     for (let i = 0; i < locations.length; i++) {
         locations[i].bulkCreate(data[i].RECORDS);
     }
 });
 
-module.exports = { User, Company, ExtraCurricular, Skill, Language, 
-    WorkExperience, JobListing, Bookmark, ProfilePicture, Application, 
-    CompanyPicture, Region, City, Province, sequelize };
+module.exports = {
+    User,
+    Company,
+    ExtraCurricular,
+    Skill,
+    Language,
+    WorkExperience,
+    JobListing,
+    Bookmark,
+    ProfilePicture,
+    Application,
+    CompanyPicture,
+    Region,
+    City,
+    Province,
+    sequelize
+};

@@ -30,7 +30,7 @@ function execute() {
             console.error(err);
             return;
         }
-        imap.search(["UNANSWERED", ['SUBJECT', 'First Future - Email Verification']], function(err, results) {
+        imap.search(["UNSEEN", ['SUBJECT', 'First Future - Email Verification']], function(err, results) {
             if (!results || !results.length) {
                 console.log("No unread mails");
                 imap.end();
@@ -60,6 +60,7 @@ function processMessage(msg, seqno) {
                 data.text.indexOf(']')
             )
             console.log(output);
+            return output;
         }
     });
 
@@ -73,4 +74,4 @@ function processMessage(msg, seqno) {
     });
 }
 
-module.exports = execute;
+module.exports.processMessage = processMessage;

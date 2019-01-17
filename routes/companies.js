@@ -14,7 +14,7 @@ router.post('/edit', (req, res) => {
     where: {
       id: req.userId,
     },
-    fields: ['userName', 'email',
+    fields: ['email',
       'companyName', 'contactNumber', 'desciption', 'city'],
   })
       .then((company) => res.json(company))

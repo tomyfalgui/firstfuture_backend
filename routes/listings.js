@@ -40,6 +40,18 @@ router.delete('/delete/:id', (req, res) => {
       .catch((err) => res.json(err));
 });
 
+router.get('/show/', [userOnly,extractUserId], (req, res) => {
+  JobListing.findAll({
+    where: {
+      companyId: req.userId
+    },
+  })
+    .then((listings) => {
+      res.json(listings);
+    })
+    .catch((err) => res.json(err));
+});
+
 router.get('/show/:id', userOnly, (req, res) => {
   JobListing.findOne({
     where: {

@@ -30,10 +30,10 @@ router.post('/signup/user', (req, res) => {
   const plaintext = req.body.user.password;
   req.body.user.password = encryptPassword(plaintext);
   User.create(req.body.user,
-  {fields: ['id','firstName','lastName','password','middleName','userName',
-      'email','phone','birthdate','sex','isGraduate','graduationDate','shs',
-      'strand','generalAverage','gradeCeiling','honors',
-      'englishRating','filipinoRating',]}
+//   {fields: ['id','firstName','lastName','password','middleName','userName',
+//       'email','phone','birthdate','sex','isGraduate','graduationDate','shs',
+//       'strand','generalAverage','gradeCeiling','honors',
+//       'englishRating','filipinoRating',]}
   ).then((user) => {
     const id = user.id;
 
@@ -82,7 +82,7 @@ router.post('/signup/user', (req, res) => {
 router.post('/signup/company', (req, res) => {
     req.body.password = encryptPassword(req.body.password);
     Company.create(req.body, {
-            fields: ['userName', 'email', 'password', 'companyName', 'contactNumber', 'desciption', 'city']
+            //fields: ['email', 'password', 'companyName', 'contactNumber', 'desciption', 'city']
         }).then((company) => {
             updateAndMail(company, false, 'emailVerification',
                 'First Future - Email Verification',

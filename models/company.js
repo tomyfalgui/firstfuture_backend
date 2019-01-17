@@ -1,10 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = (sequelize, type) => {
   return sequelize.define('company', {
-    userName: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
     password: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -43,7 +39,7 @@ module.exports = (sequelize, type) => {
     },
   },{
     defaultScope:{
-      attributes:['userName','email',
+      attributes:['email',
       'companyName','contactNumber','description','city']
     },
     scopes:{
